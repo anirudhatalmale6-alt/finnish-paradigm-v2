@@ -1,0 +1,56 @@
+[
+  {
+    "id": "v01",
+    "course": "fcfp",
+    "title": "Somewhere We Got Lost",
+    "presenter": "Elena",
+    "length": "4:30",
+    "script": "Every morning, you enter your classroom carrying a profound responsibility. Beneath paperwork, routine, and pressure, the spark that called you to teaching can begin to dim. The Finnish-inspired approach helps you return to the human centre of education: trust, balance, early support, and dignity. You may not control the whole system, but you can control the learning climate inside your classroom. Today we strip away the noise and rebuild purpose.",
+    "prompt": "Create a professional AI presenter video. Avatar: mature female educator, warm, authoritative, Scandinavian-inspired classroom backdrop, light wood accents, navy blazer, measured cadence."
+  },
+  {
+    "id": "v02",
+    "course": "fcfp",
+    "title": "The 45-15 Restorative Instructional Flow",
+    "presenter": "Elena",
+    "length": "6:00",
+    "script": "The 45-15 flow divides a 60-minute lesson into 45 minutes of focused teaching and guided practice, followed by 15 minutes of restorative movement, reflection, and teacher observation. This does not reduce learning. It protects attention and creates a window for early identification.",
+    "prompt": "AI video with timeline diagram on whiteboard. Presenter explains 5-minute focus accelerator, 20-minute direct instruction, 20-minute guided practice, 15-minute restorative observation."
+  },
+  {
+    "id": "v03",
+    "course": "asti",
+    "title": "The Three-Tier Intervention Model",
+    "presenter": "Marcus",
+    "length": "7:00",
+    "script": "Intervention must not wait for failure. Tier 1 is high-quality solo-classroom support. Tier 2 begins when evidence shows repeated difficulty. Tier 3 is intensive customized support. The teacher remains the captain of the classroom while the intervention layer stabilizes learning.",
+    "prompt": "Corporate training video. Male executive educator, grey suit, digital 3-tier pyramid, analytical tone, institutional polish."
+  },
+  {
+    "id": "v04",
+    "course": "asti",
+    "title": "Deploying Senior Assets",
+    "presenter": "Elena",
+    "length": "6:30",
+    "script": "Retired educators are one of the greatest untapped resources in education. They can provide reading, numeracy, language, confidence, and homework recovery support without taking over the classroom or creating split authority.",
+    "prompt": "B2B principal-facing video, boardroom background, calm persuasive tone, senior asset deployment diagram."
+  },
+  {
+    "id": "v05",
+    "course": "seld",
+    "title": "Leadership Dashboard and Quality Metrics",
+    "presenter": "Marcus",
+    "length": "8:00",
+    "script": "A school cannot improve what it cannot see. The leadership dashboard tracks students at risk, intervention cycles, benchmark progress, retired specialist sessions, parent contact, and unresolved escalation cases.",
+    "prompt": "High-end school leadership video, dashboard screen, calm strategic delivery, data-informed improvement tone."
+  },
+  {
+    "id": "v06",
+    "course": "seld",
+    "title": "Professional Escalation and Ministry Alignment",
+    "presenter": "Marcus",
+    "length": "7:30",
+    "script": "Teachers should advocate professionally and lawfully. Escalation begins with evidence, written proposals, leadership requests, and documented student benefit. Ministry petitions must be respectful, policy-aligned, and focused on the child.",
+    "prompt": "Serious think-tank backdrop, firm professional tone, legal-safe teacher advocacy framing."
+  }
+]

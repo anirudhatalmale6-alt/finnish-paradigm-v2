@@ -1,0 +1,50 @@
+[
+  {
+    "id": "45-15-log",
+    "title": "45-15 Instructional Flow Daily Log",
+    "category": "Classroom",
+    "summary": "Daily planner for 45 minutes of focused instruction plus 15 minutes of restorative observation and micro-intervention."
+  },
+  {
+    "id": "ivf-cards",
+    "title": "Immediate Verification Framework Cards",
+    "category": "Assessment",
+    "summary": "Green/Yellow/Red checkpoints for real-time comprehension monitoring during independent work."
+  },
+  {
+    "id": "tier-protocol",
+    "title": "Three-Tier Intervention Action Protocol",
+    "category": "Intervention",
+    "summary": "Defines Level 1 classroom support, Level 2 targeted support, and Level 3 intensive customized support."
+  },
+  {
+    "id": "senior-matrix",
+    "title": "Senior Asset Deployment Matrix",
+    "category": "Retired Teachers",
+    "summary": "Onboarding, scheduling, handover, and progress logging system for retired teacher intervention specialists."
+  },
+  {
+    "id": "petition-framework",
+    "title": "Direct Ministry Petition and Evidence Framework",
+    "category": "Escalation",
+    "summary": "Professional evidence-based template for collective teacher advocacy when school support systems are blocked."
+  },
+  {
+    "id": "autonomy-matrix",
+    "title": "Classroom Autonomy Matrix",
+    "category": "Teacher Autonomy",
+    "summary": "Helps teachers separate what they control, influence, and escalate."
+  },
+  {
+    "id": "parent-pack",
+    "title": "Parent Communication Pack",
+    "category": "Family Engagement",
+    "summary": "Supportive messages for early support notices, positive progress, and meeting requests."
+  },
+  {
+    "id": "ai-prompt-vault",
+    "title": "AI Prompt Vault for Finnish Paradigm Lesson Planning",
+    "category": "AI Resources",
+    "summary": "Copy-paste prompts to generate lesson plans using 45-15, IVF, and intervention asset protocols."
+  }
+]

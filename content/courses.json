@@ -1,0 +1,74 @@
+[
+  {
+    "id": "fcfp",
+    "level": 1,
+    "title": "Foundational Certificate in Finnish Pedagogy (FCFP)",
+    "audience": "Teachers",
+    "duration": "6 weeks",
+    "price": "149-299 USD",
+    "outcome": "Restore teacher purpose, optimise solo-classroom practice, and apply Tier-1 early intervention.",
+    "modules": [
+      "Rekindling Educator Purpose",
+      "The 45-15 Restorative Instructional Flow",
+      "Finnish-Inspired Equity and Well-Being",
+      "Immediate Verification Framework",
+      "Differentiation Without Extra Workload",
+      "Teacher Impact Portfolio"
+    ],
+    "resources": [
+      "45-15 Daily Log Sheet",
+      "Early Warning Signs Checklist",
+      "Classroom Autonomy Matrix",
+      "Student Support Tracker",
+      "Mistake-Friendly Classroom Poster"
+    ]
+  },
+  {
+    "id": "asti",
+    "level": 2,
+    "title": "Advanced Specialist in Targeted Intervention (ASTI)",
+    "audience": "Lead Teachers, Retired Specialists, SEN/Support Staff",
+    "duration": "8 weeks",
+    "price": "299-499 USD",
+    "outcome": "Deploy retired teacher networks and fine-tune Tier 2 and Tier 3 support without forced co-teaching.",
+    "modules": [
+      "Three-Tier Intervention Architecture",
+      "Senior Asset Precision Pull-Out Method",
+      "Progress Logs and Benchmark Reviews",
+      "Targeted Reading and Numeracy Support",
+      "Escalation Protocols",
+      "Intervention Case Study"
+    ],
+    "resources": [
+      "Three-Tier Intervention Action Protocol",
+      "Senior Asset Deployment Matrix",
+      "Progress Log Template",
+      "Parent Communication Pack",
+      "Individualized Educational Strategy Template"
+    ]
+  },
+  {
+    "id": "seld",
+    "level": 3,
+    "title": "Strategic Educational Leadership Diploma (SELD)",
+    "audience": "School Leaders, Directors, Ministries, Districts",
+    "duration": "10 weeks",
+    "price": "699-2500 USD",
+    "outcome": "Build a whole-school early intervention operating system with dashboards, policy templates, staffing models, and quality metrics.",
+    "modules": [
+      "Commercial and Institutional Implementation",
+      "School Culture Audit",
+      "Retired Teacher Network Funding and Operations",
+      "Data Dashboards and Quality Metrics",
+      "Legal and Ministry Alignment",
+      "School Transformation Capstone"
+    ],
+    "resources": [
+      "School Culture Audit",
+      "Leadership Dashboard Template",
+      "Ministry Petition Framework",
+      "Budget Calculator",
+      "Retired Teacher Recruitment Engine"
+    ]
+  }
+]

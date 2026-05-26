@@ -1,0 +1,32 @@
+[
+  {
+    "level": "Classroom",
+    "trigger": "First signs of difficulty",
+    "owner": "Teacher",
+    "action": "Use Level 1 support, record evidence, apply scaffolds, review in 1-2 weeks."
+  },
+  {
+    "level": "Department",
+    "trigger": "Three repeated red/yellow IVF markers in one week",
+    "owner": "Teacher + Department Lead",
+    "action": "Open Tier 2 case, schedule targeted support, log intervention plan."
+  },
+  {
+    "level": "School Support Team",
+    "trigger": "No benchmark improvement after 14-day Tier 2 cycle",
+    "owner": "Support Coordinator / Management",
+    "action": "Create Individualized Educational Strategy, contact parents, schedule review."
+  },
+  {
+    "level": "External / Specialist",
+    "trigger": "Persistent serious concern or safeguarding issue",
+    "owner": "School Leader",
+    "action": "Follow local policy, refer to specialist, document decisions."
+  },
+  {
+    "level": "Professional Advocacy",
+    "trigger": "Systemic refusal to provide support systems",
+    "owner": "Allied Faculty",
+    "action": "Submit evidence-based proposal to leadership first; if lawful and necessary, escalate through official ministry channels."
+  }
+]

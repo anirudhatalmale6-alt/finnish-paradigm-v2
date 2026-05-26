@@ -1,0 +1,44 @@
+[
+  {
+    "domain": "Lesson design",
+    "teacher_control": "High",
+    "school_support": "Medium",
+    "escalation": "None",
+    "examples": "Scaffolds, examples, pacing, guided practice, checklists."
+  },
+  {
+    "domain": "Classroom climate",
+    "teacher_control": "High",
+    "school_support": "Medium",
+    "escalation": "None",
+    "examples": "Tone, routines, mistake-friendly culture, seating support."
+  },
+  {
+    "domain": "Early intervention recording",
+    "teacher_control": "High",
+    "school_support": "High",
+    "escalation": "Department if patterns persist",
+    "examples": "Student risk map, IVF results, progress notes."
+  },
+  {
+    "domain": "Tier 2 support scheduling",
+    "teacher_control": "Medium",
+    "school_support": "High",
+    "escalation": "Management if unavailable",
+    "examples": "Small-group sessions, retired teacher deployment, study blocks."
+  },
+  {
+    "domain": "Tier 3 individualized support",
+    "teacher_control": "Low-Medium",
+    "school_support": "High",
+    "escalation": "Specialist/school leadership",
+    "examples": "IES plan, parent meeting, external referral."
+  },
+  {
+    "domain": "Policy change",
+    "teacher_control": "Low",
+    "school_support": "High",
+    "escalation": "Official proposal/ministry route",
+    "examples": "Staffing models, timetable structures, institutional budget."
+  }
+]

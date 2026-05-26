@@ -1,0 +1,61 @@
+[
+  {
+    "id": "teacher-starter",
+    "name": "Teacher Starter Bundle",
+    "price": "19 USD",
+    "includes": [
+      "Mini-course",
+      "Purpose workbook",
+      "Classroom posters",
+      "Sphere of Control worksheet"
+    ]
+  },
+  {
+    "id": "early-intervention",
+    "name": "Early Intervention Toolkit",
+    "price": "49 USD",
+    "includes": [
+      "Tier protocol",
+      "Risk map",
+      "Student trackers",
+      "Parent templates",
+      "Intervention review forms"
+    ]
+  },
+  {
+    "id": "school-leadership",
+    "name": "School Leadership Implementation Pack",
+    "price": "149 USD",
+    "includes": [
+      "Policy templates",
+      "Culture audit",
+      "Meeting agendas",
+      "Dashboards",
+      "Retired teacher programme guide"
+    ]
+  },
+  {
+    "id": "retired-mentor",
+    "name": "Retired Teacher Intervention Mentor Pack",
+    "price": "99 USD",
+    "includes": [
+      "Mentor training",
+      "Safeguarding checklist",
+      "Session plans",
+      "Progress logs",
+      "Feedback forms"
+    ]
+  },
+  {
+    "id": "enterprise",
+    "name": "Whole-School / Ministry License",
+    "price": "Custom",
+    "includes": [
+      "All courses",
+      "Admin dashboard",
+      "Assessment engine",
+      "PDF library",
+      "Implementation support architecture"
+    ]
+  }
+]
