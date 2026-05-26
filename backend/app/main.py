@@ -243,7 +243,7 @@ def protocols(): return {'escalation': ESCALATION_PROTOCOLS, 'autonomy_matrix': 
 @app.post('/api/auth/register')
 def register(payload: RegisterIn):
     conn = db(); cur = conn.cursor()
-    role = payload.role if payload.role in ('learner','teacher','manager') else 'learner'
+    role = payload.role if payload.role in ('learner','teacher') else 'learner'
     try:
         cur.execute('INSERT INTO users(name,email,password_hash,role,organisation,created_at) VALUES(?,?,?,?,?,?)', (payload.name, payload.email.lower(), hash_password(payload.password), role, payload.organisation or '', datetime.now(timezone.utc).isoformat()))
         conn.commit(); uid = cur.lastrowid
@@ -298,11 +298,14 @@ def my_progress(user=Depends(current_user)):
 
 # --------------------------- Assessments ---------------------------
 @app.get('/api/item-bank')
-def item_bank(course_id: Optional[str] = None):
+def item_bank(course_id: Optional[str] = None, user=Depends(current_user)):
     conn=db()
     if course_id: rows=conn.execute('SELECT * FROM items WHERE course_id=? ORDER BY difficulty',(course_id,)).fetchall()
     else: rows=conn.execute('SELECT * FROM items ORDER BY course_id,difficulty').fetchall()
-    conn.close(); return [{**dict(r),'options':json.loads(r['options'])} for r in rows]
+    conn.close()
+    if user['role'] in ('admin', 'manager'):
+        return [{**dict(r),'options':json.loads(r['options'])} for r in rows]
+    return [{k:v for k,v in {**dict(r),'options':json.loads(r['options'])}.items() if k != 'correct'} for r in rows]
 
 @app.post('/api/assessment/start')
 def start_assessment(payload: AssessmentStart, user=Depends(current_user)):
@@ -324,7 +327,11 @@ def get_next_item(session_id:int):
     d=dict(item); d['options']=json.loads(d['options']); d.pop('correct',None); return d
 
 @app.get('/api/assessment/{session_id}/next')
-def next_item(session_id:int, user=Depends(current_user)): return get_next_item(session_id)
+def next_item(session_id:int, user=Depends(current_user)):
+    conn=db(); sess=conn.execute('SELECT user_id FROM assessment_sessions WHERE id=?',(session_id,)).fetchone(); conn.close()
+    if not sess: raise HTTPException(404, 'Session not found')
+    if sess['user_id'] != user['id'] and user['role'] not in ('admin','manager'): raise HTTPException(403, 'Not your session')
+    return get_next_item(session_id)
 
 @app.post('/api/assessment/answer')
 def answer(payload: AnswerIn, user=Depends(current_user)):
@@ -341,10 +348,11 @@ def answer(payload: AnswerIn, user=Depends(current_user)):
 
 # --------------------------- Commercial helpers ---------------------------
 def send_email(to_email: str, subject: str, body: str) -> bool:
-    """Send transactional email when SMTP credentials are configured. Returns False in safe no-SMTP mode."""
     if not SMTP_HOST or not SMTP_USERNAME or not SMTP_PASSWORD:
         return False
-    msg = f"From: {SMTP_FROM}\r\nTo: {to_email}\r\nSubject: {subject}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body}"
+    safe_subject = subject.replace('\r', '').replace('\n', ' ')
+    safe_body = body.replace('\r\n', '\n')
+    msg = f"From: {SMTP_FROM}\r\nTo: {to_email}\r\nSubject: {safe_subject}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{safe_body}"
     try:
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=12) as server:
             server.starttls()
@@ -433,7 +441,7 @@ def stripe_readiness_report():
     }
 
 @app.get('/api/stripe/readiness')
-def stripe_readiness():
+def stripe_readiness(user=Depends(require_admin)):
     return stripe_readiness_report()
 
 @app.post('/api/checkout/create')
