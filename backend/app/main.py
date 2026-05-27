@@ -6,7 +6,8 @@ from fastapi.responses import FileResponse, HTMLResponse
 from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timedelta, timezone
-import sqlite3, json, os, secrets, hashlib, hmac, base64, time, smtplib
+from collections import defaultdict
+import sqlite3, json, os, secrets, hashlib, hmac, base64, time, smtplib, threading
 from .data_seed import COURSES, PRODUCTS, TOOLS, VIDEOS, ESCALATION_PROTOCOLS, AUTONOMY_MATRIX
 try:
     import stripe
@@ -44,8 +45,46 @@ SMTP_FROM = os.getenv('SMTP_FROM', ADMIN_EMAIL)
 if stripe and STRIPE_SECRET_KEY:
     stripe.api_key = STRIPE_SECRET_KEY
 
+RATE_LIMIT_WINDOW = int(os.getenv('RATE_LIMIT_WINDOW', '300'))
+RATE_LIMIT_MAX_AUTH = int(os.getenv('RATE_LIMIT_MAX_AUTH', '15'))
+RATE_LIMIT_MAX_BOOKING = int(os.getenv('RATE_LIMIT_MAX_BOOKING', '10'))
+
+class RateLimiter:
+    def __init__(self):
+        self._attempts: Dict[str, list] = defaultdict(list)
+        self._lock = threading.Lock()
+
+    def check(self, key: str, window: int, max_attempts: int):
+        now = time.time()
+        with self._lock:
+            self._attempts[key] = [t for t in self._attempts[key] if t > now - window]
+            if len(self._attempts[key]) >= max_attempts:
+                raise HTTPException(429, 'Too many requests. Please try again later.')
+            self._attempts[key].append(now)
+
+rate_limiter = RateLimiter()
+
+def get_client_ip(request: Request) -> str:
+    forwarded = request.headers.get('x-forwarded-for')
+    if forwarded:
+        return forwarded.split(',')[0].strip()
+    return request.client.host if request.client else '0.0.0.0'
+
+DB_SCHEMA_VERSION = 2
+
 app = FastAPI(title=f'{APP_NAME} API', version='2.0.0', docs_url='/api/docs', redoc_url='/api/redoc')
 app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS, allow_credentials=True, allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'], allow_headers=['Authorization','Content-Type'])
+
+@app.middleware('http')
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
+    response.headers['Cache-Control'] = 'no-store' if '/api/' in request.url.path else 'public, max-age=3600'
+    return response
+
 app.mount('/static', StaticFiles(directory=STATIC_DIR), name='static')
 
 # --------------------------- Models ---------------------------
@@ -176,6 +215,7 @@ def require_admin(user=Depends(current_user)):
 # --------------------------- Database ---------------------------
 def init_db():
     conn = db(); cur = conn.cursor()
+    cur.execute('''CREATE TABLE IF NOT EXISTS schema_version(version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, role TEXT NOT NULL DEFAULT 'learner', organisation TEXT DEFAULT '', active INTEGER DEFAULT 1, created_at TEXT NOT NULL)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS bookings(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, organisation TEXT, audience TEXT, preferred_date TEXT, message TEXT, status TEXT DEFAULT 'new', created_at TEXT)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS enrollments(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, email TEXT, course_id TEXT, status TEXT DEFAULT 'active', created_at TEXT, UNIQUE(user_id, course_id), FOREIGN KEY(user_id) REFERENCES users(id))''')
@@ -211,13 +251,43 @@ def init_db():
         ]
         for row in seed_items:
             cur.execute('INSERT INTO items(course_id,difficulty,skill,question,options,correct,explanation) VALUES(?,?,?,?,?,?,?)', (row[0],row[1],row[2],row[3],json.dumps(row[4]),row[5],row[6]))
+    cur.execute('INSERT OR IGNORE INTO schema_version(version, applied_at) VALUES(?,?)', (DB_SCHEMA_VERSION, datetime.now(timezone.utc).isoformat()))
     conn.commit(); conn.close()
 
 init_db()
 
 # --------------------------- Public API ---------------------------
 @app.get('/api/health')
-def health(): return {'status':'ok','service':f'{APP_NAME} API','version':'2.0.0'}
+def health():
+    try:
+        conn = db(); conn.execute('SELECT 1'); conn.close()
+        db_ok = True
+    except Exception:
+        db_ok = False
+    return {'status':'ok' if db_ok else 'degraded','service':f'{APP_NAME} API','version':'2.0.0','database':'connected' if db_ok else 'error'}
+
+@app.post('/api/admin/backup')
+def create_backup(user=Depends(require_admin)):
+    import shutil
+    backup_dir = os.path.join(os.path.dirname(DB_PATH), 'backups')
+    os.makedirs(backup_dir, exist_ok=True)
+    timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+    backup_path = os.path.join(backup_dir, f'fp_backup_{timestamp}.sqlite')
+    shutil.copy2(DB_PATH, backup_path)
+    backups = sorted([f for f in os.listdir(backup_dir) if f.endswith('.sqlite')])
+    while len(backups) > 10:
+        os.remove(os.path.join(backup_dir, backups.pop(0)))
+    return {'status':'backed_up','file':os.path.basename(backup_path),'total_backups':len(backups)}
+
+@app.get('/api/admin/db-info')
+def db_info(user=Depends(require_admin)):
+    conn = db(); cur = conn.cursor()
+    tables = [r[0] for r in cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").fetchall()]
+    counts = {t: cur.execute(f'SELECT COUNT(*) FROM [{t}]').fetchone()[0] for t in tables if t != 'schema_version'}
+    version = cur.execute('SELECT MAX(version) FROM schema_version').fetchone()
+    db_size = os.path.getsize(DB_PATH) if os.path.exists(DB_PATH) else 0
+    conn.close()
+    return {'schema_version': version[0] if version else 0, 'tables': counts, 'database_size_bytes': db_size, 'database_file': DB_PATH}
 
 @app.get('/api/courses')
 def courses(): return COURSES
@@ -241,7 +311,8 @@ def videos(): return VIDEOS
 def protocols(): return {'escalation': ESCALATION_PROTOCOLS, 'autonomy_matrix': AUTONOMY_MATRIX}
 
 @app.post('/api/auth/register')
-def register(payload: RegisterIn):
+def register(payload: RegisterIn, request: Request):
+    rate_limiter.check(f'register:{get_client_ip(request)}', RATE_LIMIT_WINDOW, RATE_LIMIT_MAX_AUTH)
     conn = db(); cur = conn.cursor()
     role = payload.role if payload.role in ('learner','teacher') else 'learner'
     try:
@@ -254,7 +325,8 @@ def register(payload: RegisterIn):
     conn.close(); return {'access_token': token, 'token_type':'bearer','user': {'id':uid,'name':payload.name,'email':payload.email.lower(),'role':role}}
 
 @app.post('/api/auth/login')
-def login(payload: LoginIn):
+def login(payload: LoginIn, request: Request):
+    rate_limiter.check(f'login:{get_client_ip(request)}', RATE_LIMIT_WINDOW, RATE_LIMIT_MAX_AUTH)
     conn = db(); user = conn.execute('SELECT * FROM users WHERE email=?', (payload.email.lower(),)).fetchone(); conn.close()
     if not user or not verify_password(payload.password, user['password_hash']):
         raise HTTPException(401, 'Incorrect email or password')
@@ -266,7 +338,8 @@ def login(payload: LoginIn):
 def me(user=Depends(current_user)): return user
 
 @app.post('/api/bookings')
-def create_booking(payload: BookingIn):
+def create_booking(payload: BookingIn, request: Request):
+    rate_limiter.check(f'booking:{get_client_ip(request)}', RATE_LIMIT_WINDOW, RATE_LIMIT_MAX_BOOKING)
     conn=db(); cur=conn.cursor()
     cur.execute('INSERT INTO bookings(name,email,organisation,audience,preferred_date,message,status,created_at) VALUES(?,?,?,?,?,?,?,?)',(payload.name,payload.email,payload.organisation,payload.audience,payload.preferred_date,payload.message,'new',datetime.now(timezone.utc).isoformat()))
     conn.commit(); ident=cur.lastrowid; conn.close()
