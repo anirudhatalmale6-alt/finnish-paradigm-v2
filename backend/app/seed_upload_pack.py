@@ -1,4 +1,5 @@
 import csv
+import json
 import re
 import sqlite3
 from pathlib import Path
@@ -100,6 +101,51 @@ def seed_upload_pack(db_path: str) -> None:
                     row["answer_focus"],
                 ),
             )
+
+    content_file = SEED_DIR / "finnish_paradigm_lms_import.jsonl"
+    if content_file.exists():
+        with open(content_file, encoding="utf-8-sig") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                rec = json.loads(line)
+                module_id = rec["id"]
+                track = rec.get("course_track", "")
+                title = rec.get("title", "")
+                aim = rec.get("aim", "")
+                overview = rec.get("overview", "")
+                audience = "; ".join(rec.get("audience", []))
+                objectives = json.dumps(rec.get("learning_objectives", []))
+                outcomes = json.dumps(rec.get("outcomes", []))
+                session_flow = json.dumps(rec.get("session_flow", []))
+                activities = json.dumps(rec.get("activities", []))
+                resources = json.dumps(rec.get("resources", []))
+                assessment = rec.get("assessment", {})
+                quiz_items = json.dumps(assessment.get("quiz_items", []) if isinstance(assessment, dict) else [])
+                performance_task = assessment.get("performance_task", "") if isinstance(assessment, dict) else ""
+                completion_criteria = assessment.get("completion_criteria", "") if isinstance(assessment, dict) else ""
+                trainer_script = rec.get("trainer_script", "")
+                scenario = json.dumps(rec.get("scenario", {}))
+                demonstration = json.dumps(rec.get("demonstration_dialogue", []))
+                leadership = json.dumps(rec.get("admin_implementation", []))
+                metadata = json.dumps(rec.get("lms_fields", {}))
+
+                cur.execute(
+                    """INSERT OR IGNORE INTO website_modules
+                       (module_id, track, title, aim, overview, audience,
+                        objectives, outcomes, session_flow, activities,
+                        resources, quiz_items, performance_task,
+                        completion_criteria, trainer_script, scenario,
+                        demonstration_dialogue, leadership_implementation,
+                        lms_metadata, published)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)""",
+                    (module_id, track, title, aim, overview, audience,
+                     objectives, outcomes, session_flow, activities,
+                     resources, quiz_items, performance_task,
+                     completion_criteria, trainer_script, scenario,
+                     demonstration, leadership, metadata),
+                )
 
     conn.commit()
     conn.close()

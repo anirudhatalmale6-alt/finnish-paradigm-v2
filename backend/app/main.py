@@ -236,6 +236,7 @@ def init_db():
     cur.execute('''CREATE TABLE IF NOT EXISTS artifact_uploads(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, module_id TEXT NOT NULL, file_url TEXT, file_name TEXT, reflection_text TEXT, status TEXT DEFAULT 'submitted', reviewed_by INTEGER, reviewed_at TEXT, feedback TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS certificates(id INTEGER PRIMARY KEY AUTOINCREMENT, certificate_id TEXT UNIQUE NOT NULL, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, learner_name TEXT NOT NULL, course_title TEXT NOT NULL, cpd_hours REAL, issued_at TEXT DEFAULT CURRENT_TIMESTAMP, certificate_url TEXT, verification_url TEXT, revoked INTEGER DEFAULT 0)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS course_products(id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT NOT NULL, product_id TEXT UNIQUE NOT NULL, stripe_price_id TEXT, price_amount REAL, currency TEXT DEFAULT 'gbp', payment_type TEXT DEFAULT 'one_time', active INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS website_modules(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, track TEXT, title TEXT NOT NULL, aim TEXT, overview TEXT, audience TEXT, objectives TEXT, outcomes TEXT, session_flow TEXT, activities TEXT, resources TEXT, quiz_items TEXT, performance_task TEXT, completion_criteria TEXT, trainer_script TEXT, scenario TEXT, demonstration_dialogue TEXT, leadership_implementation TEXT, lms_metadata TEXT, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_modules_course ON lms_modules(course_id)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_assess_course ON lms_assessment_items(course_id, module_id)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_learner_prog_user ON learner_progress(user_id, course_id)')
@@ -860,6 +861,105 @@ def my_certificates(user=Depends(current_user)):
     conn.close()
     return [dict(r) for r in rows]
 
+@app.get('/api/lms/website-modules')
+def list_website_modules():
+    conn = db()
+    rows = conn.execute('SELECT module_id, track, title, aim, overview, audience, performance_task FROM website_modules WHERE published=1 ORDER BY id').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/lms/website-modules/{module_id}')
+def get_website_module(module_id: str):
+    conn = db()
+    row = conn.execute('SELECT * FROM website_modules WHERE module_id=? AND published=1', (module_id,)).fetchone()
+    conn.close()
+    if not row:
+        raise HTTPException(404, 'Website module not found')
+    result = dict(row)
+    for field in ('objectives', 'outcomes', 'session_flow', 'activities', 'resources', 'quiz_items', 'scenario', 'demonstration_dialogue', 'leadership_implementation', 'lms_metadata'):
+        if result.get(field):
+            try:
+                result[field] = json.loads(result[field])
+            except (json.JSONDecodeError, TypeError):
+                pass
+    return result
+
+class ReflectionIn(BaseModel):
+    reflection_text: str = Field(min_length=10, max_length=5000)
+
+@app.post('/api/lms/reflection/{course_id}/{module_id}')
+def submit_reflection(course_id: str, module_id: str, payload: ReflectionIn, user=Depends(current_user)):
+    conn = db(); cur = conn.cursor()
+    now = datetime.now(timezone.utc).isoformat()
+    cur.execute('''INSERT INTO artifact_uploads(user_id, course_id, module_id, reflection_text, status, created_at)
+                   VALUES(?,?,?,?,?,?)''', (user['id'], course_id, module_id, payload.reflection_text, 'submitted', now))
+    existing = cur.execute('SELECT id FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, module_id)).fetchone()
+    if not existing:
+        cur.execute('INSERT INTO learner_progress(user_id, course_id, module_id, reflection_submitted, created_at, updated_at) VALUES(?,?,?,1,?,?)', (user['id'], course_id, module_id, now, now))
+    else:
+        cur.execute('UPDATE learner_progress SET reflection_submitted=1, updated_at=? WHERE user_id=? AND course_id=? AND module_id=?', (now, user['id'], course_id, module_id))
+    row = cur.execute('SELECT video_complete, assessment_complete, artifact_uploaded, reflection_submitted FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, module_id)).fetchone()
+    is_complete = all(row[i] for i in range(4))
+    if is_complete:
+        cur.execute('UPDATE learner_progress SET module_complete=1, completed_at=? WHERE user_id=? AND course_id=? AND module_id=?', (now, user['id'], course_id, module_id))
+    conn.commit(); conn.close()
+    return {'status': 'reflection_saved', 'module_complete': is_complete}
+
+class ArtifactIn(BaseModel):
+    file_name: str
+    file_url: Optional[str] = ''
+
+@app.post('/api/lms/artifact/{course_id}/{module_id}')
+def submit_artifact(course_id: str, module_id: str, payload: ArtifactIn, user=Depends(current_user)):
+    conn = db(); cur = conn.cursor()
+    now = datetime.now(timezone.utc).isoformat()
+    cur.execute('''INSERT INTO artifact_uploads(user_id, course_id, module_id, file_name, file_url, status, created_at)
+                   VALUES(?,?,?,?,?,?,?)''', (user['id'], course_id, module_id, payload.file_name, payload.file_url, 'submitted', now))
+    existing = cur.execute('SELECT id FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, module_id)).fetchone()
+    if not existing:
+        cur.execute('INSERT INTO learner_progress(user_id, course_id, module_id, artifact_uploaded, created_at, updated_at) VALUES(?,?,?,1,?,?)', (user['id'], course_id, module_id, now, now))
+    else:
+        cur.execute('UPDATE learner_progress SET artifact_uploaded=1, updated_at=? WHERE user_id=? AND course_id=? AND module_id=?', (now, user['id'], course_id, module_id))
+    row = cur.execute('SELECT video_complete, assessment_complete, artifact_uploaded, reflection_submitted FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, module_id)).fetchone()
+    is_complete = all(row[i] for i in range(4))
+    if is_complete:
+        cur.execute('UPDATE learner_progress SET module_complete=1, completed_at=? WHERE user_id=? AND course_id=? AND module_id=?', (now, user['id'], course_id, module_id))
+    conn.commit(); conn.close()
+    return {'status': 'artifact_saved', 'module_complete': is_complete}
+
+@app.get('/api/verify-certificate/{certificate_id}')
+def verify_certificate(certificate_id: str):
+    conn = db()
+    cert = conn.execute('SELECT certificate_id, learner_name, course_title, cpd_hours, issued_at, revoked FROM certificates WHERE certificate_id=?', (certificate_id,)).fetchone()
+    conn.close()
+    if not cert:
+        raise HTTPException(404, 'Certificate not found')
+    c = dict(cert)
+    if c['revoked']:
+        return {'valid': False, 'status': 'revoked', 'certificate_id': certificate_id}
+    return {'valid': True, 'status': 'verified', 'certificate_id': c['certificate_id'], 'learner_name': c['learner_name'], 'course_title': c['course_title'], 'cpd_hours': c['cpd_hours'], 'issued_at': c['issued_at']}
+
+@app.get('/api/admin/lms/artifacts')
+def list_artifacts(user=Depends(require_admin)):
+    conn = db()
+    rows = conn.execute('SELECT a.*, u.name AS user_name, u.email AS user_email FROM artifact_uploads a LEFT JOIN users u ON u.id=a.user_id ORDER BY a.id DESC').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/admin/lms/certificates')
+def list_all_certificates(user=Depends(require_admin)):
+    conn = db()
+    rows = conn.execute('SELECT * FROM certificates ORDER BY issued_at DESC').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/admin/lms/progress')
+def list_all_progress(user=Depends(require_admin)):
+    conn = db()
+    rows = conn.execute('SELECT lp.*, u.name AS user_name, u.email AS user_email FROM learner_progress lp LEFT JOIN users u ON u.id=lp.user_id ORDER BY lp.updated_at DESC LIMIT 200').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
 @app.get('/api/admin/lms/stats')
 def lms_stats(user=Depends(require_admin)):
     conn = db(); cur = conn.cursor()
@@ -869,8 +969,10 @@ def lms_stats(user=Depends(require_admin)):
     videos = cur.execute('SELECT COUNT(*) FROM module_videos').fetchone()[0]
     certificates = cur.execute('SELECT COUNT(*) FROM certificates WHERE revoked=0').fetchone()[0]
     progress_entries = cur.execute('SELECT COUNT(*) FROM learner_progress').fetchone()[0]
+    website_mods = cur.execute('SELECT COUNT(*) FROM website_modules WHERE published=1').fetchone()[0]
+    artifacts = cur.execute('SELECT COUNT(*) FROM artifact_uploads').fetchone()[0]
     conn.close()
-    return {'lms_courses': courses, 'lms_modules': modules, 'assessment_items': assessments, 'video_entries': videos, 'certificates_issued': certificates, 'progress_entries': progress_entries}
+    return {'lms_courses': courses, 'lms_modules': modules, 'website_modules': website_mods, 'assessment_items': assessments, 'video_entries': videos, 'certificates_issued': certificates, 'progress_entries': progress_entries, 'artifact_uploads': artifacts}
 
 # --------------------------- Files and front end ---------------------------
 @app.get('/api/downloads/{filename}')

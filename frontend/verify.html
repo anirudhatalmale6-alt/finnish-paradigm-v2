@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Verify Certificate | The Finnish Paradigm</title><link rel="stylesheet" href="/assets/styles.css"></head><body>
+<div class="top-strip"><span>Teacher CPD · Online Certificates · School Licences · Stripe-ready checkout</span><a href="/booking.html">Request school demo</a></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-mark">FP</span><span><b>The Finnish Paradigm™</b><small>Teacher CPD & School Improvement</small></span></a>
+    <form class="site-search" action="/courses.html"><input name="q" placeholder="Search teacher training courses"><button>Search</button></form>
+    <button id="menuBtn" class="menu-btn" aria-label="Open navigation">☰</button>
+    <nav id="navLinks" class="main-nav">
+      <a href="/courses.html">Courses</a><a href="/resources.html">Resources</a><a href="/assessment.html">Assessments</a><a href="/booking.html">Book Demo</a><a href="/dashboard.html">Dashboard</a><a href="/admin.html">Admin</a><span id="authSlot"></span>
+    </nav>
+  </div>
+</header>
+<main><section class="section"><div class="auth-card panel">
+  <h1>Verify Certificate</h1>
+  <p>Enter a certificate ID to verify its authenticity.</p>
+  <form id="verifyForm">
+    <input name="cert_id" placeholder="e.g. FCEI-FCFP-2026-000001" required>
+    <button class="btn primary full" type="submit" style="margin-top:12px">Verify</button>
+  </form>
+  <div id="verifyResult" style="margin-top:20px"></div>
+</div></section></main>
+<footer class="footer"><div class="footer-grid"><div><h3>The Finnish Paradigm™</h3><p>Research-informed teacher training inspired by Finnish education principles.</p><p class="small">Not an official Finnish government certification unless separately accredited or approved.</p></div><div><h4>Courses</h4><a href="/courses.html">All Courses</a></div><div><h4>Resources</h4><a href="/resources.html">Toolkit Library</a><a href="/legal.html">Legal</a></div><div><h4>Verify</h4><p>Employers and institutions can verify certificates using the certificate ID.</p></div></div><div class="copyright">© 2026 The Finnish Paradigm™ · Terms · Privacy</div></footer>
+<script src="/assets/app.js"></script>
+<script>
+document.getElementById('verifyForm').onsubmit=async function(e){
+  e.preventDefault();
+  const id=this.cert_id.value.trim();
+  const el=document.getElementById('verifyResult');
+  try{
+    const r=await fetch('/api/verify-certificate/'+encodeURIComponent(id));
+    const j=await r.json();
+    if(r.ok&&j.valid){
+      el.innerHTML='<div class="navigator-result" style="background:#e6f9ed;border:2px solid #13a673"><b>VERIFIED</b><br>Certificate: '+j.certificate_id+'<br>Learner: '+j.learner_name+'<br>Course: '+j.course_title+'<br>CPD Hours: '+j.cpd_hours+'<br>Issued: '+j.issued_at+'</div>';
+    } else if(r.ok&&!j.valid){
+      el.innerHTML='<div class="navigator-result" style="background:#fff0f0;border:2px solid #ff4f87"><b>REVOKED</b><br>This certificate has been revoked.</div>';
+    } else {
+      el.innerHTML='<div class="navigator-result" style="background:#fff8e6;border:2px solid #ffb020"><b>NOT FOUND</b><br>No certificate found with this ID.</div>';
+    }
+  }catch(err){
+    el.innerHTML='<div class="navigator-result"><b>NOT FOUND</b><br>No certificate found with this ID.</div>';
+  }
+};
+const params=new URLSearchParams(location.search);
+const certParam=params.get('id');
+if(certParam){document.querySelector('input[name="cert_id"]').value=certParam;document.getElementById('verifyForm').dispatchEvent(new Event('submit'));}
+</script>
+</body></html>
