@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 import sqlite3, json, os, secrets, hashlib, hmac, base64, time, smtplib, threading
 from .data_seed import COURSES, PRODUCTS, TOOLS, VIDEOS, ESCALATION_PROTOCOLS, AUTONOMY_MATRIX
+from .seed_upload_pack import seed_upload_pack
 try:
     import stripe
 except Exception:
@@ -70,7 +71,7 @@ def get_client_ip(request: Request) -> str:
         return forwarded.split(',')[0].strip()
     return request.client.host if request.client else '0.0.0.0'
 
-DB_SCHEMA_VERSION = 2
+DB_SCHEMA_VERSION = 3
 
 app = FastAPI(title=f'{APP_NAME} API', version='2.0.0', docs_url='/api/docs', redoc_url='/api/redoc')
 app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS, allow_credentials=True, allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'], allow_headers=['Authorization','Content-Type'])
@@ -227,6 +228,17 @@ def init_db():
     cur.execute('''CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id TEXT, customer_email TEXT, amount INTEGER, currency TEXT, status TEXT, checkout_url TEXT, provider_ref TEXT, created_at TEXT)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS subscriptions(id INTEGER PRIMARY KEY AUTOINCREMENT, customer_email TEXT, product_id TEXT, stripe_customer_id TEXT, stripe_subscription_id TEXT UNIQUE, status TEXT, current_period_end TEXT, created_at TEXT, updated_at TEXT)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS payment_events(id INTEGER PRIMARY KEY AUTOINCREMENT, event_id TEXT UNIQUE, event_type TEXT, provider_ref TEXT, payload TEXT, created_at TEXT)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_courses(id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT UNIQUE NOT NULL, slug TEXT UNIQUE NOT NULL, title TEXT NOT NULL, category TEXT, level TEXT, duration TEXT, cpd_hours REAL, audience TEXT, aim TEXT, module_count INTEGER DEFAULT 0, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_modules(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, course_id TEXT NOT NULL, title TEXT NOT NULL, scenario_setting TEXT, scenario_problem TEXT, practice_steps TEXT, reflective_checklist TEXT, video_script TEXT, sort_order INTEGER DEFAULT 0, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS module_videos(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, video_provider TEXT, video_url TEXT, video_embed_url TEXT, video_thumbnail_url TEXT, video_duration_seconds INTEGER, transcript TEXT, captions_url TEXT, video_status TEXT DEFAULT 'pending', created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_assessment_items(id INTEGER PRIMARY KEY AUTOINCREMENT, question_id TEXT UNIQUE NOT NULL, course_id TEXT NOT NULL, module_id TEXT, question TEXT NOT NULL, question_type TEXT DEFAULT 'short_answer_or_mcq', answer_focus TEXT, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS learner_progress(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, module_id TEXT, video_complete INTEGER DEFAULT 0, assessment_complete INTEGER DEFAULT 0, artifact_uploaded INTEGER DEFAULT 0, reflection_submitted INTEGER DEFAULT 0, module_complete INTEGER DEFAULT 0, completed_at TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP, updated_at TEXT DEFAULT CURRENT_TIMESTAMP, UNIQUE(user_id, course_id, module_id))''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS artifact_uploads(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, module_id TEXT NOT NULL, file_url TEXT, file_name TEXT, reflection_text TEXT, status TEXT DEFAULT 'submitted', reviewed_by INTEGER, reviewed_at TEXT, feedback TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS certificates(id INTEGER PRIMARY KEY AUTOINCREMENT, certificate_id TEXT UNIQUE NOT NULL, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, learner_name TEXT NOT NULL, course_title TEXT NOT NULL, cpd_hours REAL, issued_at TEXT DEFAULT CURRENT_TIMESTAMP, certificate_url TEXT, verification_url TEXT, revoked INTEGER DEFAULT 0)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS course_products(id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT NOT NULL, product_id TEXT UNIQUE NOT NULL, stripe_price_id TEXT, price_amount REAL, currency TEXT DEFAULT 'gbp', payment_type TEXT DEFAULT 'one_time', active INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_modules_course ON lms_modules(course_id)')
+    cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_assess_course ON lms_assessment_items(course_id, module_id)')
+    cur.execute('CREATE INDEX IF NOT EXISTS idx_learner_prog_user ON learner_progress(user_id, course_id)')
     for col, spec in {
         'payment_provider':'TEXT DEFAULT \'stripe\'', 'stripe_customer_id':'TEXT DEFAULT \'\'', 'stripe_payment_intent':'TEXT DEFAULT \'\'', 'mode':'TEXT DEFAULT \'payment\'', 'paid_at':'TEXT DEFAULT \'\'', 'refunded_at':'TEXT DEFAULT \'\'', 'refunded_amount':'INTEGER DEFAULT 0', 'failure_reason':'TEXT DEFAULT \'\'', 'metadata':'TEXT DEFAULT \'{}\''
     }.items():
@@ -255,6 +267,10 @@ def init_db():
     conn.commit(); conn.close()
 
 init_db()
+try:
+    seed_upload_pack(DB_PATH)
+except Exception:
+    pass
 
 # --------------------------- Public API ---------------------------
 @app.get('/api/health')
@@ -709,6 +725,152 @@ def list_cases(user=Depends(require_admin)):
 @app.patch('/api/admin/intervention-cases/{case_id}/close')
 def close_case(case_id:int, user=Depends(require_admin)):
     conn=db(); cur=conn.cursor(); cur.execute("UPDATE intervention_cases SET status='closed', updated_at=? WHERE id=?",(datetime.now(timezone.utc).isoformat(),case_id)); conn.commit(); conn.close(); return {'status':'closed'}
+
+# --------------------------- LMS Course/Module API ---------------------------
+@app.get('/api/lms/courses')
+def lms_courses():
+    conn = db()
+    rows = conn.execute('''
+        SELECT c.course_id, c.slug, c.title, c.category, c.level, c.duration,
+               c.cpd_hours, c.audience, c.aim, c.module_count,
+               COUNT(m.id) AS actual_modules
+        FROM lms_courses c
+        LEFT JOIN lms_modules m ON m.course_id = c.course_id AND m.published = 1
+        WHERE c.published = 1
+        GROUP BY c.course_id
+        ORDER BY c.id
+    ''').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/lms/courses/{course_id}')
+def lms_course_detail(course_id: str):
+    conn = db()
+    course = conn.execute('SELECT * FROM lms_courses WHERE (course_id=? OR slug=?) AND published=1', (course_id, course_id)).fetchone()
+    if not course:
+        conn.close(); raise HTTPException(404, 'Course not found')
+    modules = conn.execute('''
+        SELECT module_id, title, scenario_setting, sort_order
+        FROM lms_modules WHERE course_id=? AND published=1 ORDER BY sort_order
+    ''', (course['course_id'],)).fetchall()
+    conn.close()
+    return {'course': dict(course), 'modules': [dict(m) for m in modules]}
+
+@app.get('/api/lms/modules/{module_id}')
+def lms_module_detail(module_id: str):
+    conn = db()
+    module = conn.execute('''
+        SELECT m.*, c.title AS course_title, c.slug AS course_slug, c.course_id AS parent_course_id
+        FROM lms_modules m JOIN lms_courses c ON c.course_id = m.course_id
+        WHERE m.module_id=? AND m.published=1
+    ''', (module_id,)).fetchone()
+    if not module:
+        conn.close(); raise HTTPException(404, 'Module not found')
+    video = conn.execute('SELECT * FROM module_videos WHERE module_id=?', (module_id,)).fetchone()
+    questions = conn.execute('SELECT question_id, question, question_type, answer_focus FROM lms_assessment_items WHERE module_id=? AND published=1', (module_id,)).fetchall()
+    conn.close()
+    return {
+        'module': dict(module),
+        'video': dict(video) if video else None,
+        'assessment_items': [dict(q) for q in questions]
+    }
+
+@app.get('/api/lms/courses/{course_id}/assessments')
+def lms_course_assessments(course_id: str):
+    conn = db()
+    rows = conn.execute('SELECT question_id, module_id, question, question_type, answer_focus FROM lms_assessment_items WHERE course_id=? AND published=1 ORDER BY module_id', (course_id,)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+class LmsProgressUpdate(BaseModel):
+    video_complete: Optional[bool] = None
+    assessment_complete: Optional[bool] = None
+    artifact_uploaded: Optional[bool] = None
+    reflection_submitted: Optional[bool] = None
+
+@app.post('/api/lms/progress/{course_id}/{module_id}')
+def update_lms_progress(course_id: str, module_id: str, payload: LmsProgressUpdate, user=Depends(current_user)):
+    conn = db(); cur = conn.cursor()
+    now = datetime.now(timezone.utc).isoformat()
+    existing = cur.execute('SELECT id FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, module_id)).fetchone()
+    if not existing:
+        cur.execute('INSERT INTO learner_progress(user_id, course_id, module_id, created_at, updated_at) VALUES(?,?,?,?,?)', (user['id'], course_id, module_id, now, now))
+    updates = []
+    params = []
+    for field in ('video_complete', 'assessment_complete', 'artifact_uploaded', 'reflection_submitted'):
+        val = getattr(payload, field)
+        if val is not None:
+            updates.append(f'{field}=?')
+            params.append(int(val))
+    if updates:
+        params.append(now)
+        params.extend([user['id'], course_id, module_id])
+        cur.execute(f'UPDATE learner_progress SET {",".join(updates)}, updated_at=? WHERE user_id=? AND course_id=? AND module_id=?', params)
+    row = cur.execute('SELECT video_complete, assessment_complete, artifact_uploaded, reflection_submitted FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, module_id)).fetchone()
+    is_complete = all(row[i] for i in range(4))
+    cur.execute('UPDATE learner_progress SET module_complete=?, completed_at=CASE WHEN ? THEN ? ELSE completed_at END WHERE user_id=? AND course_id=? AND module_id=?', (int(is_complete), int(is_complete), now, user['id'], course_id, module_id))
+    conn.commit(); conn.close()
+    return {'status': 'progress_updated', 'module_complete': is_complete}
+
+@app.get('/api/lms/progress/{course_id}')
+def get_lms_progress(course_id: str, user=Depends(current_user)):
+    conn = db()
+    rows = conn.execute('SELECT * FROM learner_progress WHERE user_id=? AND course_id=?', (user['id'], course_id)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/lms/certificate/check/{course_id}')
+def check_certificate(course_id: str, user=Depends(current_user)):
+    conn = db()
+    modules = conn.execute('SELECT module_id FROM lms_modules WHERE course_id=? AND published=1', (course_id,)).fetchall()
+    if not modules:
+        conn.close(); return {'eligible': False, 'reason': 'No modules found'}
+    total = len(modules)
+    completed = 0
+    for m in modules:
+        prog = conn.execute('SELECT module_complete FROM learner_progress WHERE user_id=? AND course_id=? AND module_id=?', (user['id'], course_id, m['module_id'])).fetchone()
+        if prog and prog['module_complete']:
+            completed += 1
+    existing = conn.execute('SELECT certificate_id FROM certificates WHERE user_id=? AND course_id=? AND revoked=0', (user['id'], course_id)).fetchone()
+    conn.close()
+    return {'eligible': completed == total and total > 0, 'completed_modules': completed, 'total_modules': total, 'already_issued': bool(existing), 'certificate_id': existing['certificate_id'] if existing else None}
+
+@app.post('/api/lms/certificate/issue/{course_id}')
+def issue_certificate(course_id: str, user=Depends(current_user)):
+    check = check_certificate(course_id, user)
+    if not check['eligible']:
+        raise HTTPException(400, f'Not eligible: {check["completed_modules"]}/{check["total_modules"]} modules completed')
+    if check['already_issued']:
+        return {'status': 'already_issued', 'certificate_id': check['certificate_id']}
+    conn = db(); cur = conn.cursor()
+    course = conn.execute('SELECT title, cpd_hours FROM lms_courses WHERE course_id=?', (course_id,)).fetchone()
+    year = datetime.now(timezone.utc).year
+    cert_id = f"FCEI-{course_id}-{year}-{user['id']:06d}"
+    verification_url = f"{PUBLIC_BASE_URL}/verify-certificate/{cert_id}"
+    certificate_url = f"{PUBLIC_BASE_URL}/certificates/{cert_id}.pdf"
+    cur.execute('''INSERT OR IGNORE INTO certificates(certificate_id, user_id, course_id, learner_name, course_title, cpd_hours, certificate_url, verification_url, issued_at)
+                   VALUES(?,?,?,?,?,?,?,?,?)''', (cert_id, user['id'], course_id, user['name'], course['title'], course['cpd_hours'], certificate_url, verification_url, datetime.now(timezone.utc).isoformat()))
+    conn.commit(); conn.close()
+    return {'status': 'issued', 'certificate_id': cert_id, 'certificate_url': certificate_url, 'verification_url': verification_url}
+
+@app.get('/api/lms/certificates')
+def my_certificates(user=Depends(current_user)):
+    conn = db()
+    rows = conn.execute('SELECT * FROM certificates WHERE user_id=? AND revoked=0 ORDER BY issued_at DESC', (user['id'],)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/admin/lms/stats')
+def lms_stats(user=Depends(require_admin)):
+    conn = db(); cur = conn.cursor()
+    courses = cur.execute('SELECT COUNT(*) FROM lms_courses WHERE published=1').fetchone()[0]
+    modules = cur.execute('SELECT COUNT(*) FROM lms_modules WHERE published=1').fetchone()[0]
+    assessments = cur.execute('SELECT COUNT(*) FROM lms_assessment_items WHERE published=1').fetchone()[0]
+    videos = cur.execute('SELECT COUNT(*) FROM module_videos').fetchone()[0]
+    certificates = cur.execute('SELECT COUNT(*) FROM certificates WHERE revoked=0').fetchone()[0]
+    progress_entries = cur.execute('SELECT COUNT(*) FROM learner_progress').fetchone()[0]
+    conn.close()
+    return {'lms_courses': courses, 'lms_modules': modules, 'assessment_items': assessments, 'video_entries': videos, 'certificates_issued': certificates, 'progress_entries': progress_entries}
 
 # --------------------------- Files and front end ---------------------------
 @app.get('/api/downloads/{filename}')
