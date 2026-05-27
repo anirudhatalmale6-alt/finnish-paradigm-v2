@@ -23,7 +23,7 @@ os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 APP_NAME = os.getenv('APP_NAME', 'The Finnish Paradigm')
 JWT_SECRET = os.getenv('JWT_SECRET', 'CHANGE_ME_BEFORE_LIVE_' + secrets.token_hex(16))
 TOKEN_TTL_MINUTES = int(os.getenv('TOKEN_TTL_MINUTES', '480'))
-ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@finnishparadigm.local')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@finnishparadigm.com')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'ChangeMeNow!123')
 ALLOWED_ORIGINS = [o.strip() for o in os.getenv('ALLOWED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000').split(',') if o.strip()]
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
@@ -610,7 +610,8 @@ def admin_summary(user=Depends(require_admin)):
     for k,t in keys.items():
         if k == 'open_cases': out[k]=cur.execute("SELECT COUNT(*) FROM intervention_cases WHERE status='open'").fetchone()[0]
         else: out[k]=cur.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]
-    conn.close(); out.update({'retired_mentors_available':4,'production_mode': bool(os.getenv('JWT_SECRET'))}); return out
+    out['orders'] = cur.execute('SELECT COUNT(*) FROM orders').fetchone()[0]
+    conn.close(); return out
 
 @app.get('/api/admin/bookings')
 def list_bookings(user=Depends(require_admin)):
