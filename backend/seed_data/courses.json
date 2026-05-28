@@ -1,0 +1,194 @@
+[
+  {
+    "id": "C1",
+    "slug": "finnish-inspired-values-equity-and-trust",
+    "title": "Finnish-Inspired Values, Equity and Trust",
+    "purpose": "Build shared understanding of equity, dignity, trust, wellbeing, access and ethical Finnish-inspired positioning.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M1"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C2",
+    "slug": "learner-agency-and-the-joy-of-learning",
+    "title": "Learner Agency and the Joy of Learning",
+    "purpose": "Design active, collaborative lessons where pupils have voice, choice and responsibility.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M2"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C3",
+    "slug": "active-learning-play-movement-and-learning-environment-design",
+    "title": "Active Learning, Play, Movement and Learning Environment Design",
+    "purpose": "Turn classrooms into learning environments that support movement, play, exploration, collaboration and calm routines.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M3"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C4",
+    "slug": "formative-assessment-feedback-and-self-assessment",
+    "title": "Formative Assessment, Feedback and Self-Assessment",
+    "purpose": "Use learner evidence, feedback cycles and self-assessment to improve learning without fear or labelling.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M4"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C5",
+    "slug": "early-support-and-the-leave-no-child-behind-classroom-cycle",
+    "title": "Early Support and the Leave-No-Child-Behind Classroom Cycle",
+    "purpose": "Use access-first support, group-specific support and individualised action where evidence shows need.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M5"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C6",
+    "slug": "mixed-ability-differentiation-with-support-core-extension-routes",
+    "title": "Mixed-Ability Differentiation with Support/Core/Extension Routes",
+    "purpose": "Plan lessons where all learners can access the same concept through different support levels.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M6"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C7",
+    "slug": "curriculum-adaptation-studio",
+    "title": "Curriculum Adaptation Studio",
+    "purpose": "Adapt existing non-Finnish coursebooks and subject units to Finnish lesson planning ethos.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M7"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C8",
+    "slug": "phenomenon-based-projects-and-transversal-competence",
+    "title": "Phenomenon-Based Projects and Transversal Competence",
+    "purpose": "Build interdisciplinary projects that connect knowledge, skills, wellbeing, collaboration and sustainability.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M8"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C9",
+    "slug": "teacher-as-researcher-and-classroom-improvement",
+    "title": "Teacher as Researcher and Classroom Improvement",
+    "purpose": "Use small action research cycles to identify needs, test strategies and evaluate impact.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M9"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C10",
+    "slug": "leadership-quality-culture-and-institutional-self-evaluation",
+    "title": "Leadership, Quality Culture and Institutional Self-Evaluation",
+    "purpose": "Help owners and leaders create quality routines, support staff, engage parents and evaluate school culture.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M10"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C11",
+    "slug": "sisu-preschool-in-a-box-play-based-early-years-learning",
+    "title": "SISU Preschool in a Box: Play-Based Early Years Learning",
+    "purpose": "Train teachers and parents to use a practical preschool toolkit for holistic, playful and active learning.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 5,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M11"
+    ],
+    "status": "release_candidate"
+  },
+  {
+    "id": "C12",
+    "slug": "blended-learning-implementation-and-digital-cpd-operations",
+    "title": "Blended Learning Implementation and Digital CPD Operations",
+    "purpose": "Prepare FCEI delivery for online, live, classroom-based and hybrid implementation with evidence tracking.",
+    "programme_id": "FCEI-PD-MASTER-2026",
+    "level": "Professional CPD / institutional training",
+    "audience": "Teachers, school leaders, learning-centre owners, facilitators, ECE practitioners, and parent educators",
+    "delivery_mode": "Blended: self-paced video + live workshop + classroom implementation + evidence portfolio",
+    "cpd_hours": 3,
+    "certificate_wording": "FCEI Certificate of Completion / CPD Training Certificate - Finnish-inspired professional development. Not an official Finnish national qualification unless a formal awarding partnership is obtained.",
+    "module_ids": [
+      "M12"
+    ],
+    "status": "release_candidate"
+  }
+]

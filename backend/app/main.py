@@ -71,7 +71,7 @@ def get_client_ip(request: Request) -> str:
         return forwarded.split(',')[0].strip()
     return request.client.host if request.client else '0.0.0.0'
 
-DB_SCHEMA_VERSION = 3
+DB_SCHEMA_VERSION = 4
 
 app = FastAPI(title=f'{APP_NAME} API', version='2.0.0', docs_url='/api/docs', redoc_url='/api/redoc')
 app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS, allow_credentials=True, allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'], allow_headers=['Authorization','Content-Type'])
@@ -228,15 +228,22 @@ def init_db():
     cur.execute('''CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY AUTOINCREMENT, product_id TEXT, customer_email TEXT, amount INTEGER, currency TEXT, status TEXT, checkout_url TEXT, provider_ref TEXT, created_at TEXT)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS subscriptions(id INTEGER PRIMARY KEY AUTOINCREMENT, customer_email TEXT, product_id TEXT, stripe_customer_id TEXT, stripe_subscription_id TEXT UNIQUE, status TEXT, current_period_end TEXT, created_at TEXT, updated_at TEXT)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS payment_events(id INTEGER PRIMARY KEY AUTOINCREMENT, event_id TEXT UNIQUE, event_type TEXT, provider_ref TEXT, payload TEXT, created_at TEXT)''')
-    cur.execute('''CREATE TABLE IF NOT EXISTS lms_courses(id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT UNIQUE NOT NULL, slug TEXT UNIQUE NOT NULL, title TEXT NOT NULL, category TEXT, level TEXT, duration TEXT, cpd_hours REAL, audience TEXT, aim TEXT, module_count INTEGER DEFAULT 0, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
-    cur.execute('''CREATE TABLE IF NOT EXISTS lms_modules(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, course_id TEXT NOT NULL, title TEXT NOT NULL, scenario_setting TEXT, scenario_problem TEXT, practice_steps TEXT, reflective_checklist TEXT, video_script TEXT, sort_order INTEGER DEFAULT 0, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_courses(id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT UNIQUE NOT NULL, slug TEXT UNIQUE NOT NULL, title TEXT NOT NULL, purpose TEXT, programme_id TEXT, level TEXT, audience TEXT, delivery_mode TEXT, cpd_hours REAL DEFAULT 3, certificate_wording TEXT, module_count INTEGER DEFAULT 0, status TEXT DEFAULT 'release_candidate', published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_modules(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, course_id TEXT NOT NULL, slug TEXT, title TEXT NOT NULL, aim TEXT, objectives TEXT, outcomes TEXT, key_concepts TEXT, scenarios TEXT, estimated_video_minutes INTEGER DEFAULT 6, estimated_module_minutes INTEGER DEFAULT 90, lesson_type TEXT DEFAULT 'scenario_based_cpd', sort_order INTEGER DEFAULT 0, status TEXT DEFAULT 'release_candidate', published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS module_videos(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, video_provider TEXT, video_url TEXT, video_embed_url TEXT, video_thumbnail_url TEXT, video_duration_seconds INTEGER, transcript TEXT, captions_url TEXT, video_status TEXT DEFAULT 'pending', created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS lms_assessment_items(id INTEGER PRIMARY KEY AUTOINCREMENT, question_id TEXT UNIQUE NOT NULL, course_id TEXT NOT NULL, module_id TEXT, question TEXT NOT NULL, question_type TEXT DEFAULT 'short_answer_or_mcq', answer_focus TEXT, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS learner_progress(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, module_id TEXT, video_complete INTEGER DEFAULT 0, assessment_complete INTEGER DEFAULT 0, artifact_uploaded INTEGER DEFAULT 0, reflection_submitted INTEGER DEFAULT 0, module_complete INTEGER DEFAULT 0, completed_at TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP, updated_at TEXT DEFAULT CURRENT_TIMESTAMP, UNIQUE(user_id, course_id, module_id))''')
     cur.execute('''CREATE TABLE IF NOT EXISTS artifact_uploads(id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, module_id TEXT NOT NULL, file_url TEXT, file_name TEXT, reflection_text TEXT, status TEXT DEFAULT 'submitted', reviewed_by INTEGER, reviewed_at TEXT, feedback TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS certificates(id INTEGER PRIMARY KEY AUTOINCREMENT, certificate_id TEXT UNIQUE NOT NULL, user_id INTEGER NOT NULL, course_id TEXT NOT NULL, learner_name TEXT NOT NULL, course_title TEXT NOT NULL, cpd_hours REAL, issued_at TEXT DEFAULT CURRENT_TIMESTAMP, certificate_url TEXT, verification_url TEXT, revoked INTEGER DEFAULT 0)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS course_products(id INTEGER PRIMARY KEY AUTOINCREMENT, course_id TEXT NOT NULL, product_id TEXT UNIQUE NOT NULL, stripe_price_id TEXT, price_amount REAL, currency TEXT DEFAULT 'gbp', payment_type TEXT DEFAULT 'one_time', active INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
-    cur.execute('''CREATE TABLE IF NOT EXISTS website_modules(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT UNIQUE NOT NULL, track TEXT, title TEXT NOT NULL, aim TEXT, overview TEXT, audience TEXT, objectives TEXT, outcomes TEXT, session_flow TEXT, activities TEXT, resources TEXT, quiz_items TEXT, performance_task TEXT, completion_criteria TEXT, trainer_script TEXT, scenario TEXT, demonstration_dialogue TEXT, leadership_implementation TEXT, lms_metadata TEXT, published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_quizzes(id INTEGER PRIMARY KEY AUTOINCREMENT, quiz_id TEXT UNIQUE NOT NULL, module_id TEXT NOT NULL, question TEXT NOT NULL, choices TEXT, correct_choice_index INTEGER DEFAULT 0, feedback TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_rubrics(id INTEGER PRIMARY KEY AUTOINCREMENT, module_id TEXT NOT NULL, criterion TEXT NOT NULL, excellent TEXT, secure TEXT, developing TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_implementation_tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, task_id TEXT UNIQUE NOT NULL, module_id TEXT NOT NULL, title TEXT NOT NULL, instructions TEXT, evidence_required TEXT, pass_rule TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_resources(id INTEGER PRIMARY KEY AUTOINCREMENT, resource_id TEXT UNIQUE NOT NULL, title TEXT NOT NULL, resource_type TEXT, resource_path TEXT, module_ids TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_video_scripts(id INTEGER PRIMARY KEY AUTOINCREMENT, script_id TEXT UNIQUE NOT NULL, module_id TEXT NOT NULL, title TEXT NOT NULL, duration_minutes INTEGER DEFAULT 6, format TEXT, avatar_direction TEXT, scenes TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_glossary(id INTEGER PRIMARY KEY AUTOINCREMENT, concept TEXT UNIQUE NOT NULL, meaning TEXT, practice TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_programme(id INTEGER PRIMARY KEY AUTOINCREMENT, programme_id TEXT UNIQUE NOT NULL, brand TEXT, short_name TEXT, title TEXT, version TEXT, release_date TEXT, ethical_positioning TEXT, core_video_pattern TEXT, global_outcomes TEXT, source_basis TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS lms_certificate_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, programme_id TEXT UNIQUE NOT NULL, rules_json TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_modules_course ON lms_modules(course_id)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_assess_course ON lms_assessment_items(course_id, module_id)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_learner_prog_user ON learner_progress(user_id, course_id)')
@@ -248,22 +255,6 @@ def init_db():
     cur.execute('SELECT id FROM users WHERE email=?', (ADMIN_EMAIL,))
     if not cur.fetchone():
         cur.execute('INSERT INTO users(name,email,password_hash,role,organisation,created_at) VALUES(?,?,?,?,?,?)', ('Platform Admin', ADMIN_EMAIL, hash_password(ADMIN_PASSWORD), 'admin', 'Finnish Paradigm', datetime.now(timezone.utc).isoformat()))
-    cur.execute('SELECT COUNT(*) AS c FROM items')
-    if cur.fetchone()['c'] == 0:
-        seed_items = [
-            ('fcfp',1,'purpose','Which action is inside the teacher\'s sphere of control?', ['Changing ministry law','Giving clearer instructions','Changing national exams','Changing school ownership'], 'Giving clearer instructions','Teachers can directly control tone, instructions, scaffolds and classroom routines.'),
-            ('fcfp',2,'45-15','In the 45-15 flow, what should the teacher use the 15-minute window for?', ['Email and marking','Observation and micro-intervention','Staff meetings','Punishment'], 'Observation and micro-intervention','The restorative window protects student attention and gives the teacher time to notice needs.'),
-            ('fcfp',3,'ivf','A student shows a Red IVF marker three times in a week. What is the next step?', ['Ignore it','Open Tier 2 support','Remove the student permanently','Wait until final exam'], 'Open Tier 2 support','Repeated Red markers trigger targeted support, not blame.'),
-            ('asti',2,'tiering','Tier 2 support is best described as:', ['Whole-class universal teaching','Targeted short-term intervention','Full exclusion','A ministry inspection'], 'Targeted short-term intervention','Tier 2 gives focused support when repeated difficulty is detected.'),
-            ('asti',3,'retired-teacher','What is the senior asset role?', ['Take over the class','Co-teach the whole lesson','Provide targeted support without split authority','Replace the teacher'], 'Provide targeted support without split authority','Retired teachers act as intervention specialists while the main teacher keeps classroom command.'),
-            ('seld',3,'leadership','What does a leadership dashboard track?', ['Only teacher attendance','Student risk, intervention cycles and progress','Only cafeteria sales','Only test rank'], 'Student risk, intervention cycles and progress','A dashboard should show who needs support and whether interventions are working.'),
-            ('seld',4,'policy','Professional escalation should begin with:', ['Anger and public accusations','Evidence and written proposals','Ignoring leadership','Refusing all duties'], 'Evidence and written proposals','Safe advocacy is evidence-based, lawful and focused on student benefit.'),
-            ('fcfp',2,'differentiation','Differentiation the Finnish Paradigm way means:', ['Lowering goals for weak students','Same goal with different support','Only teaching top students','Using no scaffolds'], 'Same goal with different support','The objective remains high; support is increased.'),
-            ('asti',4,'tier3','Tier 3 should be activated when:', ['A student asks one question','Tier 2 gives no benchmark improvement over a review cycle','A teacher wants less work','A parent asks for grades only'], 'Tier 2 gives no benchmark improvement over a review cycle','Tier 3 is intensive and evidence-based.'),
-            ('seld',2,'governance','A safe ministry petition should be:', ['Evidence-based and lawful','Anonymous insults','Public accusations without data','A refusal to teach'], 'Evidence-based and lawful','Escalation must be professional and student-focused.')
-        ]
-        for row in seed_items:
-            cur.execute('INSERT INTO items(course_id,difficulty,skill,question,options,correct,explanation) VALUES(?,?,?,?,?,?,?)', (row[0],row[1],row[2],row[3],json.dumps(row[4]),row[5],row[6]))
     cur.execute('INSERT OR IGNORE INTO schema_version(version, applied_at) VALUES(?,?)', (DB_SCHEMA_VERSION, datetime.now(timezone.utc).isoformat()))
     conn.commit(); conn.close()
 
@@ -307,22 +298,51 @@ def db_info(user=Depends(require_admin)):
     return {'schema_version': version[0] if version else 0, 'tables': counts, 'database_size_bytes': db_size, 'database_file': DB_PATH}
 
 @app.get('/api/courses')
-def courses(): return COURSES
+def courses():
+    conn = db()
+    rows = conn.execute('''
+        SELECT c.course_id AS id, c.slug, c.title, c.purpose, c.level,
+               c.audience, c.cpd_hours, c.delivery_mode, c.module_count,
+               c.certificate_wording, c.programme_id
+        FROM lms_courses c WHERE c.published = 1 ORDER BY c.id
+    ''').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 
 @app.get('/api/courses/{course_id}')
 def course(course_id: str):
-    for c in COURSES:
-        if c['id'] == course_id: return c
-    raise HTTPException(404, 'Course not found')
+    conn = db()
+    row = conn.execute('SELECT * FROM lms_courses WHERE (course_id=? OR slug=?) AND published=1', (course_id, course_id)).fetchone()
+    if not row: conn.close(); raise HTTPException(404, 'Course not found')
+    modules = conn.execute('SELECT module_id, title, slug, aim, sort_order FROM lms_modules WHERE course_id=? AND published=1 ORDER BY sort_order', (row['course_id'],)).fetchall()
+    conn.close()
+    result = dict(row)
+    result['id'] = result['course_id']
+    result['modules'] = [dict(m) for m in modules]
+    return result
 
 @app.get('/api/products')
 def products(): return PRODUCTS
 
 @app.get('/api/tools')
-def tools(): return TOOLS
+def tools():
+    conn = db()
+    rows = conn.execute('SELECT resource_id AS id, title, resource_type AS category, resource_path, module_ids FROM lms_resources ORDER BY id').fetchall()
+    conn.close()
+    result = []
+    for r in rows:
+        d = dict(r)
+        try: d['module_ids'] = json.loads(d['module_ids'])
+        except: pass
+        result.append(d)
+    return result
 
 @app.get('/api/videos')
-def videos(): return VIDEOS
+def videos():
+    conn = db()
+    rows = conn.execute('SELECT vs.script_id AS id, vs.module_id, vs.title, vs.duration_minutes, vs.format, mv.video_status FROM lms_video_scripts vs LEFT JOIN module_videos mv ON mv.module_id=vs.module_id ORDER BY vs.id').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 
 @app.get('/api/protocols')
 def protocols(): return {'escalation': ESCALATION_PROTOCOLS, 'autonomy_matrix': AUTONOMY_MATRIX}
@@ -364,8 +384,9 @@ def create_booking(payload: BookingIn, request: Request):
 
 @app.post('/api/enrollments')
 def enroll(payload: EnrollmentIn, user=Depends(current_user)):
-    if not any(c['id']==payload.course_id for c in COURSES): raise HTTPException(404, 'Course not found')
     conn=db(); cur=conn.cursor()
+    course = cur.execute('SELECT course_id FROM lms_courses WHERE course_id=? AND published=1', (payload.course_id,)).fetchone()
+    if not course: conn.close(); raise HTTPException(404, 'Course not found')
     try:
         cur.execute('INSERT OR IGNORE INTO enrollments(user_id,name,email,course_id,status,created_at) VALUES(?,?,?,?,?,?)',(user['id'],user['name'],user['email'],payload.course_id,'active',datetime.now(timezone.utc).isoformat()))
         conn.commit()
@@ -732,8 +753,9 @@ def close_case(case_id:int, user=Depends(require_admin)):
 def lms_courses():
     conn = db()
     rows = conn.execute('''
-        SELECT c.course_id, c.slug, c.title, c.category, c.level, c.duration,
-               c.cpd_hours, c.audience, c.aim, c.module_count,
+        SELECT c.course_id, c.slug, c.title, c.purpose, c.level,
+               c.audience, c.cpd_hours, c.delivery_mode, c.module_count,
+               c.certificate_wording, c.programme_id,
                COUNT(m.id) AS actual_modules
         FROM lms_courses c
         LEFT JOIN lms_modules m ON m.course_id = c.course_id AND m.published = 1
@@ -751,7 +773,7 @@ def lms_course_detail(course_id: str):
     if not course:
         conn.close(); raise HTTPException(404, 'Course not found')
     modules = conn.execute('''
-        SELECT module_id, title, scenario_setting, sort_order
+        SELECT module_id, title, slug, aim, sort_order
         FROM lms_modules WHERE course_id=? AND published=1 ORDER BY sort_order
     ''', (course['course_id'],)).fetchall()
     conn.close()
@@ -767,21 +789,54 @@ def lms_module_detail(module_id: str):
     ''', (module_id,)).fetchone()
     if not module:
         conn.close(); raise HTTPException(404, 'Module not found')
+    result = dict(module)
+    for field in ('objectives', 'outcomes', 'key_concepts', 'scenarios'):
+        if result.get(field):
+            try: result[field] = json.loads(result[field])
+            except: pass
     video = conn.execute('SELECT * FROM module_videos WHERE module_id=?', (module_id,)).fetchone()
-    questions = conn.execute('SELECT question_id, question, question_type, answer_focus FROM lms_assessment_items WHERE module_id=? AND published=1', (module_id,)).fetchall()
+    quizzes = conn.execute('SELECT quiz_id, question, choices, correct_choice_index, feedback FROM lms_quizzes WHERE module_id=?', (module_id,)).fetchall()
+    quiz_list = []
+    for q in quizzes:
+        qd = dict(q)
+        try: qd['choices'] = json.loads(qd['choices'])
+        except: pass
+        quiz_list.append(qd)
+    rubrics = conn.execute('SELECT criterion, excellent, secure, developing FROM lms_rubrics WHERE module_id=?', (module_id,)).fetchall()
+    task = conn.execute('SELECT task_id, title, instructions, evidence_required, pass_rule FROM lms_implementation_tasks WHERE module_id=?', (module_id,)).fetchone()
+    task_dict = None
+    if task:
+        task_dict = dict(task)
+        try: task_dict['evidence_required'] = json.loads(task_dict['evidence_required'])
+        except: pass
+    video_script = conn.execute('SELECT * FROM lms_video_scripts WHERE module_id=?', (module_id,)).fetchone()
     conn.close()
     return {
-        'module': dict(module),
+        'module': result,
         'video': dict(video) if video else None,
-        'assessment_items': [dict(q) for q in questions]
+        'quizzes': quiz_list,
+        'rubrics': [dict(r) for r in rubrics],
+        'implementation_task': task_dict,
+        'video_script': dict(video_script) if video_script else None,
     }
 
 @app.get('/api/lms/courses/{course_id}/assessments')
 def lms_course_assessments(course_id: str):
     conn = db()
-    rows = conn.execute('SELECT question_id, module_id, question, question_type, answer_focus FROM lms_assessment_items WHERE course_id=? AND published=1 ORDER BY module_id', (course_id,)).fetchall()
+    modules = conn.execute('SELECT module_id FROM lms_modules WHERE course_id=? AND published=1', (course_id,)).fetchall()
+    module_ids = [m['module_id'] for m in modules]
+    if not module_ids:
+        conn.close(); return []
+    placeholders = ','.join(['?']*len(module_ids))
+    rows = conn.execute(f'SELECT quiz_id, module_id, question, choices, correct_choice_index, feedback FROM lms_quizzes WHERE module_id IN ({placeholders}) ORDER BY module_id', module_ids).fetchall()
     conn.close()
-    return [dict(r) for r in rows]
+    result = []
+    for r in rows:
+        d = dict(r)
+        try: d['choices'] = json.loads(d['choices'])
+        except: pass
+        result.append(d)
+    return result
 
 class LmsProgressUpdate(BaseModel):
     video_complete: Optional[bool] = None
@@ -861,27 +916,46 @@ def my_certificates(user=Depends(current_user)):
     conn.close()
     return [dict(r) for r in rows]
 
-@app.get('/api/lms/website-modules')
-def list_website_modules():
+@app.get('/api/lms/glossary')
+def lms_glossary():
     conn = db()
-    rows = conn.execute('SELECT module_id, track, title, aim, overview, audience, performance_task FROM website_modules WHERE published=1 ORDER BY id').fetchall()
+    rows = conn.execute('SELECT concept, meaning, practice FROM lms_glossary ORDER BY concept').fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
-@app.get('/api/lms/website-modules/{module_id}')
-def get_website_module(module_id: str):
+@app.get('/api/lms/programme')
+def lms_programme():
     conn = db()
-    row = conn.execute('SELECT * FROM website_modules WHERE module_id=? AND published=1', (module_id,)).fetchone()
+    row = conn.execute('SELECT * FROM lms_programme ORDER BY id LIMIT 1').fetchone()
     conn.close()
-    if not row:
-        raise HTTPException(404, 'Website module not found')
+    if not row: return {}
     result = dict(row)
-    for field in ('objectives', 'outcomes', 'session_flow', 'activities', 'resources', 'quiz_items', 'scenario', 'demonstration_dialogue', 'leadership_implementation', 'lms_metadata'):
+    for field in ('core_video_pattern', 'global_outcomes', 'source_basis'):
         if result.get(field):
-            try:
-                result[field] = json.loads(result[field])
-            except (json.JSONDecodeError, TypeError):
-                pass
+            try: result[field] = json.loads(result[field])
+            except: pass
+    return result
+
+@app.get('/api/lms/certificate-rules')
+def lms_certificate_rules():
+    conn = db()
+    row = conn.execute('SELECT rules_json FROM lms_certificate_rules ORDER BY id LIMIT 1').fetchone()
+    conn.close()
+    if not row: return {}
+    try: return json.loads(row['rules_json'])
+    except: return {}
+
+@app.get('/api/lms/resources')
+def lms_resources_list():
+    conn = db()
+    rows = conn.execute('SELECT resource_id, title, resource_type, resource_path, module_ids FROM lms_resources ORDER BY id').fetchall()
+    conn.close()
+    result = []
+    for r in rows:
+        d = dict(r)
+        try: d['module_ids'] = json.loads(d['module_ids'])
+        except: pass
+        result.append(d)
     return result
 
 class ReflectionIn(BaseModel):
@@ -965,14 +1039,18 @@ def lms_stats(user=Depends(require_admin)):
     conn = db(); cur = conn.cursor()
     courses = cur.execute('SELECT COUNT(*) FROM lms_courses WHERE published=1').fetchone()[0]
     modules = cur.execute('SELECT COUNT(*) FROM lms_modules WHERE published=1').fetchone()[0]
-    assessments = cur.execute('SELECT COUNT(*) FROM lms_assessment_items WHERE published=1').fetchone()[0]
+    quizzes = cur.execute('SELECT COUNT(*) FROM lms_quizzes').fetchone()[0]
+    rubrics = cur.execute('SELECT COUNT(*) FROM lms_rubrics').fetchone()[0]
+    impl_tasks = cur.execute('SELECT COUNT(*) FROM lms_implementation_tasks').fetchone()[0]
+    resources = cur.execute('SELECT COUNT(*) FROM lms_resources').fetchone()[0]
     videos = cur.execute('SELECT COUNT(*) FROM module_videos').fetchone()[0]
+    video_scripts = cur.execute('SELECT COUNT(*) FROM lms_video_scripts').fetchone()[0]
+    glossary = cur.execute('SELECT COUNT(*) FROM lms_glossary').fetchone()[0]
     certificates = cur.execute('SELECT COUNT(*) FROM certificates WHERE revoked=0').fetchone()[0]
     progress_entries = cur.execute('SELECT COUNT(*) FROM learner_progress').fetchone()[0]
-    website_mods = cur.execute('SELECT COUNT(*) FROM website_modules WHERE published=1').fetchone()[0]
     artifacts = cur.execute('SELECT COUNT(*) FROM artifact_uploads').fetchone()[0]
     conn.close()
-    return {'lms_courses': courses, 'lms_modules': modules, 'website_modules': website_mods, 'assessment_items': assessments, 'video_entries': videos, 'certificates_issued': certificates, 'progress_entries': progress_entries, 'artifact_uploads': artifacts}
+    return {'lms_courses': courses, 'lms_modules': modules, 'quiz_items': quizzes, 'rubric_criteria': rubrics, 'implementation_tasks': impl_tasks, 'resources': resources, 'video_entries': videos, 'video_scripts': video_scripts, 'glossary_terms': glossary, 'certificates_issued': certificates, 'progress_entries': progress_entries, 'artifact_uploads': artifacts}
 
 # --------------------------- Files and front end ---------------------------
 @app.get('/api/downloads/{filename}')

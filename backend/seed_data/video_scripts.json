@@ -1,0 +1,710 @@
+[
+  {
+    "id": "VID-M1",
+    "module_id": "M1",
+    "title": "Finnish-Inspired Values, Equity and Ethical Positioning: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Finnish-Inspired Values, Equity and Ethical Positioning",
+        "narration": "In this module, we begin with a real professional problem: A centre advertises “official Finnish qualification” without a confirmed Finnish partner and teachers are unsure how to describe the programme to parents. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "equity",
+        "narration": "The key principle is equity. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Finnish-Inspired Values, Equity and Ethical Positioning in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M2",
+    "module_id": "M2",
+    "title": "Learner Agency and Joy of Learning: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Learner Agency and Joy of Learning",
+        "narration": "In this module, we begin with a real professional problem: Students wait for the teacher to explain everything and rarely ask questions or take initiative. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "learner agency",
+        "narration": "The key principle is learner agency. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Learner Agency and Joy of Learning in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M3",
+    "module_id": "M3",
+    "title": "Active Learning, Play, Movement and Learning Environment Design: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Active Learning, Play, Movement and Learning Environment Design",
+        "narration": "In this module, we begin with a real professional problem: A teacher believes movement means losing control, so students sit for 50 minutes and attention drops. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "active learning",
+        "narration": "The key principle is active learning. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Active Learning, Play, Movement and Learning Environment Design in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M4",
+    "module_id": "M4",
+    "title": "Formative Assessment, Feedback and Self-Assessment: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Formative Assessment, Feedback and Self-Assessment",
+        "narration": "In this module, we begin with a real professional problem: The teacher only discovers misunderstanding after the final test. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "formative assessment",
+        "narration": "The key principle is formative assessment. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Formative Assessment, Feedback and Self-Assessment in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M5",
+    "module_id": "M5",
+    "title": "Early Support and the Leave-No-Child-Behind Classroom Cycle: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Early Support and the Leave-No-Child-Behind Classroom Cycle",
+        "narration": "In this module, we begin with a real professional problem: A child is repeatedly off-task during reading and the teacher assumes laziness. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "early support",
+        "narration": "The key principle is early support. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Early Support and the Leave-No-Child-Behind Classroom Cycle in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M6",
+    "module_id": "M6",
+    "title": "Mixed-Ability Differentiation: Support/Core/Extension Routes: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Mixed-Ability Differentiation: Support/Core/Extension Routes",
+        "narration": "In this module, we begin with a real professional problem: In a B1 English class, some students finish in five minutes while others cannot start. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "differentiation",
+        "narration": "The key principle is differentiation. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Mixed-Ability Differentiation: Support/Core/Extension Routes in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M7",
+    "module_id": "M7",
+    "title": "Curriculum Adaptation Studio: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Curriculum Adaptation Studio",
+        "narration": "In this module, we begin with a real professional problem: An ESL coursebook reading activity is too difficult for weaker A2 learners but too easy for stronger B2 learners. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "curriculum adaptation",
+        "narration": "The key principle is curriculum adaptation. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Curriculum Adaptation Studio in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M8",
+    "module_id": "M8",
+    "title": "Phenomenon-Based Projects and Transversal Competence: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Phenomenon-Based Projects and Transversal Competence",
+        "narration": "In this module, we begin with a real professional problem: A project week becomes decoration and posters but has weak learning evidence. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "transversal competence",
+        "narration": "The key principle is transversal competence. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Phenomenon-Based Projects and Transversal Competence in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M9",
+    "module_id": "M9",
+    "title": "Teacher as Researcher and Small Action Research: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Teacher as Researcher and Small Action Research",
+        "narration": "In this module, we begin with a real professional problem: A teacher tries many strategies but cannot tell which one helped learners improve. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "teacher as researcher",
+        "narration": "The key principle is teacher as researcher. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Teacher as Researcher and Small Action Research in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M10",
+    "module_id": "M10",
+    "title": "Leadership, Quality Culture and Institutional Self-Evaluation: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Leadership, Quality Culture and Institutional Self-Evaluation",
+        "narration": "In this module, we begin with a real professional problem: Parents complain about inconsistent teaching quality across classes. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "quality culture",
+        "narration": "The key principle is quality culture. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Leadership, Quality Culture and Institutional Self-Evaluation in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M11",
+    "module_id": "M11",
+    "title": "SISU Preschool in a Box: Play-Based Early Years Learning: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "SISU Preschool in a Box: Play-Based Early Years Learning",
+        "narration": "In this module, we begin with a real professional problem: Preschool children are expected to sit quietly for worksheets and lose interest quickly. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "play pedagogy",
+        "narration": "The key principle is play pedagogy. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from SISU Preschool in a Box: Play-Based Early Years Learning in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  },
+  {
+    "id": "VID-M12",
+    "module_id": "M12",
+    "title": "Blended Learning Implementation and Digital CPD Operations: From Principle to Classroom Action",
+    "duration_minutes": 6,
+    "format": "Colossyan-ready scene script",
+    "avatar_direction": "Professional, warm, practical educator-trainer tone. Speak slowly with clear emphasis on action verbs.",
+    "scenes": [
+      {
+        "scene": 1,
+        "title": "Visual hook",
+        "on_screen_text": "Blended Learning Implementation and Digital CPD Operations",
+        "narration": "In this module, we begin with a real professional problem: Participants watch videos but do not change classroom practice. The Finnish-inspired response is not to blame the learner or the teacher. We look first at evidence and access.",
+        "visual_direction": "Show a realistic classroom, preschool, or leadership scene. No abstract theory slide."
+      },
+      {
+        "scene": 2,
+        "title": "Principle card",
+        "on_screen_text": "blended learning",
+        "narration": "The key principle is blended learning. In FCEI training, a principle is useful only when it changes what the educator does next.",
+        "visual_direction": "Display one clean keyword card with a simple icon."
+      },
+      {
+        "scene": 3,
+        "title": "Read the evidence",
+        "on_screen_text": "What do we actually see?",
+        "narration": "Before deciding a solution, pause and name the observable evidence. What did learners say, write, do, avoid, misunderstand or complete successfully?",
+        "visual_direction": "Show learner work samples, observation notes or a mini-whiteboard evidence check."
+      },
+      {
+        "scene": 4,
+        "title": "Three routes",
+        "on_screen_text": "Support Route -> Core Route -> Extension Route",
+        "narration": "Start with the Support Route to remove the access barrier. Then protect the Core Route so every learner works toward the shared standard. Finally, add the Extension Route for deeper challenge, transfer and creativity.",
+        "visual_direction": "Use a three-lane pathway graphic."
+      },
+      {
+        "scene": 5,
+        "title": "Teacher/leader action",
+        "on_screen_text": "Act before the lesson ends",
+        "narration": "Try these practical actions: Barrier-first planning: identify the access barrier before changing the expectation.; Visible success criteria: show what good work looks like through models, rubrics or exemplars.; Evidence pause: stop midway to collect learner evidence and adapt before the lesson ends.. The goal is daily improvement, not performance for inspection.",
+        "visual_direction": "Show teacher modelling, peer support, route cards and learner choice."
+      },
+      {
+        "scene": 6,
+        "title": "Evidence checkpoint",
+        "on_screen_text": "Exit evidence: What changed?",
+        "narration": "Collect one quick piece of evidence before the end. It can be an exit ticket, a learner explanation, a photo of a task, a checklist or a short reflection.",
+        "visual_direction": "Show upload button and portfolio evidence sample."
+      },
+      {
+        "scene": 7,
+        "title": "Implementation task",
+        "on_screen_text": "Try it. Upload evidence. Reflect.",
+        "narration": "Your implementation task is to apply one idea from Blended Learning Implementation and Digital CPD Operations in a real setting and upload evidence with a short reflection. Ask: what improved, what still needs support, and what will I change next?",
+        "visual_direction": "End with FCEI logo, download icon and reflective question."
+      }
+    ]
+  }
+]

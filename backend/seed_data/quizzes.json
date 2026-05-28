@@ -1,0 +1,470 @@
+[
+  {
+    "id": "Q-M1-1",
+    "module_id": "M1",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M1-2",
+    "module_id": "M1",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M1-3",
+    "module_id": "M1",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M2-1",
+    "module_id": "M2",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M2-2",
+    "module_id": "M2",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M2-3",
+    "module_id": "M2",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M3-1",
+    "module_id": "M3",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M3-2",
+    "module_id": "M3",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M3-3",
+    "module_id": "M3",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M4-1",
+    "module_id": "M4",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M4-2",
+    "module_id": "M4",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M4-3",
+    "module_id": "M4",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M5-1",
+    "module_id": "M5",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M5-2",
+    "module_id": "M5",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M5-3",
+    "module_id": "M5",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M6-1",
+    "module_id": "M6",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M6-2",
+    "module_id": "M6",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M6-3",
+    "module_id": "M6",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M7-1",
+    "module_id": "M7",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M7-2",
+    "module_id": "M7",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M7-3",
+    "module_id": "M7",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M8-1",
+    "module_id": "M8",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M8-2",
+    "module_id": "M8",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M8-3",
+    "module_id": "M8",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M9-1",
+    "module_id": "M9",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M9-2",
+    "module_id": "M9",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M9-3",
+    "module_id": "M9",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M10-1",
+    "module_id": "M10",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M10-2",
+    "module_id": "M10",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M10-3",
+    "module_id": "M10",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M11-1",
+    "module_id": "M11",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M11-2",
+    "module_id": "M11",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M11-3",
+    "module_id": "M11",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M12-1",
+    "module_id": "M12",
+    "question": "What is the first FCEI response when a classroom problem appears?",
+    "choices": [
+      "Blame the learner",
+      "Read observable evidence and identify the access barrier",
+      "Lower the expected standard for everyone",
+      "Move quickly to a final test"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M12-2",
+    "module_id": "M12",
+    "question": "Which route removes barriers before learners attempt the core task?",
+    "choices": [
+      "Extension Route",
+      "Certificate Route",
+      "Support Route",
+      "Inspection Route"
+    ],
+    "correct_choice_index": 2,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  },
+  {
+    "id": "Q-M12-3",
+    "module_id": "M12",
+    "question": "What evidence best supports formative teaching decisions?",
+    "choices": [
+      "Only final exam scores",
+      "Visible learner work, explanations, observations or exit tickets",
+      "Teacher assumptions about ability",
+      "Parent income level"
+    ],
+    "correct_choice_index": 1,
+    "feedback": "Use learner evidence to decide the next support, core or extension action."
+  }
+]

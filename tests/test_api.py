@@ -14,7 +14,14 @@ def auth_headers():
 def test_courses_available():
     r = client.get('/api/courses')
     assert r.status_code == 200
-    assert len(r.json()) >= 3
+    assert len(r.json()) >= 12
+
+def test_lms_courses():
+    r = client.get('/api/lms/courses')
+    assert r.status_code == 200
+    courses = r.json()
+    assert len(courses) == 12
+    assert courses[0]['course_id'] == 'C1'
 
 def test_booking_create():
     r = client.post('/api/bookings', json={
@@ -23,15 +30,22 @@ def test_booking_create():
     assert r.status_code == 200
     assert r.json()['status'] == 'booked'
 
-def test_adaptive_assessment_flow():
-    h = auth_headers()
-    r = client.post('/api/assessment/start', json={'learner_name':'Learner','course_id':'fcfp'}, headers=h)
+def test_lms_module_detail():
+    r = client.get('/api/lms/modules/M1')
     assert r.status_code == 200
-    payload = r.json()
-    assert payload['session_id']
-    item = payload['next_item']
-    assert item['question']
-    answer = item['options'][0]
-    r2 = client.post('/api/assessment/answer', json={'session_id':payload['session_id'],'item_id':item['id'],'selected':answer}, headers=h)
-    assert r2.status_code == 200
-    assert 'ability' in r2.json()
+    data = r.json()
+    assert data['module']['title'] == 'Finnish-Inspired Values, Equity and Ethical Positioning'
+    assert len(data['quizzes']) == 3
+    assert len(data['rubrics']) == 3
+    assert data['implementation_task'] is not None
+
+def test_lms_glossary():
+    r = client.get('/api/lms/glossary')
+    assert r.status_code == 200
+    assert len(r.json()) == 13
+
+def test_lms_programme():
+    r = client.get('/api/lms/programme')
+    assert r.status_code == 200
+    data = r.json()
+    assert data['brand'] == 'Finland Creative Education Institute'

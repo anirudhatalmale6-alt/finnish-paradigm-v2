@@ -1,0 +1,28 @@
+{
+  "programme_id": "FCEI-PD-MASTER-2026",
+  "video_completion_required_percent": 90,
+  "quiz_pass_percent": 70,
+  "implementation_tasks_required": "all required module tasks",
+  "portfolio_minimum_artefacts": [
+    "lesson plan or adapted plan",
+    "learner/work evidence",
+    "observation note or formative checkpoint",
+    "feedback sample",
+    "reflection",
+    "improvement plan"
+  ],
+  "final_reflection_options": [
+    "800-1200 words",
+    "5-minute recorded reflection"
+  ],
+  "certificate_titles_allowed": [
+    "Certificate of Completion",
+    "CPD Training Certificate",
+    "Professional Development Certificate"
+  ],
+  "certificate_titles_avoid": [
+    "Official Finnish qualification",
+    "Finnish government accredited certificate",
+    "University credit unless formally approved"
+  ]
+}

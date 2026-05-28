@@ -1,0 +1,31 @@
+{
+  "id": "FCEI-PD-MASTER-2026",
+  "brand": "Finland Creative Education Institute",
+  "short_name": "FCEI",
+  "title": "Finnish-Inspired Professional Development and Institutional Training Curriculum",
+  "version": "1.0-release-candidate",
+  "release_date": "2026-05-28",
+  "ethical_positioning": "Independent Finnish-inspired CPD. Avoid claims of official Finnish accreditation unless a formal Finnish partner, awarding body or accreditation agreement is secured.",
+  "core_video_pattern": [
+    "principle",
+    "classroom reality",
+    "teacher/leader action",
+    "learner evidence",
+    "implementation task"
+  ],
+  "global_outcomes": [
+    "Translate Finnish-inspired education values into observable classroom and leadership behaviours.",
+    "Plan lessons with Support, Core and Extension Routes so mixed-ability learners can access the same learning goal.",
+    "Use evidence, formative assessment and self-evaluation to improve daily practice.",
+    "Adapt non-Finnish coursebooks and subject units to a Finnish-inspired planning ethos without losing subject integrity.",
+    "Implement SISU-style play-based early years routines for teachers and parents.",
+    "Build a blended CPD platform with videos, tasks, portfolio evidence, reflection and safe certificate rules."
+  ],
+  "source_basis": [
+    "FCEI uploaded instruction brief",
+    "Finnish National Agency for Education core curriculum materials",
+    "Finnish ECEC core curriculum guidance",
+    "Finnish Education Evaluation Centre enhancement-led evaluation",
+    "OECD teaching and curriculum autonomy research"
+  ]
+}

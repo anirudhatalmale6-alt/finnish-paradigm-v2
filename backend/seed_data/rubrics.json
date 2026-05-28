@@ -1,0 +1,254 @@
+[
+  {
+    "module_id": "M1",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M1",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M1",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M2",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M2",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M2",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M3",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M3",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M3",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M4",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M4",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M4",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M5",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M5",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M5",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M6",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M6",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M6",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M7",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M7",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M7",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M8",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M8",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M8",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M9",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M9",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M9",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M10",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M10",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M10",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M11",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M11",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M11",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  },
+  {
+    "module_id": "M12",
+    "criterion": "Principle alignment",
+    "excellent": "The submission clearly links the action to a Finnish-inspired value or curriculum principle.",
+    "secure": "The principle is named and mostly linked to action.",
+    "developing": "The principle is mentioned but action link is unclear."
+  },
+  {
+    "module_id": "M12",
+    "criterion": "Learner evidence",
+    "excellent": "Evidence is observable and used to adjust teaching or leadership decisions.",
+    "secure": "Evidence is included but adjustment is limited.",
+    "developing": "Evidence is vague or based mainly on assumptions."
+  },
+  {
+    "module_id": "M12",
+    "criterion": "Implementation practicality",
+    "excellent": "The action is realistic, repeatable and suitable for daily practice.",
+    "secure": "The action can be used with minor adjustment.",
+    "developing": "The action is too general or not yet implementable."
+  }
+]

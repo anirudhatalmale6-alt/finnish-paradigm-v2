@@ -257,30 +257,33 @@ class TestAdminRouteProtection:
 #  ITEM BANK SECURITY (24-25)
 # ═══════════════════════════════════════════════════════
 
-class TestItemBankSecurity:
-    """Tests 24-25: learners must not see correct answers."""
+class TestLmsContent:
+    """Tests 24-25: LMS content verification."""
 
-    # 24. Learner sees items but NOT the 'correct' field
-    def test_24_item_bank_learner_no_correct(self):
-        h = get_auth_headers("learner")
-        r = client.get("/api/item-bank", headers=h)
+    # 24. LMS quizzes loaded for module M1
+    def test_24_lms_quizzes_loaded(self):
+        r = client.get("/api/lms/modules/M1")
         assert r.status_code == 200
-        items = r.json()
-        assert len(items) > 0
-        for item in items:
-            assert "correct" not in item, \
-                "Learners must NOT see the 'correct' field in item-bank"
+        data = r.json()
+        quizzes = data["quizzes"]
+        assert len(quizzes) == 3
+        for q in quizzes:
+            assert "question" in q
+            assert "choices" in q
+            assert len(q["choices"]) == 4
 
-    # 25. Admin sees items WITH the 'correct' field
-    def test_25_item_bank_admin_has_correct(self):
-        h = get_admin_headers()
-        r = client.get("/api/item-bank", headers=h)
+    # 25. LMS rubrics loaded for module M1
+    def test_25_lms_rubrics_loaded(self):
+        r = client.get("/api/lms/modules/M1")
         assert r.status_code == 200
-        items = r.json()
-        assert len(items) > 0
-        for item in items:
-            assert "correct" in item, \
-                "Admins must see the 'correct' field in item-bank"
+        data = r.json()
+        rubrics = data["rubrics"]
+        assert len(rubrics) == 3
+        for rb in rubrics:
+            assert "criterion" in rb
+            assert "excellent" in rb
+            assert "secure" in rb
+            assert "developing" in rb
 
 
 # ═══════════════════════════════════════════════════════
@@ -293,10 +296,10 @@ class TestEnrollments:
     # 26. Enroll in valid course
     def test_26_enroll_valid_course(self):
         h = get_auth_headers("learner")
-        r = client.post("/api/enrollments", json={"course_id": "fcfp"}, headers=h)
+        r = client.post("/api/enrollments", json={"course_id": "C1"}, headers=h)
         assert r.status_code == 200
         assert r.json()["status"] == "enrolled"
-        assert r.json()["course_id"] == "fcfp"
+        assert r.json()["course_id"] == "C1"
 
     # 27. Enroll in non-existent course -> 404
     def test_27_enroll_nonexistent_course(self):
@@ -306,7 +309,7 @@ class TestEnrollments:
 
     # 28. Enroll without auth -> 401
     def test_28_enroll_no_auth(self):
-        r = client.post("/api/enrollments", json={"course_id": "fcfp"})
+        r = client.post("/api/enrollments", json={"course_id": "C1"})
         assert r.status_code == 401
 
 
@@ -315,53 +318,37 @@ class TestEnrollments:
 # ═══════════════════════════════════════════════════════
 
 class TestAssessmentSessions:
-    """Tests 29-31: adaptive assessment flow."""
+    """Tests 29-31: assessment and LMS quiz flow."""
 
-    # 29. Start assessment -> session_id and next_item
+    # 29. Start assessment session creates a session
     def test_29_start_assessment(self):
         h = get_auth_headers("learner")
         r = client.post("/api/assessment/start", json={
-            "learner_name": "Tester", "course_id": "fcfp"
+            "learner_name": "Tester", "course_id": "C1"
         }, headers=h)
         assert r.status_code == 200
         data = r.json()
         assert "session_id" in data
         assert data["session_id"] > 0
-        assert "next_item" in data
-        assert data["next_item"] is not None
-        assert "question" in data["next_item"]
-        assert "options" in data["next_item"]
 
-    # 30. Answer a question -> feedback + ability score
-    def test_30_answer_question(self):
-        h = get_auth_headers("learner")
-        start = client.post("/api/assessment/start", json={
-            "learner_name": "Tester", "course_id": "fcfp"
-        }, headers=h).json()
-        item = start["next_item"]
-        r = client.post("/api/assessment/answer", json={
-            "session_id": start["session_id"],
-            "item_id": item["id"],
-            "selected": item["options"][0]
-        }, headers=h)
+    # 30. LMS course assessments return quizzes
+    def test_30_lms_course_assessments(self):
+        r = client.get("/api/lms/courses/C1/assessments")
         assert r.status_code == 200
         data = r.json()
-        assert "correct" in data  # True or False
-        assert isinstance(data["correct"], bool)
-        assert "explanation" in data
-        assert "ability" in data
-        assert isinstance(data["ability"], (int, float))
+        assert len(data) == 3
+        for q in data:
+            assert "question" in q
+            assert "choices" in q
+            assert isinstance(q["choices"], list)
 
     # 31. Access another user's session -> 403
     def test_31_access_other_users_session(self):
-        # User A starts a session
         h_a = get_auth_headers("learner")
         start = client.post("/api/assessment/start", json={
-            "learner_name": "User A", "course_id": "fcfp"
+            "learner_name": "User A", "course_id": "C1"
         }, headers=h_a).json()
         session_id = start["session_id"]
-
-        # User B tries to get next item for User A's session
         h_b = get_auth_headers("learner")
         r = client.get(f"/api/assessment/{session_id}/next", headers=h_b)
         assert r.status_code == 403

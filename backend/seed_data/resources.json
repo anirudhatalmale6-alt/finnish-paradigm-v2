@@ -1,0 +1,73 @@
+[
+  {
+    "id": "RES-001",
+    "title": "Educator Values Reflection Checklist",
+    "type": "checklist",
+    "path": "resources/checklists/educator_values_reflection.md",
+    "module_ids": [
+      "M1",
+      "M10"
+    ]
+  },
+  {
+    "id": "RES-002",
+    "title": "Support Core Extension Lesson Planning Template",
+    "type": "template",
+    "path": "resources/templates/support_core_extension_lesson_plan.md",
+    "module_ids": [
+      "M5",
+      "M6",
+      "M7"
+    ]
+  },
+  {
+    "id": "RES-003",
+    "title": "Observable Learner Need Evidence Sheet",
+    "type": "downloadable",
+    "path": "resources/downloadables/observable_learner_need_evidence_sheet.md",
+    "module_ids": [
+      "M4",
+      "M5",
+      "M9"
+    ]
+  },
+  {
+    "id": "RES-004",
+    "title": "FCEI Module Implementation Evidence Upload Guide",
+    "type": "guide",
+    "path": "resources/downloadables/evidence_upload_guide.md",
+    "module_ids": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10",
+      "M11",
+      "M12"
+    ]
+  },
+  {
+    "id": "RES-005",
+    "title": "SISU Preschool Box Parent Play Cards",
+    "type": "parent_resource",
+    "path": "resources/downloadables/sisu_parent_play_cards.md",
+    "module_ids": [
+      "M11"
+    ]
+  },
+  {
+    "id": "RES-006",
+    "title": "Leadership Quality Self-Evaluation Dashboard",
+    "type": "checklist",
+    "path": "resources/checklists/leadership_quality_self_evaluation.md",
+    "module_ids": [
+      "M10",
+      "M12"
+    ]
+  }
+]

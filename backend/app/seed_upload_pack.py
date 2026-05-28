@@ -1,15 +1,8 @@
-import csv
 import json
-import re
 import sqlite3
 from pathlib import Path
 
 SEED_DIR = Path(__file__).resolve().parent.parent / "seed_data"
-
-
-def _extract_sort_order(module_id: str) -> int:
-    match = re.search(r"-M(\d+)$", module_id)
-    return int(match.group(1)) if match else 0
 
 
 def seed_upload_pack(db_path: str) -> None:
@@ -21,131 +14,190 @@ def seed_upload_pack(db_path: str) -> None:
         conn.close()
         return
 
-    courses_file = SEED_DIR / "practical_courses_import.csv"
-    with open(courses_file, encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            cur.execute(
-                """INSERT OR IGNORE INTO lms_courses
-                   (course_id, slug, title, category, level, duration,
-                    cpd_hours, audience, aim, module_count, published)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)""",
-                (
-                    row["course_id"],
-                    row["slug"],
-                    row["title"],
-                    row["category"],
-                    row["level"],
-                    row["duration"],
-                    row["cpd_hours"],
-                    row["audience"],
-                    row["aim"],
-                    row["module_count"],
-                ),
-            )
-            product_id = f"course-{row['course_id'].lower()}"
-            cur.execute(
-                """INSERT OR IGNORE INTO course_products
-                   (course_id, product_id, payment_type, active)
-                   VALUES (?, ?, 'one_time', 1)""",
-                (row["course_id"], product_id),
-            )
+    courses_file = SEED_DIR / "courses.json"
+    with open(courses_file, encoding="utf-8") as f:
+        courses = json.load(f)
+    for c in courses:
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_courses
+               (course_id, slug, title, purpose, programme_id, level,
+                audience, delivery_mode, cpd_hours, certificate_wording,
+                module_count, status, published)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)""",
+            (
+                c["id"], c["slug"], c["title"], c.get("purpose", ""),
+                c.get("programme_id", ""), c.get("level", ""),
+                c.get("audience", ""), c.get("delivery_mode", ""),
+                c.get("cpd_hours", 3), c.get("certificate_wording", ""),
+                len(c.get("module_ids", [])), c.get("status", "release_candidate"),
+            ),
+        )
+        product_id = f"course-{c['id'].lower()}"
+        cur.execute(
+            """INSERT OR IGNORE INTO course_products
+               (course_id, product_id, payment_type, active)
+               VALUES (?, ?, 'one_time', 1)""",
+            (c["id"], product_id),
+        )
 
-    modules_file = SEED_DIR / "practical_modules_import.csv"
-    with open(modules_file, encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            sort_order = _extract_sort_order(row["module_id"])
-            video_script = row.get("video_script", "")
-            cur.execute(
-                """INSERT OR IGNORE INTO lms_modules
-                   (module_id, course_id, title, scenario_setting,
-                    scenario_problem, practice_steps, reflective_checklist,
-                    video_script, sort_order, published)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)""",
-                (
-                    row["module_id"],
-                    row["course_id"],
-                    row["title"],
-                    row["scenario_setting"],
-                    row["scenario_problem"],
-                    row["practice_steps"],
-                    row["checklist"],
-                    video_script,
-                    sort_order,
-                ),
-            )
-            transcript = video_script[:500] if video_script else ""
-            cur.execute(
-                """INSERT OR IGNORE INTO module_videos
-                   (module_id, video_status, transcript)
-                   VALUES (?, 'script_ready', ?)""",
-                (row["module_id"], transcript),
-            )
+    modules_file = SEED_DIR / "modules.json"
+    with open(modules_file, encoding="utf-8") as f:
+        modules = json.load(f)
+    for i, m in enumerate(modules):
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_modules
+               (module_id, course_id, slug, title, aim, objectives, outcomes,
+                key_concepts, scenarios, estimated_video_minutes,
+                estimated_module_minutes, lesson_type, sort_order,
+                status, published)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)""",
+            (
+                m["id"], m["course_id"], m.get("slug", ""),
+                m["title"], m.get("aim", ""),
+                json.dumps(m.get("objectives", [])),
+                json.dumps(m.get("outcomes", [])),
+                json.dumps(m.get("key_concepts", [])),
+                json.dumps(m.get("scenarios", [])),
+                m.get("estimated_video_minutes", 6),
+                m.get("estimated_module_minutes", 90),
+                m.get("lesson_type", "scenario_based_cpd"),
+                i + 1, m.get("status", "release_candidate"),
+            ),
+        )
 
-    assessment_file = SEED_DIR / "practical_assessment_item_bank.csv"
-    with open(assessment_file, encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            cur.execute(
-                """INSERT OR IGNORE INTO lms_assessment_items
-                   (question_id, course_id, module_id, question,
-                    question_type, answer_focus, published)
-                   VALUES (?, ?, ?, ?, ?, ?, 1)""",
-                (
-                    row["question_id"],
-                    row["course_id"],
-                    row["module_id"],
-                    row["question"],
-                    row["type"],
-                    row["answer_focus"],
-                ),
-            )
+    quizzes_file = SEED_DIR / "quizzes.json"
+    with open(quizzes_file, encoding="utf-8") as f:
+        quizzes = json.load(f)
+    for q in quizzes:
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_quizzes
+               (quiz_id, module_id, question, choices,
+                correct_choice_index, feedback)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (
+                q["id"], q["module_id"], q["question"],
+                json.dumps(q.get("choices", [])),
+                q.get("correct_choice_index", 0),
+                q.get("feedback", ""),
+            ),
+        )
 
-    content_file = SEED_DIR / "finnish_paradigm_lms_import.jsonl"
-    if content_file.exists():
-        with open(content_file, encoding="utf-8-sig") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                rec = json.loads(line)
-                module_id = rec["id"]
-                track = rec.get("course_track", "")
-                title = rec.get("title", "")
-                aim = rec.get("aim", "")
-                overview = rec.get("overview", "")
-                audience = "; ".join(rec.get("audience", []))
-                objectives = json.dumps(rec.get("learning_objectives", []))
-                outcomes = json.dumps(rec.get("outcomes", []))
-                session_flow = json.dumps(rec.get("session_flow", []))
-                activities = json.dumps(rec.get("activities", []))
-                resources = json.dumps(rec.get("resources", []))
-                assessment = rec.get("assessment", {})
-                quiz_items = json.dumps(assessment.get("quiz_items", []) if isinstance(assessment, dict) else [])
-                performance_task = assessment.get("performance_task", "") if isinstance(assessment, dict) else ""
-                completion_criteria = assessment.get("completion_criteria", "") if isinstance(assessment, dict) else ""
-                trainer_script = rec.get("trainer_script", "")
-                scenario = json.dumps(rec.get("scenario", {}))
-                demonstration = json.dumps(rec.get("demonstration_dialogue", []))
-                leadership = json.dumps(rec.get("admin_implementation", []))
-                metadata = json.dumps(rec.get("lms_fields", {}))
+    rubrics_file = SEED_DIR / "rubrics.json"
+    with open(rubrics_file, encoding="utf-8") as f:
+        rubrics = json.load(f)
+    for r in rubrics:
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_rubrics
+               (module_id, criterion, excellent, secure, developing)
+               VALUES (?, ?, ?, ?, ?)""",
+            (
+                r["module_id"], r["criterion"],
+                r.get("excellent", ""), r.get("secure", ""),
+                r.get("developing", ""),
+            ),
+        )
 
-                cur.execute(
-                    """INSERT OR IGNORE INTO website_modules
-                       (module_id, track, title, aim, overview, audience,
-                        objectives, outcomes, session_flow, activities,
-                        resources, quiz_items, performance_task,
-                        completion_criteria, trainer_script, scenario,
-                        demonstration_dialogue, leadership_implementation,
-                        lms_metadata, published)
-                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)""",
-                    (module_id, track, title, aim, overview, audience,
-                     objectives, outcomes, session_flow, activities,
-                     resources, quiz_items, performance_task,
-                     completion_criteria, trainer_script, scenario,
-                     demonstration, leadership, metadata),
-                )
+    tasks_file = SEED_DIR / "implementation_tasks.json"
+    with open(tasks_file, encoding="utf-8") as f:
+        tasks = json.load(f)
+    for t in tasks:
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_implementation_tasks
+               (task_id, module_id, title, instructions,
+                evidence_required, pass_rule)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (
+                t["id"], t["module_id"], t["title"],
+                t.get("instructions", ""),
+                json.dumps(t.get("evidence_required", [])),
+                t.get("pass_rule", ""),
+            ),
+        )
+
+    resources_file = SEED_DIR / "resources.json"
+    with open(resources_file, encoding="utf-8") as f:
+        resources = json.load(f)
+    for res in resources:
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_resources
+               (resource_id, title, resource_type, resource_path, module_ids)
+               VALUES (?, ?, ?, ?, ?)""",
+            (
+                res["id"], res["title"], res.get("type", ""),
+                res.get("path", ""),
+                json.dumps(res.get("module_ids", [])),
+            ),
+        )
+
+    video_scripts_file = SEED_DIR / "video_scripts.json"
+    with open(video_scripts_file, encoding="utf-8") as f:
+        video_scripts = json.load(f)
+    for vs in video_scripts:
+        cur.execute(
+            """INSERT OR IGNORE INTO module_videos
+               (module_id, video_status, transcript, video_duration_seconds)
+               VALUES (?, 'script_ready', ?, ?)""",
+            (
+                vs["module_id"],
+                json.dumps(vs.get("scenes", [])),
+                (vs.get("duration_minutes", 6) * 60),
+            ),
+        )
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_video_scripts
+               (script_id, module_id, title, duration_minutes,
+                format, avatar_direction, scenes)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (
+                vs["id"], vs["module_id"], vs["title"],
+                vs.get("duration_minutes", 6),
+                vs.get("format", ""),
+                vs.get("avatar_direction", ""),
+                json.dumps(vs.get("scenes", [])),
+            ),
+        )
+
+    glossary_file = SEED_DIR / "glossary.json"
+    with open(glossary_file, encoding="utf-8") as f:
+        glossary = json.load(f)
+    for g in glossary:
+        cur.execute(
+            """INSERT OR IGNORE INTO lms_glossary
+               (concept, meaning, practice)
+               VALUES (?, ?, ?)""",
+            (g["concept"], g.get("meaning", ""), g.get("practice", "")),
+        )
+
+    programme_file = SEED_DIR / "programme.json"
+    with open(programme_file, encoding="utf-8") as f:
+        programme = json.load(f)
+    cur.execute(
+        """INSERT OR IGNORE INTO lms_programme
+           (programme_id, brand, short_name, title, version,
+            release_date, ethical_positioning, core_video_pattern,
+            global_outcomes, source_basis)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (
+            programme["id"], programme.get("brand", ""),
+            programme.get("short_name", ""),
+            programme.get("title", ""), programme.get("version", ""),
+            programme.get("release_date", ""),
+            programme.get("ethical_positioning", ""),
+            json.dumps(programme.get("core_video_pattern", [])),
+            json.dumps(programme.get("global_outcomes", [])),
+            json.dumps(programme.get("source_basis", [])),
+        ),
+    )
+
+    cert_rules_file = SEED_DIR / "certificate_rules.json"
+    with open(cert_rules_file, encoding="utf-8") as f:
+        cert_rules = json.load(f)
+    cur.execute(
+        """INSERT OR IGNORE INTO lms_certificate_rules
+           (programme_id, rules_json)
+           VALUES (?, ?)""",
+        (cert_rules.get("programme_id", ""), json.dumps(cert_rules)),
+    )
 
     conn.commit()
     conn.close()

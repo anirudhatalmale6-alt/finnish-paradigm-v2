@@ -1,0 +1,99 @@
+{
+  "home": [
+    {
+      "label": "Courses",
+      "href": "/courses"
+    },
+    {
+      "label": "SISU Preschool",
+      "href": "/courses/sisu-preschool-in-a-box-play-based-early-years-learning"
+    },
+    {
+      "label": "Resource Library",
+      "href": "/resources"
+    },
+    {
+      "label": "Certification",
+      "href": "/certification"
+    }
+  ],
+  "course_sequence": [
+    {
+      "course_id": "C1",
+      "title": "Finnish-Inspired Values, Equity and Trust",
+      "slug": "finnish-inspired-values-equity-and-trust"
+    },
+    {
+      "course_id": "C2",
+      "title": "Learner Agency and the Joy of Learning",
+      "slug": "learner-agency-and-the-joy-of-learning"
+    },
+    {
+      "course_id": "C3",
+      "title": "Active Learning, Play, Movement and Learning Environment Design",
+      "slug": "active-learning-play-movement-and-learning-environment-design"
+    },
+    {
+      "course_id": "C4",
+      "title": "Formative Assessment, Feedback and Self-Assessment",
+      "slug": "formative-assessment-feedback-and-self-assessment"
+    },
+    {
+      "course_id": "C5",
+      "title": "Early Support and the Leave-No-Child-Behind Classroom Cycle",
+      "slug": "early-support-and-the-leave-no-child-behind-classroom-cycle"
+    },
+    {
+      "course_id": "C6",
+      "title": "Mixed-Ability Differentiation with Support/Core/Extension Routes",
+      "slug": "mixed-ability-differentiation-with-support-core-extension-routes"
+    },
+    {
+      "course_id": "C7",
+      "title": "Curriculum Adaptation Studio",
+      "slug": "curriculum-adaptation-studio"
+    },
+    {
+      "course_id": "C8",
+      "title": "Phenomenon-Based Projects and Transversal Competence",
+      "slug": "phenomenon-based-projects-and-transversal-competence"
+    },
+    {
+      "course_id": "C9",
+      "title": "Teacher as Researcher and Classroom Improvement",
+      "slug": "teacher-as-researcher-and-classroom-improvement"
+    },
+    {
+      "course_id": "C10",
+      "title": "Leadership, Quality Culture and Institutional Self-Evaluation",
+      "slug": "leadership-quality-culture-and-institutional-self-evaluation"
+    },
+    {
+      "course_id": "C11",
+      "title": "SISU Preschool in a Box: Play-Based Early Years Learning",
+      "slug": "sisu-preschool-in-a-box-play-based-early-years-learning"
+    },
+    {
+      "course_id": "C12",
+      "title": "Blended Learning Implementation and Digital CPD Operations",
+      "slug": "blended-learning-implementation-and-digital-cpd-operations"
+    }
+  ],
+  "user_roles": [
+    "learner",
+    "educator",
+    "leader",
+    "parent",
+    "tutor",
+    "admin"
+  ],
+  "tracking_events": [
+    "video_started",
+    "video_90_percent",
+    "quiz_passed",
+    "task_submitted",
+    "reflection_submitted",
+    "portfolio_approved",
+    "certificate_issued"
+  ]
+}
