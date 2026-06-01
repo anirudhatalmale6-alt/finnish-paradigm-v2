@@ -22,10 +22,10 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
 os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 
-APP_NAME = os.getenv('APP_NAME', 'The Finnish Paradigm')
+APP_NAME = os.getenv('APP_NAME', 'FCEI')
 JWT_SECRET = os.getenv('JWT_SECRET', 'CHANGE_ME_BEFORE_LIVE_' + secrets.token_hex(16))
 TOKEN_TTL_MINUTES = int(os.getenv('TOKEN_TTL_MINUTES', '480'))
-ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@finnishparadigm.com')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'admin@fcei.edu')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'ChangeMeNow!123')
 ALLOWED_ORIGINS = [o.strip() for o in os.getenv('ALLOWED_ORIGINS', 'http://localhost:8000,http://127.0.0.1:8000').split(',') if o.strip()]
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
@@ -71,7 +71,7 @@ def get_client_ip(request: Request) -> str:
         return forwarded.split(',')[0].strip()
     return request.client.host if request.client else '0.0.0.0'
 
-DB_SCHEMA_VERSION = 4
+DB_SCHEMA_VERSION = 5
 
 app = FastAPI(title=f'{APP_NAME} API', version='2.0.0', docs_url='/api/docs', redoc_url='/api/redoc')
 app.add_middleware(CORSMiddleware, allow_origins=ALLOWED_ORIGINS, allow_credentials=True, allow_methods=['GET','POST','PUT','PATCH','DELETE','OPTIONS'], allow_headers=['Authorization','Content-Type'])
@@ -244,6 +244,8 @@ def init_db():
     cur.execute('''CREATE TABLE IF NOT EXISTS lms_glossary(id INTEGER PRIMARY KEY AUTOINCREMENT, concept TEXT UNIQUE NOT NULL, meaning TEXT, practice TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS lms_programme(id INTEGER PRIMARY KEY AUTOINCREMENT, programme_id TEXT UNIQUE NOT NULL, brand TEXT, short_name TEXT, title TEXT, version TEXT, release_date TEXT, ethical_positioning TEXT, core_video_pattern TEXT, global_outcomes TEXT, source_basis TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS lms_certificate_rules(id INTEGER PRIMARY KEY AUTOINCREMENT, programme_id TEXT UNIQUE NOT NULL, rules_json TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS tvet_modules(id INTEGER PRIMARY KEY AUTOINCREMENT, tvet_id TEXT UNIQUE NOT NULL, slug TEXT UNIQUE, title TEXT NOT NULL, purpose TEXT, topic TEXT, task TEXT, scenario TEXT, demo TEXT, category TEXT DEFAULT 'TVET & Work-Based Learning', method TEXT DEFAULT 'Online / Blended', level TEXT DEFAULT 'Certificate', duration TEXT DEFAULT '3-5 hours', credential TEXT DEFAULT 'Certificate of Completion', audience TEXT DEFAULT 'TVET trainers, institutions and employer partners', published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS consultancy_services(id INTEGER PRIMARY KEY AUTOINCREMENT, service_id TEXT UNIQUE NOT NULL, slug TEXT UNIQUE, title TEXT NOT NULL, description TEXT, category TEXT DEFAULT 'Consultancy & Workshops', method TEXT DEFAULT 'On-site / Online / Blended', level TEXT DEFAULT 'Professional Service', duration TEXT DEFAULT 'Half-day to 90 days', credential TEXT DEFAULT 'Workshop Completion Record', audience TEXT DEFAULT 'Schools, institutions, ministries and education providers', published INTEGER DEFAULT 1, created_at TEXT DEFAULT CURRENT_TIMESTAMP)''')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_modules_course ON lms_modules(course_id)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_lms_assess_course ON lms_assessment_items(course_id, module_id)')
     cur.execute('CREATE INDEX IF NOT EXISTS idx_learner_prog_user ON learner_progress(user_id, course_id)')
@@ -254,7 +256,7 @@ def init_db():
         except sqlite3.OperationalError: pass
     cur.execute('SELECT id FROM users WHERE email=?', (ADMIN_EMAIL,))
     if not cur.fetchone():
-        cur.execute('INSERT INTO users(name,email,password_hash,role,organisation,created_at) VALUES(?,?,?,?,?,?)', ('Platform Admin', ADMIN_EMAIL, hash_password(ADMIN_PASSWORD), 'admin', 'Finnish Paradigm', datetime.now(timezone.utc).isoformat()))
+        cur.execute('INSERT INTO users(name,email,password_hash,role,organisation,created_at) VALUES(?,?,?,?,?,?)', ('Platform Admin', ADMIN_EMAIL, hash_password(ADMIN_PASSWORD), 'admin', 'FCEI', datetime.now(timezone.utc).isoformat()))
     cur.execute('INSERT OR IGNORE INTO schema_version(version, applied_at) VALUES(?,?)', (DB_SCHEMA_VERSION, datetime.now(timezone.utc).isoformat()))
     conn.commit(); conn.close()
 
@@ -380,7 +382,7 @@ def create_booking(payload: BookingIn, request: Request):
     conn=db(); cur=conn.cursor()
     cur.execute('INSERT INTO bookings(name,email,organisation,audience,preferred_date,message,status,created_at) VALUES(?,?,?,?,?,?,?,?)',(payload.name,payload.email,payload.organisation,payload.audience,payload.preferred_date,payload.message,'new',datetime.now(timezone.utc).isoformat()))
     conn.commit(); ident=cur.lastrowid; conn.close()
-    send_email(payload.email, 'Finnish Paradigm consultation request received', f'Thank you {payload.name}. Your consultation request #{ident} has been received. We will respond with confirmation details.'); return {'id':ident,'status':'booked','message':'Consultation request saved. Email confirmation sent if SMTP is configured.'}
+    send_email(payload.email, 'FCEI consultation request received', f'Thank you {payload.name}. Your consultation request #{ident} has been received. We will respond with confirmation details.'); return {'id':ident,'status':'booked','message':'Consultation request saved. Email confirmation sent if SMTP is configured.'}
 
 @app.post('/api/enrollments')
 def enroll(payload: EnrollmentIn, user=Depends(current_user)):
@@ -493,15 +495,15 @@ def activate_paid_access(customer_email: str, product_id: str):
 
 # --------------------------- Commerce ---------------------------
 PRODUCT_CONFIG = {
-    'teacher-starter': {'amount': 1900, 'mode': 'payment', 'course_id': 'fcfp', 'description': 'Teacher Starter Bundle'},
-    'teacher-certificate': {'amount': 19900, 'mode': 'payment', 'course_id': 'fcfp', 'description': 'Certified Finnish Paradigm Educator'},
-    'early-intervention': {'amount': 4900, 'mode': 'payment', 'course_id': 'asti', 'description': 'Early Intervention Toolkit'},
-    'retired-mentor': {'amount': 9900, 'mode': 'payment', 'course_id': 'asti', 'description': 'Retired Teacher Intervention Mentor Pack'},
-    'school-leadership': {'amount': 14900, 'mode': 'payment', 'course_id': 'seld', 'description': 'School Leadership Implementation Pack'},
-    'leadership-diploma': {'amount': 69900, 'mode': 'payment', 'course_id': 'seld', 'description': 'Strategic Educational Leadership Diploma'},
+    'teacher-starter': {'amount': 1900, 'mode': 'payment', 'course_id': 'C1', 'description': 'Teacher Starter Bundle'},
+    'teacher-certificate': {'amount': 19900, 'mode': 'payment', 'course_id': 'C1', 'description': 'Certified FCEI Educator'},
+    'early-intervention': {'amount': 4900, 'mode': 'payment', 'course_id': 'C5', 'description': 'Early Intervention Toolkit'},
+    'retired-mentor': {'amount': 9900, 'mode': 'payment', 'course_id': 'C5', 'description': 'Retired Teacher Intervention Mentor Pack'},
+    'school-leadership': {'amount': 14900, 'mode': 'payment', 'course_id': 'C10', 'description': 'School Leadership Implementation Pack'},
+    'leadership-diploma': {'amount': 69900, 'mode': 'payment', 'course_id': 'C10', 'description': 'Strategic Educational Leadership Diploma'},
     'toolkit-bundle': {'amount': 4900, 'mode': 'payment', 'course_id': None, 'description': 'Full PDF Toolkit Bundle'},
-    'membership-monthly': {'amount': 2900, 'mode': 'subscription', 'interval': 'month', 'course_id': 'fcfp', 'description': 'Monthly Teacher Membership'},
-    'school-license': {'amount': 499900, 'mode': 'subscription', 'interval': 'year', 'course_id': 'seld', 'description': 'Annual Whole-School License'},
+    'membership-monthly': {'amount': 2900, 'mode': 'subscription', 'interval': 'month', 'course_id': 'C1', 'description': 'Monthly Teacher Membership'},
+    'school-license': {'amount': 499900, 'mode': 'subscription', 'interval': 'year', 'course_id': 'C10', 'description': 'Annual Whole-School License'},
     'enterprise': {'amount': 0, 'mode': 'quote', 'course_id': None, 'description': 'Custom whole-school or ministry package'}
 }
 
@@ -605,7 +607,7 @@ def create_checkout(payload: CheckoutIn):
         status = 'stripe_not_configured'
     cur.execute('UPDATE orders SET status=?, checkout_url=?, provider_ref=? WHERE id=?', (status, checkout_url, provider_ref, oid))
     conn.commit(); conn.close()
-    send_email(payload.customer_email, 'Finnish Paradigm order started', f'Your order reference is #{oid}. Continue here: {checkout_url}')
+    send_email(payload.customer_email, 'FCEI order started', f'Your order reference is #{oid}. Continue here: {checkout_url}')
     return {'order_id':oid,'status':status,'checkout_url':checkout_url,'mode':mode,'amount':amount,'currency':STRIPE_CURRENCY,'stripe_ready':stripe_readiness_report()}
 
 def record_payment_event(event: Dict[str, Any]):
@@ -649,7 +651,7 @@ async def stripe_webhook(request: Request):
             conn.commit(); conn.close()
         if email and product_id:
             activation = activate_paid_access(email, product_id)
-            send_email(email, 'Finnish Paradigm course access', f'Payment confirmed. Access activation result: {activation}. Log in at {PUBLIC_BASE_URL}/login.html')
+            send_email(email, 'FCEI course access', f'Payment confirmed. Access activation result: {activation}. Log in at {PUBLIC_BASE_URL}/login.html')
     elif etype in ('checkout.session.expired','checkout.session.async_payment_failed'):
         update_order_by_session(obj, 'failed' if 'failed' in etype else 'expired')
     elif etype == 'payment_intent.payment_failed':
@@ -916,6 +918,50 @@ def my_certificates(user=Depends(current_user)):
     conn.close()
     return [dict(r) for r in rows]
 
+@app.get('/api/tvet')
+def tvet_modules():
+    conn = db()
+    rows = conn.execute('SELECT tvet_id AS id, slug, title, purpose, topic, task, scenario, demo, category, method, level, duration, credential, audience FROM tvet_modules WHERE published=1 ORDER BY id').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/tvet/{tvet_id}')
+def tvet_module_detail(tvet_id: str):
+    conn = db()
+    row = conn.execute('SELECT * FROM tvet_modules WHERE (tvet_id=? OR slug=?) AND published=1', (tvet_id, tvet_id)).fetchone()
+    conn.close()
+    if not row: raise HTTPException(404, 'TVET module not found')
+    return dict(row)
+
+@app.get('/api/consultancy')
+def consultancy_services():
+    conn = db()
+    rows = conn.execute('SELECT service_id AS id, slug, title, description, category, method, level, duration, credential, audience FROM consultancy_services WHERE published=1 ORDER BY id').fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+@app.get('/api/consultancy/{service_id}')
+def consultancy_service_detail(service_id: str):
+    conn = db()
+    row = conn.execute('SELECT * FROM consultancy_services WHERE (service_id=? OR slug=?) AND published=1', (service_id, service_id)).fetchone()
+    conn.close()
+    if not row: raise HTTPException(404, 'Consultancy service not found')
+    return dict(row)
+
+@app.get('/api/catalogue')
+def full_catalogue():
+    conn = db()
+    courses = conn.execute('SELECT course_id AS id, slug, title, purpose, level, audience, cpd_hours, delivery_mode, certificate_wording FROM lms_courses WHERE published=1 ORDER BY id').fetchall()
+    tvet = conn.execute('SELECT tvet_id AS id, slug, title, purpose, level, audience, duration, credential FROM tvet_modules WHERE published=1 ORDER BY id').fetchall()
+    services = conn.execute('SELECT service_id AS id, slug, title, description, level, audience, duration, credential FROM consultancy_services WHERE published=1 ORDER BY id').fetchall()
+    conn.close()
+    return {
+        'courses': [dict(r) for r in courses],
+        'tvet': [dict(r) for r in tvet],
+        'consultancy': [dict(r) for r in services],
+        'total': len(courses) + len(tvet) + len(services)
+    }
+
 @app.get('/api/lms/glossary')
 def lms_glossary():
     conn = db()
@@ -1049,8 +1095,10 @@ def lms_stats(user=Depends(require_admin)):
     certificates = cur.execute('SELECT COUNT(*) FROM certificates WHERE revoked=0').fetchone()[0]
     progress_entries = cur.execute('SELECT COUNT(*) FROM learner_progress').fetchone()[0]
     artifacts = cur.execute('SELECT COUNT(*) FROM artifact_uploads').fetchone()[0]
+    tvet_count = cur.execute('SELECT COUNT(*) FROM tvet_modules WHERE published=1').fetchone()[0]
+    consultancy_count = cur.execute('SELECT COUNT(*) FROM consultancy_services WHERE published=1').fetchone()[0]
     conn.close()
-    return {'lms_courses': courses, 'lms_modules': modules, 'quiz_items': quizzes, 'rubric_criteria': rubrics, 'implementation_tasks': impl_tasks, 'resources': resources, 'video_entries': videos, 'video_scripts': video_scripts, 'glossary_terms': glossary, 'certificates_issued': certificates, 'progress_entries': progress_entries, 'artifact_uploads': artifacts}
+    return {'lms_courses': courses, 'lms_modules': modules, 'tvet_modules': tvet_count, 'consultancy_services': consultancy_count, 'quiz_items': quizzes, 'rubric_criteria': rubrics, 'implementation_tasks': impl_tasks, 'resources': resources, 'video_entries': videos, 'video_scripts': video_scripts, 'glossary_terms': glossary, 'certificates_issued': certificates, 'progress_entries': progress_entries, 'artifact_uploads': artifacts}
 
 # --------------------------- Files and front end ---------------------------
 @app.get('/api/downloads/{filename}')

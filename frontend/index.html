@@ -1,32 +1,105 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Home | The Finnish Paradigm</title><link rel="stylesheet" href="/assets/styles.css"></head><body>
-<div class="top-strip"><span>Teacher CPD · Online Certificates · School Licences · Stripe-ready checkout</span><a href="/booking.html">Request school demo</a></div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FCEI | Finnish-Inspired CPD, TVET and Consultancy</title><link rel="stylesheet" href="/assets/styles.css"></head><body>
+<div class="top-strip"><span>Finnish-inspired professional development</span><span>Courses &middot; TVET &middot; Consultancy &middot; Workshops</span></div>
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="/"><span class="brand-mark">FP</span><span><b>The Finnish Paradigm™</b><small>Teacher CPD & School Improvement</small></span></a>
-    <form class="site-search" action="/courses.html"><input name="q" placeholder="Search teacher training courses"><button>Search</button></form>
-    <button id="menuBtn" class="menu-btn" aria-label="Open navigation">☰</button>
+    <a class="brand" href="/"><span class="brand-mark">F</span><span><b>FCEI</b><small>Finland Creative Education Institute</small></span></a>
     <nav id="navLinks" class="main-nav">
-      <a href="/courses.html">Courses</a><a href="/resources.html">Resources</a><a href="/assessment.html">Assessments</a><a href="/booking.html">Book Demo</a><a href="/dashboard.html">Dashboard</a><a href="/admin.html">Admin</a><span id="authSlot"></span>
+      <a href="/courses.html">Courses</a>
+      <a href="/tvet.html">TVET</a>
+      <a href="/consultancy.html">Consultancy</a>
+      <a href="/resources.html">Resources</a>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/admin.html">Admin</a>
+      <span id="authSlot"></span>
     </nav>
+    <a href="/courses.html" class="nav-cta">Browse Courses</a>
+    <button id="menuBtn" class="menu-btn" aria-label="Open navigation">&#9776;</button>
   </div>
   <div class="mega-bar">
-    <a href="/courses.html?subject=foundation">Courses by Subject</a><a href="/courses.html?method=online">Study Method</a><a href="/courses.html?level=cpd">Qualification Level</a><a href="/courses.html?role=teacher">Job Role</a><a href="/resources.html">Resource Hub</a><a href="/booking.html">Become a Partner</a>
+    <a href="/courses.html">Courses by Subject</a>
+    <a href="/courses.html?method=online">Study Method</a>
+    <a href="/courses.html?level=cpd">Qualification Level</a>
+    <a href="/tvet.html">TVET Modules</a>
+    <a href="/consultancy.html">Consultancy</a>
+    <a href="/resources.html">Resources</a>
   </div>
 </header>
 
 <main>
-<section class="hero-marketplace">
-  <div class="hero-copy"><span class="eyebrow">Online teacher CPD and school improvement courses</span><h1>Browse and compare Finnish Paradigm teacher training pathways</h1><p>Choose your teaching goal to get a personalised course list in under 30 seconds. Built for teachers, SENCOs, TAs, school leaders, ESL specialists and IELTS instructors.</p><div class="goal-pills"><button data-goal="career">New teacher pathway</button><button data-goal="upskill">Upskill classroom practice</button><button data-goal="school">Transform a school</button><button data-goal="ielts">IELTS / ESL</button></div><div class="hero-actions"><a class="btn primary" href="/courses.html">Explore courses</a><a class="btn outline" href="/booking.html">Request institutional demo</a></div></div>
-  <aside class="course-navigator"><h2>Course Navigator</h2><p>Answer 3 questions to refine your pathway.</p><label>Your role</label><select id="navRole"><option>Teacher</option><option>Teaching Assistant</option><option>SENCO</option><option>Senior Leader</option><option>ESL Teacher</option><option>IELTS Instructor</option></select><label>Goal</label><select id="navGoal"><option>Early Intervention</option><option>Primary Practice</option><option>Leadership</option><option>ESL Integration</option><option>IELTS Differentiation</option></select><label>Time available</label><select id="navTime"><option>Under 2 hours</option><option>3–5 hours</option><option>Full certificate</option></select><button class="btn primary full" onclick="recommendCourses()">Find my course</button><div id="navigatorResult" class="navigator-result"></div></aside>
+<section class="hero-shell">
+  <div class="navigator-card">
+    <span class="eyebrow">Finnish-inspired professional development</span>
+    <h1>CPD, TVET and consultancy for schools and institutions</h1>
+    <p>Evidence-based teacher training, vocational education modules and institutional improvement services. Built around implementation evidence, not just theory.</p>
+    <div class="goal-grid">
+      <a href="/courses.html">CPD Courses</a>
+      <a href="/tvet.html">TVET Modules</a>
+      <a href="/consultancy.html">Consultancy</a>
+      <a href="/resources.html">Resources</a>
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="/courses.html">Explore courses</a>
+      <a class="btn outline" href="/booking.html">Request institutional demo</a>
+    </div>
+  </div>
+  <div class="hero-illustration" aria-hidden="true">
+    <div class="orb one"></div><div class="orb two"></div>
+    <div class="phone-card"><strong>FCEI Course Finder</strong><span>CPD &middot; TVET &middot; Consultancy</span><small>Evidence-led learning routes</small></div>
+  </div>
 </section>
-<section class="section"><div class="section-head"><h2>Popular Subjects</h2><a href="/courses.html">See all subjects</a></div><div class="subject-cloud"><a>Education & Training</a><a>Early Intervention</a><a>SEND / Inclusion</a><a>Leadership</a><a>Teacher CPD</a><a>ESL / EAL</a><a>IELTS</a><a>Assessment</a><a>Digital Skills</a><a>EdTech</a><a>Well-being</a><a>Curriculum Design</a></div></section>
-<section class="section tinted"><div class="section-head"><h2>Popular With Other Educators</h2><a href="/courses.html">View catalogue</a></div><div id="popularCourses" class="course-row"></div></section>
-<section class="section"><div class="section-head"><h2>Course Levels</h2><p>Filter by CPD hour, qualification level and career stage.</p></div><div class="level-grid"><a>CPD Short Course</a><a>Foundation</a><a>Certificate</a><a>Practitioner</a><a>Specialist</a><a>Diploma</a><a>Leadership</a><a>School Licence</a></div></section>
-<section class="section"><div class="section-head"><h2>Get a Certification</h2><p>Secure practical professional development with downloadable certificates and implementation evidence.</p></div><div class="cert-grid"><article><b>Foundation</b><span>2 modules</span></article><article><b>Primary Practice</b><span>2 modules</span></article><article><b>ESL Hybrid</b><span>3 modules</span></article><article><b>IELTS Differentiation</b><span>3 modules</span></article><article><b>Leadership Diploma</b><span>School implementation</span></article></div></section>
-<section class="section tinted"><div class="section-head"><h2>Latest Resources</h2><a href="/resources.html">Go to resource hub</a></div><div class="resource-cards"><article><span>Guide</span><h3>How to implement early intervention without overwhelming staff</h3><p>Use the three-tier support matrix, review rhythm and practical escalation protocol.</p></article><article><span>Checklist</span><h3>Stripe live launch readiness</h3><p>Confirm payment keys, webhooks, products, tax and subscription logic.</p></article><article><span>Toolkit</span><h3>Teacher action research canvas</h3><p>Turn classroom concerns into practical five-day evidence cycles.</p></article></div></section>
+
+<section class="section">
+  <div class="section-head"><h2>Popular Subjects</h2><a href="/courses.html">See all subjects</a></div>
+  <div class="subject-grid" id="subjectGrid"></div>
+</section>
+
+<section class="section tinted">
+  <div class="section-head"><h2>Popular with schools and institutions</h2><a href="/courses.html">View all</a></div>
+  <div id="popularCourses" class="course-grid"></div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>Course Levels</h2><p>Organise learning by CPD, certificate, practitioner and institution-level routes.</p></div>
+  <div class="level-grid">
+    <a href="/courses.html?level=cpd">CPD</a>
+    <a href="/courses.html?level=certificate">Certificate</a>
+    <a href="/tvet.html">TVET</a>
+    <a href="/consultancy.html">Professional Service</a>
+    <a href="/courses.html">Practitioner</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="certification">
+    <div><p class="eyebrow">Get A Certification</p><h2>Professional development built around implementation evidence</h2><p>Each course turns principles into visible teaching, leadership or workplace tasks with downloadable evidence templates.</p></div>
+    <a href="/courses.html">Explore certificates</a>
+  </div>
+</section>
+
+<section class="section providers">
+  <h2>Consultancy and workshops for schools and institutions</h2>
+  <div class="provider-grid" id="providerGrid"></div>
+</section>
+
+<section class="section tinted">
+  <div class="section-head"><h2>Latest practical resources</h2><a href="/resources.html">All resources</a></div>
+  <div class="resource-cards">
+    <article><span>TVET Toolkit</span><h3>How to convert module topics into observable work tasks</h3><p>Use competence mapping to turn syllabus content into practical workplace tasks.</p></article>
+    <article><span>Assessment</span><h3>Building learner evidence portfolios for practical demonstration</h3><p>Create portfolio systems that capture genuine competence evidence.</p></article>
+    <article><span>Teacher CPD</span><h3>Designing Finnish-inspired classroom routines without over-theory</h3><p>Turn principles into quick, practical routines for any school context.</p></article>
+  </div>
+</section>
 </main>
 
-<footer class="footer"><div class="footer-grid"><div><h3>The Finnish Paradigm™</h3><p>Research-informed teacher training inspired by Finnish education principles and adapted for classroom practice, ESL, IELTS and school leadership.</p><p class="small">Not an official Finnish government certification unless separately accredited or approved.</p></div><div><h4>Courses</h4><a href="/courses.html">All Courses</a><a href="/courses.html?method=online">Online CPD</a><a href="/courses.html?level=certificate">Certificates</a><a href="/courses.html?role=senior-leader">Leadership</a></div><div><h4>Resources</h4><a href="/resources.html">Toolkit Library</a><a href="/assessment.html">Adaptive Tests</a><a href="/legal.html">Legal</a><a href="/privacy.html">Privacy</a></div><div><h4>Newsletter</h4><p>Get teacher training updates, implementation tips and course offers.</p><form class="newsletter"><input placeholder="Email address"><button>Sign up</button></form></div></div><div class="copyright">© 2026 The Finnish Paradigm™ · Terms · Privacy · Cookie Settings</div></footer>
-<div id="cookieNotice" class="cookie"><b>Privacy overview</b><p>This preview includes a cookie notice pattern for live deployment.</p><button onclick="this.closest('.cookie').remove()">Accept</button></div>
+<footer class="footer">
+  <div class="footer-grid">
+    <div><h3>FCEI</h3><p>Finland Creative Education Institute. Research-informed teacher training inspired by Finnish education principles and adapted for classroom practice, TVET and school leadership.</p><p class="small">Not an official Finnish government certification unless separately accredited or approved.</p></div>
+    <div><h4>Courses</h4><a href="/courses.html">All Courses</a><a href="/tvet.html">TVET Modules</a><a href="/consultancy.html">Consultancy</a><a href="/resources.html">Resources</a></div>
+    <div><h4>Platform</h4><a href="/dashboard.html">Dashboard</a><a href="/booking.html">Book Demo</a><a href="/legal.html">Legal</a><a href="/privacy.html">Privacy</a></div>
+    <div><h4>Newsletter</h4><p>Get training updates, implementation tips and course offers.</p><form class="newsletter" onsubmit="return false"><input placeholder="Email address"><button>Sign up</button></form></div>
+  </div>
+  <div class="copyright">&copy; 2026 Finland Creative Education Institute &middot; <a href="/terms.html">Terms</a> &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/cookie.html">Cookie Settings</a></div>
+</footer>
+<div id="cookieNotice" class="cookie"><b>Privacy overview</b><p>This site uses cookies for essential functionality.</p><button onclick="this.closest('.cookie').remove()">Accept</button></div>
 <script src="/assets/app.js"></script>
 </body></html>

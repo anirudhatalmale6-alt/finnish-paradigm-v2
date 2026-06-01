@@ -199,5 +199,37 @@ def seed_upload_pack(db_path: str) -> None:
         (cert_rules.get("programme_id", ""), json.dumps(cert_rules)),
     )
 
+    tvet_file = SEED_DIR / "tvet_modules.json"
+    if tvet_file.exists():
+        with open(tvet_file, encoding="utf-8") as f:
+            tvet = json.load(f)
+        for t in tvet:
+            cur.execute(
+                """INSERT OR IGNORE INTO tvet_modules
+                   (tvet_id, slug, title, purpose, topic, task, scenario, demo)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    t["id"], t.get("slug", ""), t["title"],
+                    t.get("purpose", ""), t.get("topic", ""),
+                    t.get("task", ""), t.get("scenario", ""),
+                    t.get("demo", ""),
+                ),
+            )
+
+    consultancy_file = SEED_DIR / "consultancy_services.json"
+    if consultancy_file.exists():
+        with open(consultancy_file, encoding="utf-8") as f:
+            services = json.load(f)
+        for s in services:
+            cur.execute(
+                """INSERT OR IGNORE INTO consultancy_services
+                   (service_id, slug, title, description)
+                   VALUES (?, ?, ?, ?)""",
+                (
+                    s["id"], s.get("slug", ""), s["title"],
+                    s.get("description", ""),
+                ),
+            )
+
     conn.commit()
     conn.close()

@@ -49,3 +49,38 @@ def test_lms_programme():
     assert r.status_code == 200
     data = r.json()
     assert data['brand'] == 'Finland Creative Education Institute'
+
+def test_tvet_modules():
+    r = client.get('/api/tvet')
+    assert r.status_code == 200
+    tvet = r.json()
+    assert len(tvet) == 12
+    assert tvet[0]['id'] == 'T01'
+
+def test_tvet_detail():
+    r = client.get('/api/tvet/T01')
+    assert r.status_code == 200
+    data = r.json()
+    assert 'Competence' in data['title']
+
+def test_consultancy_services():
+    r = client.get('/api/consultancy')
+    assert r.status_code == 200
+    services = r.json()
+    assert len(services) == 12
+    assert services[0]['id'] == 'S01'
+
+def test_consultancy_detail():
+    r = client.get('/api/consultancy/S01')
+    assert r.status_code == 200
+    data = r.json()
+    assert 'Audit' in data['title']
+
+def test_catalogue():
+    r = client.get('/api/catalogue')
+    assert r.status_code == 200
+    data = r.json()
+    assert data['total'] == 36
+    assert len(data['courses']) == 12
+    assert len(data['tvet']) == 12
+    assert len(data['consultancy']) == 12

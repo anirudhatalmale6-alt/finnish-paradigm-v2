@@ -34,3 +34,13 @@ def test_glossary_and_programme():
     assert prog['brand'] == 'Finland Creative Education Institute'
     rules = client.get('/api/lms/certificate-rules').json()
     assert rules['quiz_pass_percent'] == 70
+
+def test_tvet_and_consultancy():
+    tvet = client.get('/api/tvet').json()
+    assert len(tvet) == 12
+    assert tvet[0]['id'] == 'T01'
+    services = client.get('/api/consultancy').json()
+    assert len(services) == 12
+    assert services[0]['id'] == 'S01'
+    cat = client.get('/api/catalogue').json()
+    assert cat['total'] == 36
