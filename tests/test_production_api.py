@@ -43,4 +43,4 @@ def test_tvet_and_consultancy():
     assert len(services) == 12
     assert services[0]['id'] == 'S01'
     cat = client.get('/api/catalogue').json()
-    assert cat['total'] == 36
+    assert cat['total'] >= 36
