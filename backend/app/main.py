@@ -208,6 +208,17 @@ def current_user(authorization: Optional[str] = Header(None)):
     if not user or not user['active']: raise HTTPException(401, 'User not found or inactive')
     return dict(user)
 
+def optional_user(authorization: Optional[str] = Header(None)):
+    if not authorization or not authorization.lower().startswith('bearer '):
+        return None
+    try:
+        payload = read_token(authorization.split(' ', 1)[1])
+        conn = db(); user = conn.execute('SELECT id,name,email,role,organisation,active FROM users WHERE id=?', (payload['sub'],)).fetchone(); conn.close()
+        if not user or not user['active']: return None
+        return dict(user)
+    except:
+        return None
+
 def require_admin(user=Depends(current_user)):
     if user['role'] not in ('admin', 'manager'):
         raise HTTPException(403, 'Admin or manager role required')
@@ -782,7 +793,7 @@ def lms_course_detail(course_id: str):
     return {'course': dict(course), 'modules': [dict(m) for m in modules]}
 
 @app.get('/api/lms/modules/{module_id}')
-def lms_module_detail(module_id: str):
+def lms_module_detail(module_id: str, user=Depends(optional_user)):
     conn = db()
     module = conn.execute('''
         SELECT m.*, c.title AS course_title, c.slug AS course_slug, c.course_id AS parent_course_id
@@ -796,6 +807,18 @@ def lms_module_detail(module_id: str):
         if result.get(field):
             try: result[field] = json.loads(result[field])
             except: pass
+    enrolled = False
+    if user:
+        enrollment = conn.execute('SELECT id FROM enrollments WHERE user_id=? AND course_id=?', (user['id'], module['parent_course_id'])).fetchone()
+        enrolled = bool(enrollment) or user['role'] in ('admin', 'manager')
+    if not enrolled:
+        conn.close()
+        return {
+            'module': result,
+            'locked': True,
+            'video': None, 'quizzes': [], 'rubrics': [],
+            'implementation_task': None, 'video_script': None,
+        }
     video = conn.execute('SELECT * FROM module_videos WHERE module_id=?', (module_id,)).fetchone()
     quizzes = conn.execute('SELECT quiz_id, question, choices, correct_choice_index, feedback FROM lms_quizzes WHERE module_id=?', (module_id,)).fetchall()
     quiz_list = []
@@ -815,6 +838,7 @@ def lms_module_detail(module_id: str):
     conn.close()
     return {
         'module': result,
+        'locked': False,
         'video': dict(video) if video else None,
         'quizzes': quiz_list,
         'rubrics': [dict(r) for r in rubrics],

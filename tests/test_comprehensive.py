@@ -260,11 +260,18 @@ class TestAdminRouteProtection:
 class TestLmsContent:
     """Tests 24-25: LMS content verification."""
 
-    # 24. LMS quizzes loaded for module M1
+    # 24. LMS quizzes loaded for module M1 (requires enrollment)
     def test_24_lms_quizzes_loaded(self):
-        r = client.get("/api/lms/modules/M1")
+        email='lms_content_test@example.com'
+        r=client.post('/api/auth/register', json={'name':'LMS Test','email':email,'password':'StrongPass123','role':'teacher'})
+        if r.status_code == 409:
+            r=client.post('/api/auth/login', json={'email':email,'password':'StrongPass123'})
+        h={'Authorization':'Bearer '+r.json()['access_token']}
+        client.post('/api/enrollments', json={'course_id':'C1'}, headers=h)
+        r = client.get("/api/lms/modules/M1", headers=h)
         assert r.status_code == 200
         data = r.json()
+        assert data["locked"] == False
         quizzes = data["quizzes"]
         assert len(quizzes) == 3
         for q in quizzes:
@@ -272,9 +279,12 @@ class TestLmsContent:
             assert "choices" in q
             assert len(q["choices"]) == 4
 
-    # 25. LMS rubrics loaded for module M1
+    # 25. LMS rubrics loaded for module M1 (requires enrollment)
     def test_25_lms_rubrics_loaded(self):
-        r = client.get("/api/lms/modules/M1")
+        email='lms_content_test@example.com'
+        r=client.post('/api/auth/login', json={'email':email,'password':'StrongPass123'})
+        h={'Authorization':'Bearer '+r.json()['access_token']}
+        r = client.get("/api/lms/modules/M1", headers=h)
         assert r.status_code == 200
         data = r.json()
         rubrics = data["rubrics"]

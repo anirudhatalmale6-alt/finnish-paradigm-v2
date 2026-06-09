@@ -31,13 +31,23 @@ def test_booking_create():
     assert r.json()['status'] == 'booked'
 
 def test_lms_module_detail():
-    r = client.get('/api/lms/modules/M1')
+    h = auth_headers()
+    client.post('/api/enrollments', json={'course_id':'C1'}, headers=h)
+    r = client.get('/api/lms/modules/M1', headers=h)
     assert r.status_code == 200
     data = r.json()
     assert data['module']['title'] == 'Finnish-Inspired Values, Equity and Ethical Positioning'
+    assert data['locked'] == False
     assert len(data['quizzes']) == 3
     assert len(data['rubrics']) == 3
     assert data['implementation_task'] is not None
+
+def test_lms_module_locked_without_enrollment():
+    r = client.get('/api/lms/modules/M1')
+    assert r.status_code == 200
+    data = r.json()
+    assert data['locked'] == True
+    assert len(data['quizzes']) == 0
 
 def test_lms_glossary():
     r = client.get('/api/lms/glossary')

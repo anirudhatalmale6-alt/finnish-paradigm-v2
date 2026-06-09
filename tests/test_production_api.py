@@ -19,10 +19,18 @@ def test_auth_enrollment_flow():
     assert client.post('/api/enrollments', json={'course_id':'C1'}, headers=h).status_code == 200
 
 def test_lms_module_with_quizzes():
-    r = client.get('/api/lms/modules/M1')
+    email='teacher_fcei_mod@example.com'
+    r=client.post('/api/auth/register', json={'name':'Module Test','email':email,'password':'StrongPass123','role':'teacher'})
+    if r.status_code == 409:
+        r=client.post('/api/auth/login', json={'email':email,'password':'StrongPass123'})
+    assert r.status_code == 200
+    h={'Authorization':'Bearer '+r.json()['access_token']}
+    client.post('/api/enrollments', json={'course_id':'C1'}, headers=h)
+    r = client.get('/api/lms/modules/M1', headers=h)
     assert r.status_code == 200
     data = r.json()
     assert data['module']['title'] == 'Finnish-Inspired Values, Equity and Ethical Positioning'
+    assert data['locked'] == False
     assert len(data['quizzes']) == 3
     assert len(data['rubrics']) == 3
     assert data['implementation_task'] is not None
