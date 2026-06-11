@@ -1132,4 +1132,8 @@ def download_file(filename: str):
     if not os.path.exists(path): raise HTTPException(404, 'File not found')
     return FileResponse(path, filename=safe)
 
+from .scorm import scorm_router, init_scorm_tables
+app.include_router(scorm_router)
+init_scorm_tables()
+
 app.mount('/', StaticFiles(directory=FRONTEND_DIR, html=True), name='frontend')
