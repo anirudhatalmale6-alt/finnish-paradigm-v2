@@ -1136,4 +1136,16 @@ from .scorm import scorm_router, init_scorm_tables
 app.include_router(scorm_router)
 init_scorm_tables()
 
+from .cms import cms_router, init_cms_tables
+app.include_router(cms_router)
+init_cms_tables()
+
+from .videos_api import videos_router, init_video_tables
+app.include_router(videos_router)
+init_video_tables()
+
+from .artefacts import artefacts_router, init_artefact_tables
+app.include_router(artefacts_router)
+init_artefact_tables()
+
 app.mount('/', StaticFiles(directory=FRONTEND_DIR, html=True), name='frontend')
