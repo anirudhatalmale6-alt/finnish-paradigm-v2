@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FCEI Improvement Cycle — hover banners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --fce-pine:#0c3a2c; --fce-emerald:#1b8e63; --fce-emerald-strong:#14724e;
+  --fce-moss:#5e7257; --fce-moss-soft:#edf2e8; --fce-moss-border:#d2ddca;
+  --fce-cloudberry:#e8a33c; --fce-birch:#f7f3ea; --fce-birch-2:#fbf8f1;
+  --fce-ink:#0f1a16; --fce-ink-soft:#46584e;
+  --fce-display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --fce-sans:'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --fce-mono:'Space Mono',ui-monospace,monospace;
+}
+
+/* Demo chrome (NOT part of the feature) --------------------------------- */
+body{margin:0;font-family:var(--fce-sans);color:var(--fce-ink);background:var(--fce-birch);}
+.demo-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 22px;background:var(--fce-birch-2);border-bottom:1px solid var(--fce-moss-border);}
+.demo-logo{display:flex;align-items:center;gap:9px;font-family:var(--fce-display);font-weight:800;font-size:1.2rem;margin-right:12px;}
+.demo-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--fce-emerald);color:var(--fce-birch);font-weight:800;}
+.demo-item{font-family:var(--fce-sans);font-weight:500;font-size:.95rem;color:var(--fce-ink-soft);background:none;border:1px solid transparent;border-radius:9px;padding:8px 12px;cursor:pointer;}
+.demo-item:hover,.demo-item:focus-visible{color:var(--fce-ink);background:var(--fce-moss-soft);outline:none;}
+.demo-note{max-width:760px;margin:2.6rem auto;padding:0 22px;color:var(--fce-ink-soft);line-height:1.6;}
+.demo-note h1{font-family:var(--fce-display);font-size:1.5rem;color:var(--fce-ink);}
+.demo-note code{font-family:var(--fce-mono);background:var(--fce-moss-soft);padding:.12rem .4rem;border-radius:6px;font-size:.86em;}
+.demo-grid{display:flex;gap:10px;flex-wrap:wrap;max-width:760px;margin:1rem auto;padding:0 22px;}
+.demo-card{flex:1 1 200px;background:#fff;border:1px solid var(--fce-moss-border);border-radius:14px;padding:16px;cursor:pointer;}
+.demo-card b{font-family:var(--fce-display);}
+
+/* FCEI HOW IT WORKS MAP ------------------------------------------------- */
+.fcei-map{max-width:1120px;margin:1.8rem auto 2.8rem;padding:0 22px;}
+.fcei-map-shell{background:linear-gradient(180deg,#fbf8f1 0%,#f7f3ea 100%);border:1px solid var(--fce-moss-border);border-radius:26px;box-shadow:0 18px 46px rgba(12,58,44,.10);padding:26px;}
+.fcei-map-kicker{font-family:var(--fce-mono);font-weight:700;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fce-emerald-strong);margin:0 0 8px;}
+.fcei-map h2{font-family:var(--fce-display);font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.04;margin:0;color:var(--fce-ink);max-width:820px;}
+.fcei-map-intro{font-size:1.02rem;line-height:1.65;color:var(--fce-ink-soft);max-width:860px;margin:12px 0 22px;}
+.fcei-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0 24px;}
+.fcei-flow-card{position:relative;background:#fff;border:1px solid var(--fce-moss-border);border-radius:18px;padding:16px 14px 18px;min-height:156px;box-shadow:0 10px 22px rgba(12,58,44,.07);cursor:default;}
+.fcei-flow-card:hover,.fcei-flow-card:focus-visible{border-color:rgba(27,142,99,.55);box-shadow:0 14px 28px rgba(12,58,44,.12);outline:none;}
+.fcei-flow-card:not(:last-child)::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);z-index:2;display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:var(--fce-emerald);color:#fff;font-weight:800;box-shadow:0 6px 14px rgba(12,58,44,.18);}
+.fcei-flow-num{display:inline-grid;place-items:center;width:34px;height:26px;border-radius:9px;background:var(--fce-emerald);color:var(--fce-birch-2);font-family:var(--fce-mono);font-weight:700;font-size:.78rem;margin-bottom:10px;}
+.fcei-flow-card h3{font-family:var(--fce-display);font-size:1.16rem;line-height:1.08;margin:0 0 8px;color:var(--fce-ink);}
+.fcei-flow-card p{font-size:.92rem;line-height:1.45;color:var(--fce-ink-soft);margin:0;}
+.fcei-map-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:16px;}
+.fcei-map-panel{background:var(--fce-moss-soft);border:1px solid var(--fce-moss-border);border-radius:20px;padding:18px;}
+.fcei-map-panel h3{font-family:var(--fce-display);font-size:1.2rem;margin:0 0 10px;color:var(--fce-pine);}
+.fcei-map-panel ul{margin:0;padding-left:1.05rem;color:var(--fce-ink-soft);line-height:1.55;}
+.fcei-map-table{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:.93rem;}
+.fcei-map-table th{text-align:left;font-family:var(--fce-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fce-emerald-strong);font-weight:700;padding:0 8px 2px;}
+.fcei-map-table td{background:#fff;border-top:1px solid var(--fce-moss-border);border-bottom:1px solid var(--fce-moss-border);padding:10px 8px;color:var(--fce-ink-soft);vertical-align:top;}
+.fcei-map-table td:first-child{border-left:1px solid var(--fce-moss-border);border-radius:12px 0 0 12px;color:var(--fce-ink);font-weight:700;white-space:nowrap;}
+.fcei-map-table td:last-child{border-right:1px solid var(--fce-moss-border);border-radius:0 12px 12px 0;font-family:var(--fce-mono);font-size:.82rem;color:var(--fce-emerald-strong);}
+.fcei-map-callout{display:flex;gap:12px;align-items:flex-start;margin-top:18px;background:#fff;border:1px solid var(--fce-moss-border);border-radius:18px;padding:14px;color:var(--fce-ink-soft);line-height:1.55;}
+.fcei-map-callout strong{color:var(--fce-pine);}
+.fcei-map-callout span{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:12px;background:var(--fce-cloudberry);color:#fff;font-weight:800;}
+@media (max-width:960px){.fcei-flow{grid-template-columns:1fr;}.fcei-flow-card:not(:last-child)::after{content:"↓";right:50%;top:auto;bottom:-20px;transform:translateX(50%);}.fcei-map-grid{grid-template-columns:1fr;}}
+
+
+/* ======================================================================
+   FCEI IMPROVEMENT CYCLE BANNERS — component. COPY THIS <style> BLOCK.
+   The banner is non-interactive (pointer-events:none), non-selectable, and
+   its text is painted to <canvas> (not present in the DOM) with a watermark.
+   ====================================================================== */
+.fcei-cyc-banner{
+  position:fixed; z-index:99999; display:none;
+  pointer-events:none;                 /* cannot be clicked, selected or right-clicked */
+  -webkit-user-select:none; user-select:none;
+  background:var(--fce-birch-2,#fbf8f1);
+  border:1.5px solid var(--fce-moss-border,#d2ddca);
+  border-radius:14px;
+  box-shadow:0 18px 44px rgba(8,42,32,.22);
+  padding:16px;
+  opacity:0; transform:translateY(4px);
+  transition:opacity .14s ease, transform .14s ease;
+}
+.fcei-cyc-banner.show{opacity:1; transform:translateY(0);}
+.fcei-cyc-canvas{display:block; -webkit-user-select:none; user-select:none; -webkit-user-drag:none; user-drag:none;}
+.fcei-cyc-caret{position:absolute; bottom:-7px; width:12px; height:12px; background:var(--fce-birch-2,#fbf8f1);
+  border-right:1.5px solid var(--fce-moss-border,#d2ddca); border-bottom:1.5px solid var(--fce-moss-border,#d2ddca);
+  transform:rotate(45deg);}
+.fcei-cyc-banner.below .fcei-cyc-caret{bottom:auto; top:-7px;
+  border-right:0; border-bottom:0; border-left:1.5px solid var(--fce-moss-border,#d2ddca); border-top:1.5px solid var(--fce-moss-border,#d2ddca);}
+@media (prefers-reduced-motion:reduce){.fcei-cyc-banner{transition:none;}}
+</style>
+</head>
+<body>
+
+<!-- ===== Demo: pretend these are EXISTING platform items =============== -->
+<nav class="demo-nav">
+  <div class="demo-logo"><span class="demo-mark">F</span>FCEI</div>
+  <button class="demo-item" data-fcei-cycle="01">Diagnostics &amp; Evidence</button>
+  <button class="demo-item" data-fcei-cycle="02">Classroom Tools</button>
+  <button class="demo-item" data-fcei-cycle="03">Portfolio &amp; Uploads</button>
+  <button class="demo-item" data-fcei-cycle="04">Impact Review</button>
+  <button class="demo-item" data-fcei-cycle="05">Scaling &amp; Improvement</button>
+</nav>
+
+<div class="demo-note">
+  <h1>Improvement Cycle hover banners</h1>
+  <p><strong>Hover (or keyboard-focus) any item above or the cards below.</strong> A temporary
+  banner shows its mapped Improvement Cycle stage. The banner text is painted to a canvas with an
+  <code>FCEI</code> watermark — try to select it, right-click it, or drag it: you can't, and it
+  isn't in the page's text/DOM.</p>
+  <p><strong>To wire it on fcei.eu (no rebuild):</strong> paste the <code>&lt;style&gt;</code> and
+  <code>&lt;script&gt;</code> blocks into the site, then map existing items either by adding
+  <code>data-fcei-cycle="01"</code> … <code>"05"</code> (or <code>see-it</code> … <code>refine-it</code>)
+  to the elements, or by listing CSS selectors in the <code>CYCLE_SELECTORS</code> map at the top of
+  the script. New items rendered later are picked up automatically.</p>
+</div>
+
+<section class="fcei-map" aria-labelledby="fcei-map-title">
+  <div class="fcei-map-shell">
+    <p class="fcei-map-kicker">FCEI Finnish Teacher Training Development Framework</p>
+    <h2 id="fcei-map-title">How the Improvement Cycle works on the platform</h2>
+    <p class="fcei-map-intro">The cycle guides every learner, teacher, trainer and school team through one clear improvement journey: identify the real issue, apply one manageable Finnish-inspired practice, collect evidence, reflect on impact and refine the next step before scaling.</p>
+
+    <div class="fcei-flow" aria-label="FCEI Improvement Cycle stages">
+      <article class="fcei-flow-card" tabindex="0" data-fcei-cycle="see-it">
+        <span class="fcei-flow-num">01</span>
+        <h3>See it</h3>
+        <p>Use evidence to locate the real classroom, workplace or institutional problem without blame.</p>
+      </article>
+      <article class="fcei-flow-card" tabindex="0" data-fcei-cycle="apply-it">
+        <span class="fcei-flow-num">02</span>
+        <h3>Apply it</h3>
+        <p>Try one practical routine, tool or strategy in one real learning setting first.</p>
+      </article>
+      <article class="fcei-flow-card" tabindex="0" data-fcei-cycle="evidence-it">
+        <span class="fcei-flow-num">03</span>
+        <h3>Evidence it</h3>
+        <p>Upload visible artefacts that prove the change happened and show learner response.</p>
+      </article>
+      <article class="fcei-flow-card" tabindex="0" data-fcei-cycle="reflect-it">
+        <span class="fcei-flow-num">04</span>
+        <h3>Reflect it</h3>
+        <p>Review what improved, what stayed the same and what the evidence suggests next.</p>
+      </article>
+      <article class="fcei-flow-card" tabindex="0" data-fcei-cycle="refine-it">
+        <span class="fcei-flow-num">05</span>
+        <h3>Refine it</h3>
+        <p>Improve the routine and scale only when evidence supports wider use.</p>
+      </article>
+    </div>
+
+    <div class="fcei-map-grid">
+      <div class="fcei-map-panel">
+        <h3>What the participant experiences</h3>
+        <ul>
+          <li>They begin with a diagnostic task, observation or gap-analysis prompt.</li>
+          <li>They choose one manageable classroom, TVET, leadership or wellbeing action.</li>
+          <li>They upload proof such as learner work, checklists, photos, rubrics or reflections.</li>
+          <li>They complete a guided impact review using evidence, not opinion only.</li>
+          <li>They revise the practice and decide whether to repeat, adapt or scale it.</li>
+        </ul>
+      </div>
+      <div class="fcei-map-panel">
+        <h3>Developer mapping logic</h3>
+        <table class="fcei-map-table" aria-label="Developer stage mapping table">
+          <thead><tr><th>Platform area</th><th>Cycle stage</th><th>Data key</th></tr></thead>
+          <tbody>
+            <tr><td>Diagnostics</td><td>See it</td><td>data-fcei-cycle="01"</td></tr>
+            <tr><td>Classroom tools</td><td>Apply it</td><td>data-fcei-cycle="02"</td></tr>
+            <tr><td>Portfolio uploads</td><td>Evidence it</td><td>data-fcei-cycle="03"</td></tr>
+            <tr><td>Impact review</td><td>Reflect it</td><td>data-fcei-cycle="04"</td></tr>
+            <tr><td>Scaling plan</td><td>Refine it</td><td>data-fcei-cycle="05"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fcei-map-callout">
+      <span>✓</span>
+      <div><strong>How the hover map works:</strong> every mapped platform item carries a cycle key. When the user hovers or keyboard-focuses that item, the protected canvas banner displays the correct stage explanation. This makes the improvement cycle visible across navigation, course cards, toolkit buttons, portfolio uploads and LMS progress screens.</div>
+    </div>
+  </div>
+</section>
+
+<div class="demo-grid">
+  <div class="demo-card" data-fcei-cycle="see-it"><b>Assessment for Learning</b><br><small>existing course card</small></div>
+  <div class="demo-card" data-fcei-cycle="apply-it"><b>Mixed-Ability Teaching</b><br><small>existing course card</small></div>
+  <div class="demo-card" data-fcei-cycle="evidence-it"><b>Capstone Evidence</b><br><small>existing course card</small></div>
+</div>
+
+<!-- ===== FCEI IMPROVEMENT CYCLE BANNERS — COPY THIS SCRIPT ============= -->
+<script>
+(function(){
+  /* ---- 1) MAP existing platform items -> a cycle stage ------------------
+     Two ways (use either or both):
+       (a) add an attribute to the element:  data-fcei-cycle="01"  (01..05,
+           or "see-it","apply-it","evidence-it","reflect-it","refine-it")
+       (b) list CSS selectors here -> stage key: */
+  var CYCLE_SELECTORS = {
+    // "#nav .courses-link": "see-it",
+    // ".course-card.assessment": "apply-it"
+  };
+
+  /* ---- 2) The five stages (text is your content; edit freely) ---------- */
+  var STAGES = {
+    "see-it":      { num:"01", title:"See it",      blurb:"Spot the real classroom, workplace or institutional problem using evidence, not blame." },
+    "apply-it":    { num:"02", title:"Apply it",    blurb:"Choose one manageable Finnish-education tool or routine and use it in a real lesson, workshop or process." },
+    "evidence-it": { num:"03", title:"Evidence it", blurb:"Collect visible learner, staff or workplace evidence and upload it to make the change real." },
+    "reflect-it":  { num:"04", title:"Reflect it",  blurb:"Review what changed and what the evidence shows about the impact." },
+    "refine-it":   { num:"05", title:"Refine it",   blurb:"Improve the next step and scale responsibly across classes, teams or sites." }
+  };
+  function normKey(v){
+    v=(v||"").toString().toLowerCase().trim();
+    var byNum={ "01":"see-it","1":"see-it","02":"apply-it","2":"apply-it","03":"evidence-it","3":"evidence-it","04":"reflect-it","4":"reflect-it","05":"refine-it","5":"refine-it" };
+    if(byNum[v]) return byNum[v];
+    v=v.replace(/[^a-z]+/g,"-").replace(/^-|-$/g,"");
+    return STAGES[v] ? v : null;
+  }
+
+  /* ---- 3) Protected banner (canvas-painted, non-interactive) ----------- */
+  var banner=document.createElement("div");
+  banner.className="fcei-cyc-banner";
+  banner.setAttribute("aria-hidden","true");
+  banner.innerHTML='<canvas class="fcei-cyc-canvas"></canvas><span class="fcei-cyc-caret"></span>';
+  var canvas=banner.querySelector("canvas");
+  var caret=banner.querySelector(".fcei-cyc-caret");
+
+  function roundRect(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+  function wrap(c,text,maxW){ var w=text.split(" "),lines=[],line=""; for(var i=0;i<w.length;i++){ var t=line?line+" "+w[i]:w[i]; if(c.measureText(t).width>maxW && line){ lines.push(line); line=w[i]; } else line=t; } if(line) lines.push(line); return lines; }
+
+  function draw(s){
+    var DPR=Math.max(1, window.devicePixelRatio||1);
+    var W=300, chipW=30, chipH=22, gap1=12, titleSize=19, gap2=9, blurbSize=13.5, lineH=19;
+    var ctx=canvas.getContext("2d");
+    ctx.font='500 '+blurbSize+'px "Hanken Grotesk", sans-serif';
+    var lines=wrap(ctx, s.blurb, W);
+    var H=chipH+gap1+titleSize+gap2+lines.length*lineH+2;
+    canvas.style.width=W+"px"; canvas.style.height=Math.ceil(H)+"px";
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.clearRect(0,0,W,H);
+    ctx.textBaseline="alphabetic"; ctx.textAlign="left";
+    // watermark (deterrent + traceability)
+    ctx.save(); ctx.globalAlpha=0.06; ctx.fillStyle="#0c3a2c"; ctx.font='700 20px "Space Mono", monospace'; ctx.rotate(-0.34);
+    for(var yy=-10; yy<H+50; yy+=32){ for(var xx=-40; xx<W+80; xx+=118){ ctx.fillText("FCEI", xx, yy); } }
+    ctx.restore();
+    // number chip
+    roundRect(ctx,0,0,chipW,chipH,7); ctx.fillStyle="#1b8e63"; ctx.fill();
+    ctx.fillStyle="#fbf8f1"; ctx.font='700 12px "Space Mono", monospace'; ctx.textAlign="center";
+    ctx.fillText(s.num, chipW/2, 15); ctx.textAlign="left";
+    // kicker
+    ctx.fillStyle="#14724e"; ctx.font='700 10px "Space Mono", monospace';
+    if("letterSpacing" in ctx){ try{ ctx.letterSpacing="1.4px"; }catch(e){} }
+    ctx.fillText("FCEI FINNISH IMPROVEMENT CYCLE", chipW+10, 15);
+    if("letterSpacing" in ctx){ try{ ctx.letterSpacing="0px"; }catch(e){} }
+    // title
+    var ty=chipH+gap1+titleSize-4;
+    ctx.fillStyle="#0f1a16"; ctx.font='700 '+titleSize+'px "Bricolage Grotesque", sans-serif';
+    ctx.fillText(s.title, 0, ty);
+    // blurb
+    ctx.fillStyle="#46584e"; ctx.font='500 '+blurbSize+'px "Hanken Grotesk", sans-serif';
+    var by=ty+gap2+blurbSize;
+    for(var i=0;i<lines.length;i++){ ctx.fillText(lines[i], 0, by+i*lineH); }
+  }
+
+  var hideT;
+  function place(el){
+    banner.style.display="block"; banner.classList.remove("show");
+    var r=el.getBoundingClientRect(), bw=banner.offsetWidth, bh=banner.offsetHeight;
+    var left=Math.round(r.left + r.width/2 - bw/2);
+    left=Math.max(8, Math.min(left, window.innerWidth-bw-8));
+    var top=Math.round(r.top - bh - 12), below=false;
+    if(top<8){ top=Math.round(r.bottom+12); below=true; }
+    banner.style.left=left+"px"; banner.style.top=top+"px";
+    banner.classList.toggle("below", below);
+    caret.style.left=Math.max(14, Math.min(bw-14, Math.round(r.left+r.width/2-left)))+"px";
+    requestAnimationFrame(function(){ banner.classList.add("show"); });
+  }
+  function showFor(el,key){ var s=STAGES[key]; if(!s) return; clearTimeout(hideT); draw(s); place(el); }
+  function hide(){ clearTimeout(hideT); hideT=setTimeout(function(){ banner.classList.remove("show"); setTimeout(function(){ if(!banner.classList.contains("show")) banner.style.display="none"; },170); },80); }
+
+  function wire(el,key){
+    if(!key || !STAGES[key] || el.__fceiCyc) return;
+    el.__fceiCyc=1;
+    el.addEventListener("mouseenter", function(){ showFor(el,key); });
+    el.addEventListener("mouseleave", hide);
+    el.addEventListener("focus", function(){ showFor(el,key); });
+    el.addEventListener("blur", hide);
+  }
+  function rewire(){
+    var els=document.querySelectorAll("[data-fcei-cycle]");
+    for(var i=0;i<els.length;i++){ wire(els[i], normKey(els[i].getAttribute("data-fcei-cycle"))); }
+    for(var sel in CYCLE_SELECTORS){ if(!CYCLE_SELECTORS.hasOwnProperty(sel)) continue;
+      var m=document.querySelectorAll(sel); for(var j=0;j<m.length;j++){ wire(m[j], normKey(CYCLE_SELECTORS[sel])); } }
+  }
+
+  function init(){
+    document.body.appendChild(banner);
+    // copy/snipe deterrents on the banner itself
+    ["contextmenu","copy","cut","dragstart","selectstart"].forEach(function(ev){
+      banner.addEventListener(ev, function(e){ e.preventDefault(); return false; });
+    });
+    rewire();
+    // pick up items rendered later by the SPA
+    if(window.MutationObserver){ new MutationObserver(rewire).observe(document.body,{childList:true,subtree:true}); }
+    // a moving page would leave the banner stranded; hide it
+    window.addEventListener("scroll", function(){ banner.classList.remove("show"); banner.style.display="none"; }, true);
+    window.addEventListener("resize", function(){ banner.classList.remove("show"); banner.style.display="none"; });
+    window.fceiCycleRewire=rewire; // call after a route change if needed
+  }
+
+  function start(){
+    if(document.fonts && document.fonts.load){
+      Promise.all([
+        document.fonts.load('700 19px "Bricolage Grotesque"'),
+        document.fonts.load('500 14px "Hanken Grotesk"'),
+        document.fonts.load('700 12px "Space Mono"')
+      ]).then(init, init);
+    } else { init(); }
+  }
+  if(document.readyState==="loading"){ document.addEventListener("DOMContentLoaded", start); } else { start(); }
+})();
+</script>
+</body>
+</html>

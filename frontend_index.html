@@ -656,6 +656,30 @@ strong{font-weight:600; color:var(--pine)}
   .fc-grid{grid-template-columns:1fr;}
 }
 @media (prefers-reduced-motion:reduce){.fc-panel,.fc-item,.fc-trigger .chev{transition:none;}}
+
+/* ============================================================
+   IMPROVEMENT CYCLE HOVER BANNERS — canvas-painted tooltips
+   ============================================================ */
+.fcei-cyc-banner{
+  position:fixed; z-index:99999; display:none;
+  pointer-events:none;
+  -webkit-user-select:none; user-select:none;
+  background:var(--birch,#fbf8f1);
+  border:1.5px solid var(--line-strong,#d2ddca);
+  border-radius:14px;
+  box-shadow:0 18px 44px rgba(8,42,32,.22);
+  padding:16px;
+  opacity:0; transform:translateY(4px);
+  transition:opacity .14s ease, transform .14s ease;
+}
+.fcei-cyc-banner.show{opacity:1; transform:translateY(0);}
+.fcei-cyc-canvas{display:block; -webkit-user-select:none; user-select:none; -webkit-user-drag:none; user-drag:none;}
+.fcei-cyc-caret{position:absolute; bottom:-7px; width:12px; height:12px; background:var(--birch,#fbf8f1);
+  border-right:1.5px solid var(--line-strong,#d2ddca); border-bottom:1.5px solid var(--line-strong,#d2ddca);
+  transform:rotate(45deg);}
+.fcei-cyc-banner.below .fcei-cyc-caret{bottom:auto; top:-7px;
+  border-right:0; border-bottom:0; border-left:1.5px solid var(--line-strong,#d2ddca); border-top:1.5px solid var(--line-strong,#d2ddca);}
+@media (prefers-reduced-motion:reduce){.fcei-cyc-banner{transition:none;}}
 </style>
 </head>
 <body>
@@ -1096,8 +1120,9 @@ function cycleSvg(){
   </svg>`;
 }
 function cycleSteps(){
+  const keys=['see-it','apply-it','evidence-it','reflect-it','refine-it'];
   return `<div class="cycle-steps">${CYCLE.map((s,i)=>`
-    <div class="cstep"><span class="n">0${i+1}</span><div><h4>${esc(s[0])}</h4><p>${esc(s[1])}</p></div></div>`).join('')}</div>`;
+    <div class="cstep" tabindex="0" data-fcei-cycle="${keys[i]}"><span class="n">0${i+1}</span><div><h4>${esc(s[0])}</h4><p>${esc(s[1])}</p></div></div>`).join('')}</div>`;
 }
 
 /* ============================================================
@@ -2220,6 +2245,115 @@ function init(){
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
 else init();
+</script>
+<script>
+(function(){
+  var STAGES = {
+    "see-it":      { num:"01", title:"See it",      blurb:"Spot the real classroom, workplace or institutional problem using evidence, not blame." },
+    "apply-it":    { num:"02", title:"Apply it",    blurb:"Choose one manageable Finnish-education tool or routine and use it in a real lesson, workshop or process." },
+    "evidence-it": { num:"03", title:"Evidence it", blurb:"Collect visible learner, staff or workplace evidence and upload it to make the change real." },
+    "reflect-it":  { num:"04", title:"Reflect it",  blurb:"Review what changed and what the evidence shows about the impact." },
+    "refine-it":   { num:"05", title:"Refine it",   blurb:"Improve the next step and scale responsibly across classes, teams or sites." }
+  };
+  function normKey(v){
+    v=(v||"").toString().toLowerCase().trim();
+    var byNum={"01":"see-it","1":"see-it","02":"apply-it","2":"apply-it","03":"evidence-it","3":"evidence-it","04":"reflect-it","4":"reflect-it","05":"refine-it","5":"refine-it"};
+    if(byNum[v]) return byNum[v];
+    v=v.replace(/[^a-z]+/g,"-").replace(/^-|-$/g,"");
+    return STAGES[v] ? v : null;
+  }
+  var banner=document.createElement("div");
+  banner.className="fcei-cyc-banner";
+  banner.setAttribute("aria-hidden","true");
+  banner.innerHTML='<canvas class="fcei-cyc-canvas"></canvas><span class="fcei-cyc-caret"></span>';
+  var canvas=banner.querySelector("canvas");
+  var caret=banner.querySelector(".fcei-cyc-caret");
+
+  function roundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+  function wrap(c,text,maxW){var w=text.split(" "),lines=[],line="";for(var i=0;i<w.length;i++){var t=line?line+" "+w[i]:w[i];if(c.measureText(t).width>maxW&&line){lines.push(line);line=w[i];}else line=t;}if(line)lines.push(line);return lines;}
+
+  function draw(s){
+    var DPR=Math.max(1,window.devicePixelRatio||1);
+    var W=300,chipW=30,chipH=22,gap1=12,titleSize=19,gap2=9,blurbSize=13.5,lineH=19;
+    var ctx=canvas.getContext("2d");
+    ctx.font='500 '+blurbSize+'px "Hanken Grotesk", sans-serif';
+    var lines=wrap(ctx,s.blurb,W);
+    var H=chipH+gap1+titleSize+gap2+lines.length*lineH+2;
+    canvas.style.width=W+"px";canvas.style.height=Math.ceil(H)+"px";
+    canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.clearRect(0,0,W,H);
+    ctx.textBaseline="alphabetic";ctx.textAlign="left";
+    ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle="#0c3a2c";ctx.font='700 20px "Space Mono", monospace';ctx.rotate(-0.34);
+    for(var yy=-10;yy<H+50;yy+=32){for(var xx=-40;xx<W+80;xx+=118){ctx.fillText("FCEI",xx,yy);}}
+    ctx.restore();
+    roundRect(ctx,0,0,chipW,chipH,7);ctx.fillStyle="#1b8e63";ctx.fill();
+    ctx.fillStyle="#fbf8f1";ctx.font='700 12px "Space Mono", monospace';ctx.textAlign="center";
+    ctx.fillText(s.num,chipW/2,15);ctx.textAlign="left";
+    ctx.fillStyle="#14724e";ctx.font='700 10px "Space Mono", monospace';
+    if("letterSpacing" in ctx){try{ctx.letterSpacing="1.4px";}catch(e){}}
+    ctx.fillText("FCEI FINNISH IMPROVEMENT CYCLE",chipW+10,15);
+    if("letterSpacing" in ctx){try{ctx.letterSpacing="0px";}catch(e){}}
+    var ty=chipH+gap1+titleSize-4;
+    ctx.fillStyle="#0f1a16";ctx.font='700 '+titleSize+'px "Bricolage Grotesque", sans-serif';
+    ctx.fillText(s.title,0,ty);
+    ctx.fillStyle="#46584e";ctx.font='500 '+blurbSize+'px "Hanken Grotesk", sans-serif';
+    var by=ty+gap2+blurbSize;
+    for(var i=0;i<lines.length;i++){ctx.fillText(lines[i],0,by+i*lineH);}
+  }
+
+  var hideT;
+  function place(el){
+    banner.style.display="block";banner.classList.remove("show");
+    var r=el.getBoundingClientRect(),bw=banner.offsetWidth,bh=banner.offsetHeight;
+    var left=Math.round(r.left+r.width/2-bw/2);
+    left=Math.max(8,Math.min(left,window.innerWidth-bw-8));
+    var top=Math.round(r.top-bh-12),below=false;
+    if(top<8){top=Math.round(r.bottom+12);below=true;}
+    banner.style.left=left+"px";banner.style.top=top+"px";
+    banner.classList.toggle("below",below);
+    caret.style.left=Math.max(14,Math.min(bw-14,Math.round(r.left+r.width/2-left)))+"px";
+    requestAnimationFrame(function(){banner.classList.add("show");});
+  }
+  function showFor(el,key){var s=STAGES[key];if(!s)return;clearTimeout(hideT);draw(s);place(el);}
+  function hide(){clearTimeout(hideT);hideT=setTimeout(function(){banner.classList.remove("show");setTimeout(function(){if(!banner.classList.contains("show"))banner.style.display="none";},170);},80);}
+
+  function wire(el,key){
+    if(!key||!STAGES[key]||el.__fceiCyc)return;
+    el.__fceiCyc=1;
+    el.addEventListener("mouseenter",function(){showFor(el,key);});
+    el.addEventListener("mouseleave",hide);
+    el.addEventListener("focus",function(){showFor(el,key);});
+    el.addEventListener("blur",hide);
+  }
+  function rewire(){
+    var els=document.querySelectorAll("[data-fcei-cycle]");
+    for(var i=0;i<els.length;i++){wire(els[i],normKey(els[i].getAttribute("data-fcei-cycle")));}
+  }
+
+  function init(){
+    document.body.appendChild(banner);
+    ["contextmenu","copy","cut","dragstart","selectstart"].forEach(function(ev){
+      banner.addEventListener(ev,function(e){e.preventDefault();return false;});
+    });
+    rewire();
+    if(window.MutationObserver){new MutationObserver(rewire).observe(document.body,{childList:true,subtree:true});}
+    window.addEventListener("scroll",function(){banner.classList.remove("show");banner.style.display="none";},true);
+    window.addEventListener("resize",function(){banner.classList.remove("show");banner.style.display="none";});
+    window.fceiCycleRewire=rewire;
+  }
+
+  function start(){
+    if(document.fonts&&document.fonts.load){
+      Promise.all([
+        document.fonts.load('700 19px "Bricolage Grotesque"'),
+        document.fonts.load('500 14px "Hanken Grotesk"'),
+        document.fonts.load('700 12px "Space Mono"')
+      ]).then(init,init);
+    } else {init();}
+  }
+  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",start);}else{start();}
+})();
 </script>
 </body>
 </html>
