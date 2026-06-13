@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FCEI — “Find Courses” menu (brand system)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* ========================================================================
+   FCEI BRAND TOKENS — the canonical system. Reuse these everywhere.
+   Colour: deep pine + emerald, moss tints, cloudberry amber, birch-white.
+   Type:   Bricolage Grotesque (display) · Hanken Grotesk (UI) · Space Mono (labels)
+   ======================================================================== */
+:root{
+  --fce-pine:#0c3a2c; --fce-pine-2:#082a20;
+  --fce-emerald:#1b8e63; --fce-emerald-strong:#14724e;
+  --fce-moss:#5e7257; --fce-moss-soft:#edf2e8; --fce-moss-border:#d2ddca;
+  --fce-cloudberry:#e8a33c; --fce-cloudberry-deep:#c9821c;
+  --fce-birch:#f7f3ea; --fce-birch-2:#fbf8f1; --fce-card:#ffffff;
+  --fce-ink:#15251d; --fce-ink-soft:#46584e;
+  --fce-display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --fce-sans:'Hanken Grotesk',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --fce-mono:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+/* Demo page chrome (NOT part of the component) -------------------------- */
+body{margin:0;font-family:var(--fce-sans);color:var(--fce-ink);background:var(--fce-birch);}
+.demo-nav{display:flex;align-items:center;gap:14px;height:68px;padding:0 22px;background:var(--fce-birch-2);border-bottom:1px solid var(--fce-moss-border);position:sticky;top:0;z-index:60;}
+.demo-logo{display:flex;align-items:center;gap:9px;font-family:var(--fce-display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;}
+.demo-mark{display:grid;place-items:center;width:33px;height:33px;border-radius:10px;background:var(--fce-emerald);color:var(--fce-birch);font-weight:800;}
+.demo-link{color:var(--fce-ink-soft);font-size:.95rem;font-weight:500;text-decoration:none;padding:6px 8px;border-radius:8px;}
+.demo-link:hover{background:var(--fce-moss-soft);color:var(--fce-ink);}
+.demo-sp{flex:1;}
+.demo-cta{background:var(--fce-cloudberry);color:#3a2607;border:0;border-radius:999px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;}
+.demo-cta:hover{background:var(--fce-cloudberry-deep);color:#fff;}
+.demo-note{max-width:760px;margin:3rem auto;padding:0 22px;color:var(--fce-ink-soft);line-height:1.6;}
+.demo-note h1{font-family:var(--fce-display);font-size:1.6rem;color:var(--fce-ink);}
+.demo-note code{font-family:var(--fce-mono);background:var(--fce-moss-soft);padding:.12rem .4rem;border-radius:6px;font-size:.86em;}
+
+/* ========================================================================
+   FIND COURSES MENU — component styles. COPY THIS <style> BLOCK.
+   All visual values come from the FCEI tokens above. Scoped under .fc.
+   ======================================================================== */
+.fc{position:relative;display:inline-block;font-family:var(--fce-sans);}
+.fc *,.fc *::before,.fc *::after{box-sizing:border-box;}
+
+/* Trigger (Bricolage display) */
+.fc-trigger{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-family:var(--fce-display);font-size:1rem;font-weight:700;letter-spacing:-.01em;
+  background:var(--fce-pine);color:var(--fce-birch);
+  border:0;border-radius:999px;padding:.6rem 1.1rem;cursor:pointer;
+  transition:background .15s ease;
+}
+.fc-trigger:hover{background:#114a39;}
+.fc-trigger .chev{color:var(--fce-cloudberry);transition:transform .18s ease;}
+.fc-trigger[aria-expanded="true"] .chev{transform:rotate(180deg);}
+
+/* Panel: birch card, moss frame, fixed head + footer, scrollable middle */
+.fc-panel{
+  position:absolute;top:calc(100% + 10px);left:0;
+  width:min(720px,92vw);
+  display:flex;flex-direction:column;
+  max-height:min(560px,80vh);
+  background:var(--fce-birch-2);
+  border:2px solid var(--fce-moss-border);
+  border-radius:20px;
+  box-shadow:0 28px 70px rgba(8,42,32,.26);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .16s ease,transform .16s ease,visibility .16s;
+  z-index:70;overflow:hidden;
+}
+.fc-panel.open{opacity:1;visibility:visible;transform:translateY(0);}
+
+/* Fixed header: mono kicker + search */
+.fc-head{padding:16px 16px 12px;border-bottom:1px solid var(--fce-moss-border);background:var(--fce-birch-2);}
+.fc-kicker{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:var(--fce-mono);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fce-emerald);margin:0 .15rem .7rem;
+}
+.fc-kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--fce-cloudberry);}
+.fc-search{display:flex;align-items:center;gap:.55rem;background:var(--fce-card);border:1px solid var(--fce-moss-border);border-radius:11px;padding:.6rem .85rem;}
+.fc-search:focus-within{border-color:var(--fce-cloudberry);box-shadow:0 0 0 3px rgba(232,163,60,.28);}
+.fc-search svg{color:var(--fce-moss);flex:none;}
+.fc-search input{flex:1;border:0;outline:none;font:inherit;font-family:var(--fce-sans);font-size:.95rem;background:transparent;color:var(--fce-ink);}
+
+/* Scrollable middle region — the full scroll functionality */
+.fc-scroll{
+  overflow-y:auto;overflow-x:hidden;
+  padding:14px 10px 14px 14px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--fce-moss-border) transparent;
+}
+.fc-scroll::-webkit-scrollbar{width:12px;}
+.fc-scroll::-webkit-scrollbar-track{background:transparent;}
+.fc-scroll::-webkit-scrollbar-thumb{background:var(--fce-moss-border);border-radius:999px;border:3px solid var(--fce-birch-2);background-clip:padding-box;}
+.fc-scroll::-webkit-scrollbar-thumb:hover{background:var(--fce-emerald);}
+.fc-scroll:focus-visible{outline:none;box-shadow:inset 0 0 0 2px rgba(27,142,99,.5);border-radius:8px;}
+
+/* Item grid */
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fc-item{
+  display:flex;align-items:center;gap:.7rem;
+  background:var(--fce-card);
+  border:1px solid #e6ede1;
+  border-radius:12px;
+  padding:.72rem .9rem;
+  text-decoration:none;color:var(--fce-ink);
+  font-family:var(--fce-sans);font-size:.97rem;font-weight:500;line-height:1.25;
+  transition:border-color .14s ease,box-shadow .14s ease,transform .12s ease,background .14s ease;
+}
+.fc-item:hover,.fc-item:focus-visible{
+  border-color:var(--fce-emerald);
+  background:var(--fce-moss-soft);
+  box-shadow:0 6px 16px rgba(27,142,99,.16);
+  transform:translateY(-1px);outline:none;
+}
+.fc-item .fc-ic{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:9px;background:var(--fce-moss-soft);color:var(--fce-pine);transition:background .14s,color .14s;}
+.fc-item:hover .fc-ic,.fc-item:focus-visible .fc-ic{background:var(--fce-emerald);color:var(--fce-birch);}
+.fc-item .fc-ic svg{width:19px;height:19px;}
+.fc-item .fc-label{flex:1;}
+.fc-item.hidden{display:none;}
+.fc-empty{display:none;color:var(--fce-moss);font-size:.92rem;padding:.4rem .25rem 0;}
+.fc-empty a{color:var(--fce-emerald);font-weight:600;}
+
+/* Fixed footer */
+.fc-footer{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:12px 16px;border-top:1px solid var(--fce-moss-border);background:var(--fce-birch-2);}
+.fc-all{font-family:var(--fce-sans);font-weight:700;font-size:.95rem;color:var(--fce-emerald);text-decoration:none;}
+.fc-all:hover{color:var(--fce-cloudberry-deep);}
+.fc-sub{font-family:var(--fce-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fce-moss);text-decoration:none;}
+.fc-sub:hover{color:var(--fce-emerald);}
+
+@media (max-width:760px){
+  .fc{position:static;}
+  .fc-panel{position:fixed;left:8px;right:8px;top:76px;width:auto;max-height:84vh;}
+  .fc-grid{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion:reduce){.fc-panel,.fc-item,.fc-trigger .chev{transition:none;}}
+</style>
+</head>
+<body>
+
+<!-- ===== Demo navigation bar (shows the component in context) =========== -->
+<nav class="demo-nav">
+  <div class="demo-logo"><span class="demo-mark">F</span>FCEI</div>
+
+  <!-- ===== FIND COURSES COMPONENT — COPY THIS BLOCK into your nav ======= -->
+  <div class="fc" id="findCourses">
+    <button class="fc-trigger" id="fcTrigger" aria-haspopup="true" aria-expanded="false" aria-controls="fcPanel">
+      Find Courses
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="fc-panel" id="fcPanel" role="region" aria-label="Find courses">
+      <div class="fc-head">
+        <div class="fc-kicker"><span class="dot" aria-hidden="true"></span>Find Courses · 18 areas</div>
+        <div class="fc-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="fcSearch" type="text" placeholder="Find a course or area…" aria-label="Filter the menu" autocomplete="off" />
+        </div>
+      </div>
+      <div class="fc-scroll" id="fcScroll" tabindex="0" aria-label="Course areas, scrollable">
+        <div class="fc-grid" id="fcGrid"><!-- items injected by script --></div>
+        <p class="fc-empty" id="fcEmpty">No matches. <a href="#" id="fcReset">Show everything</a></p>
+      </div>
+      <div class="fc-footer">
+        <a class="fc-all" href="#/courses">Browse all courses →</a>
+        <a class="fc-sub" href="#/finnish-curriculum-framework">Finnish Curriculum Framework</a>
+      </div>
+    </div>
+  </div>
+  <!-- ===== end component block ========================================= -->
+
+  <a class="demo-link" href="#">For organisations</a>
+  <a class="demo-link" href="#">About</a>
+  <div class="demo-sp"></div>
+  <a class="demo-link" href="#">Log in</a>
+  <button class="demo-cta">Get started</button>
+</nav>
+
+<div class="demo-note">
+  <h1>“Find Courses” — drop-in feature for fcei.eu</h1>
+  <p>Click <strong>Find Courses</strong>. The search header and footer stay fixed; the
+  18 areas <strong>scroll inside the panel</strong> (custom emerald/moss scrollbar, keyboard
+  scrollable). Colours and the Bricolage / Hanken / Space&nbsp;Mono type follow the FCEI system.</p>
+  <p><strong>Built to add to the fcei.eu menu, not rebuild it.</strong> Copy the
+  <code>&lt;style&gt;</code> block (incl. the <code>:root</code> tokens), the
+  <code>&lt;div class="fc"&gt;…&lt;/div&gt;</code> block and the <code>&lt;script&gt;</code> block
+  into the site's header, beside the existing search.</p>
+  <p><strong>How it maps to your real pages (fcei.eu is a hash-routed SPA):</strong> on load the
+  menu <strong>adopts the real <code>href</code> from your existing nav</strong> by matching each
+  item's label, so it links to the same routes the site already uses — no manual mapping. For any
+  item it can't auto-match, set <code>window.FCEI_ROUTES[slug]</code> (template above) or edit the
+  <code>FC_ITEMS</code> hrefs. Open the console: it logs how many of the 18 are mapped, and
+  <code>findCoursesAudit()</code> prints the full label&nbsp;→&nbsp;destination table. Confirmed
+  real links on the site today: <code>https://fcei.eu/login.html</code> and
+  <code>https://fcei.eu/booking.html</code>.</p>
+</div>
+
+<!-- ===== OPTIONAL: provide your real routes here and the menu maps to them.
+     Uncomment, set each value to your platform's real route for that page,
+     and the matching items become mapped automatically (overrides placeholders).
+<script>
+  window.FCEI_ROUTES = {
+    "early-years-sisu":            "#/REPLACE",
+    "how-it-works":                "#/REPLACE",
+    "leadership-quality-culture":  "#/REPLACE",
+    "curriculum-adaptation-studio":"#/REPLACE",
+    "for-schools":                 "#/REPLACE",
+    "for-teachers":                "#/REPLACE",
+    "for-tvet":                    "#/REPLACE",
+    "consultancy-workshops":       "#/REPLACE",
+    "pricing":                     "#/REPLACE",
+    "finnish-curriculum-framework":"#/REPLACE",
+    "resources":                   "#/REPLACE",
+    "template-library":            "#/REPLACE",
+    "curriculum-syllabi":          "#/REPLACE",
+    "certificates-evidence":       "#/REPLACE",
+    "digital-training-lms":        "#/REPLACE",
+    "competences-skills":          "#/REPLACE",
+    "edufi-fineec":                "#/REPLACE",
+    "capstone-pathways":           "#/REPLACE"
+  };
+  // For a single-page-app router instead of plain links:
+  // window.FCEI_NAVIGATE = function(href, item){ yourRouter.navigate(href); };
+</script>
+===== -->
+
+<!-- ===== FIND COURSES COMPONENT — COPY THIS SCRIPT ===================== -->
+<script>
+(function(){
+  /* ---- 1) EDIT THESE: each menu item -> the page it should open ---------
+     Replace every `href` with your platform's real route (hash like
+     "#/early-years" or a path like "/courses/early-years"). Order below is
+     the on-screen order (fills the two columns left-to-right, row by row). */
+  var FC_ITEMS = [
+    { label: "Early Years & SISU Preschool",        href: "#/early-years-sisu",                 icon: "school" },
+    { label: "How FCEI Works",                        href: "#/how-it-works",                     icon: "gear" },
+    { label: "Leadership & Quality Culture",         href: "#/leadership-quality-culture",       icon: "target" },
+    { label: "Curriculum Adaptation Studio",         href: "#/curriculum-adaptation-studio",     icon: "adapt" },
+    { label: "For Schools & Institutions",           href: "#/for-schools",                      icon: "building" },
+    { label: "For Teachers & Educators",             href: "#/for-teachers",                     icon: "board" },
+    { label: "For TVET Providers",                   href: "#/for-tvet",                         icon: "tools" },
+    { label: "Consultancy & Workshops",              href: "#/consultancy-workshops",            icon: "people" },
+    { label: "Pricing & Access",                     href: "#/pricing",                          icon: "tag" },
+    { label: "Finnish Curriculum Framework",         href: "#/finnish-curriculum-framework",     icon: "flagfi" },
+    { label: "Resources & Downloads",                href: "#/resources",                        icon: "bookopen" },
+    { label: "Template Library",                     href: "#/template-library",                 icon: "folder" },
+    { label: "Curriculum & Syllabi",                 href: "#/curriculum-syllabi",               icon: "folderlines" },
+    { label: "Certificates & Evidence",              href: "#/certificates-evidence",            icon: "certificate" },
+    { label: "Digital Professional Training & LMS",  href: "#/digital-training-lms",             icon: "laptop" },
+    { label: "Competences & Skills",                 href: "#/competences-skills",               icon: "hand" },
+    { label: "EDUFI & FINEEC",                       href: "#/edufi-fineec",                     icon: "cap" },
+    { label: "Capstone Training Pathways",           href: "#/capstone-pathways",                icon: "cap" }
+  ];
+
+  /* ---- 2) Icons (inline SVG, outline) ----------------------------------- */
+  var S = function(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
+  var IC = {
+    school:     S('<path d="M3 10 12 4l9 6"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-5h5v5"/>'),
+    gear:       S('<circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/>'),
+    target:     S('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>'),
+    adapt:      S('<path d="M4 12a8 8 0 0 1 13.3-6L20 8"/><path d="M20 3v5h-5"/><path d="M20 12a8 8 0 0 1-13.3 6L4 16"/><path d="M4 21v-5h5"/>'),
+    building:   S('<path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9.5 21v-5h5v5"/><path d="M9 9h1M14 9h1M9 12.5h1M14 12.5h1"/>'),
+    board:      S('<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8.5 21l3.5-2.5L15.5 21"/>'),
+    tools:      S('<path d="M14.5 6.5a3.5 3.5 0 0 0 4.6 4.6l-9.8 9.8a2 2 0 0 1-2.8-2.8l9.8-9.8a3.5 3.5 0 0 0-1.8-1.8Z"/><path d="m4 4 4 4"/>'),
+    people:     S('<circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 5.4a3 3 0 0 1 0 5.4M20.6 19a5 5 0 0 0-3-4.6"/>'),
+    tag:        S('<path d="M20.6 13.4 11 3.8a2 2 0 0 0-1.4-.6H5a2 2 0 0 0-2 2v4.6c0 .5.2 1 .6 1.4l9.6 9.6a2 2 0 0 0 2.8 0l4.6-4.6a2 2 0 0 0 0-2.8Z"/><circle cx="7.5" cy="7.5" r="1.3"/>'),
+    bookopen:   S('<path d="M12 6c-2-1.4-5-1.9-8-1v13c3-.9 6-.4 8 1 2-1.4 5-1.9 8-1V5c-3-.9-6-.4-8 1Z"/><path d="M12 6v13"/>'),
+    folder:     S('<path d="M3 7a2 2 0 0 1 2-2h3.5l2 2H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>'),
+    folderlines:S('<path d="M3 7a2 2 0 0 1 2-2h3.5l2 2H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M8 12.5h8M8 15.5h5"/>'),
+    certificate:S('<path d="M6 3h9a2 2 0 0 1 2 2v8H4V5a2 2 0 0 1 2-2Z"/><circle cx="10.5" cy="8" r="2.1"/><path d="m9 11-1 5 2.5-1.5L13 16l-1-5"/>'),
+    laptop:     S('<rect x="4" y="5" width="16" height="10" rx="1.5"/><path d="M2 19h20"/>'),
+    hand:       S('<path d="M8 13V6.5a1.5 1.5 0 0 1 3 0V11m0-1V5a1.5 1.5 0 0 1 3 0v6m0-2V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a5 5 0 0 1-4-2l-2.8-3.7a1.6 1.6 0 0 1 2.5-2L8 13.5Z"/>'),
+    cap:        S('<path d="M12 4 2 9l10 5 10-5-10-5Z"/><path d="M6 11v4.2c0 1.1 2.7 2.3 6 2.3s6-1.2 6-2.3V11"/><path d="M22 9v5"/>'),
+    flagfi:     '<svg viewBox="0 0 24 16"><rect x="0.5" y="0.5" width="23" height="15" rx="1.5" fill="#fff" stroke="#cfd8e3"/><rect x="6" y="0.5" width="3.4" height="15" fill="#003580"/><rect x="0.5" y="6.3" width="23" height="3.4" fill="#003580"/></svg>'
+  };
+
+  /* ---- 3) ARCHITECTURAL MAPPING: how each item resolves to a real page ---
+     Each destination is resolved in this order, so the menu fits ANY routing
+     model in your platform with no guesswork:
+       (a) window.FCEI_ROUTES[slug]   — an explicit route map you provide (best)
+       (b) an on-page link whose visible text matches the item label (adopted)
+       (c) the item's `href` above   — placeholder fallback
+     `slug` = the href minus a leading "#/" (e.g. "early-years-sisu").
+     For a single-page-app router, set:
+       window.FCEI_NAVIGATE = function(href, item){ yourRouter.go(href); };
+     DIAGNOSTICS (open the browser console):
+       • any item still on its placeholder is logged as UNMAPPED;
+       • window.findCoursesAudit() prints the full label -> destination table. */
+
+  var root = document.getElementById('findCourses');
+  if(!root) return;
+  var trigger=document.getElementById('fcTrigger'), panel=document.getElementById('fcPanel'),
+      grid=document.getElementById('fcGrid'), search=document.getElementById('fcSearch'),
+      empty=document.getElementById('fcEmpty'), scroll=document.getElementById('fcScroll');
+
+  var norm=function(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); };
+  function adoptFromPage(label){
+    var want=norm(label), links=document.querySelectorAll('a[href]');
+    for(var i=0;i<links.length;i++){
+      var el=links[i];
+      if(el.closest && el.closest('#findCourses')) continue;      // ignore our own menu
+      var href=el.getAttribute('href'); if(!href||href==='#') continue;
+      if(norm(el.textContent)===want) return href;
+    }
+    return null;
+  }
+  function resolve(it){
+    var slug=(it.href||'').replace(/^#\//,'');
+    if(window.FCEI_ROUTES && window.FCEI_ROUTES[slug]) return {href:window.FCEI_ROUTES[slug], src:'map'};
+    var adopted=adoptFromPage(it.label);
+    if(adopted) return {href:adopted, src:'adopted'};
+    return {href:it.href, src:'fallback'};
+  }
+
+  var audit=[];
+  grid.innerHTML = FC_ITEMS.map(function(it){
+    var r=resolve(it); audit.push({label:it.label, destination:r.href, source:r.src});
+    var ico=IC[it.icon]||IC.folder;
+    return '<a class="fc-item" data-src="'+r.src+'" href="'+r.href+'"><span class="fc-ic" aria-hidden="true">'+ico+'</span><span class="fc-label">'+it.label+'</span></a>';
+  }).join('');
+  var items=[].slice.call(grid.querySelectorAll('.fc-item'));
+
+  window.findCoursesAudit=function(){ try{ console.table(audit); }catch(e){} return audit; };
+  var unmapped=audit.filter(function(a){ return a.source==='fallback'; });
+  if(unmapped.length){
+    console.warn('[Find Courses] '+unmapped.length+'/'+audit.length+' items are NOT mapped to a real page yet (placeholder routes in use). '
+      +'Provide window.FCEI_ROUTES or matching on-page links, or edit FC_ITEMS hrefs. Unmapped: ',
+      unmapped.map(function(u){ return u.label; }));
+  } else {
+    console.info('[Find Courses] all '+audit.length+' items mapped to platform routes.');
+  }
+
+  function open(){ panel.classList.add('open'); trigger.setAttribute('aria-expanded','true'); if(scroll) scroll.scrollTop=0; setTimeout(function(){ try{ search.focus(); }catch(e){} },40); }
+  function close(focusBack){ panel.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); if(focusBack) trigger.focus(); }
+  function isOpen(){ return panel.classList.contains('open'); }
+
+  trigger.addEventListener('click', function(){ isOpen()?close():open(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&isOpen()) close(true); });
+  document.addEventListener('click', function(e){ if(isOpen()&&!root.contains(e.target)) close(); });
+  items.forEach(function(a){
+    a.addEventListener('click', function(e){
+      if(typeof window.FCEI_NAVIGATE==='function'){ e.preventDefault(); window.FCEI_NAVIGATE(a.getAttribute('href'), {label:a.textContent.trim()}); }
+      close();
+    });
+  });
+
+  function filter(q){
+    var t=(q||'').trim().toLowerCase(), n=0;
+    items.forEach(function(a){ var show=!t||a.textContent.toLowerCase().indexOf(t)!==-1; a.classList.toggle('hidden',!show); if(show)n++; });
+    empty.style.display=(t&&n===0)?'block':'none'; if(scroll) scroll.scrollTop=0;
+  }
+  search.addEventListener('input', function(){ filter(search.value); });
+  var reset=document.getElementById('fcReset');
+  reset && reset.addEventListener('click', function(e){ e.preventDefault(); search.value=''; filter(''); search.focus(); });
+})();
+</script>
+</body>
+</html>
