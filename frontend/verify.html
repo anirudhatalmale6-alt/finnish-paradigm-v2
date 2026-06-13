@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Verify Certificate | FCEI</title><link rel="stylesheet" href="/assets/styles.css"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Verify Certificate | FCEI</title><link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/assets/cookie-consent.css"></head><body>
 <div class="top-strip"><span>Finland Creative Education Institute</span><span>Courses &middot; TVET &middot; Consultancy &middot; Workshops</span></div>
 <header class="site-header">
   <div class="header-inner">
@@ -44,4 +44,4 @@ const params=new URLSearchParams(location.search);
 const certParam=params.get('id');
 if(certParam){document.querySelector('input[name="cert_id"]').value=certParam;document.getElementById('verifyForm').dispatchEvent(new Event('submit'));}
 </script>
-</body></html>
+<script src="/assets/cookie-consent.js"></script></body></html>

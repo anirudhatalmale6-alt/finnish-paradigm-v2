@@ -1148,4 +1148,11 @@ from .artefacts import artefacts_router, init_artefact_tables
 app.include_router(artefacts_router)
 init_artefact_tables()
 
+from .toolkit_store import toolkit_router, init_toolkit_tables
+from .cookie_consent import cookie_consent_router, init_cookie_consent_tables
+app.include_router(toolkit_router)
+init_toolkit_tables()
+app.include_router(cookie_consent_router)
+init_cookie_consent_tables()
+
 app.mount('/', StaticFiles(directory=FRONTEND_DIR, html=True), name='frontend')
