@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FCEI · Finland Creative Education Institute</title>
+<meta name="description" content="Worldwide provider of Finnish pedagogy, professional development, TVET and school improvement. EDUFI and FINEEC-aligned, enhancement-led professional learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   FCEI — Finland Creative Education Institute
+   Nordic design system  ·  calm, precise, evidence-led
+   Palette: snow · birch paper · fjord navy · lake blue · spruce/mint green
+   Type:    Familjen Grotesk (display) · Hanken Grotesk (body) · Space Mono (codes)
+   ========================================================================== */
+
+:root{
+  /* surfaces */
+  --snow:#ffffff;
+  --paper:#f1f2ee;        /* cool birch-white page */
+  --mist:#e9ebe4;         /* alternate section fill */
+  --birch:#e7e1d2;        /* warm sand fill / chips */
+  --sand:#f3eee2;
+
+  /* nordic core */
+  --fjord:#163a4d;        /* deep navy-teal — primary dark */
+  --fjord-2:#0f2a38;      /* darker */
+  --lake:#2c6a85;         /* mid blue — links / accents */
+  --lake-soft:#dbe6ea;    /* pale blue tint */
+  --spruce:#1c7a5e;       /* green — primary CTA */
+  --spruce-d:#155f49;
+  --mint:#3fc28d;         /* brand green — bright accent / progress */
+  --mint-soft:#d8f0e5;
+
+  /* ink */
+  --ink:#13222a;
+  --ink-2:#3f515b;
+  --ink-3:#6c7a82;
+  --line:#e0ded4;         /* hairline */
+  --line-2:#d2d5cd;       /* cooler hairline */
+
+  /* feedback */
+  --amber:#caa23f;
+  --rose:#b5544e;
+
+  /* type */
+  --display:'Familjen Grotesk','Segoe UI',system-ui,sans-serif;
+  --body:'Hanken Grotesk','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'Space Mono','SFMono-Regular',ui-monospace,Menlo,monospace;
+
+  /* scale */
+  --maxw:1200px;
+  --gutter:clamp(20px,4vw,56px);
+  --radius:14px;
+  --radius-s:9px;
+  --shadow-sm:0 1px 2px rgba(19,34,42,.05),0 1px 0 rgba(19,34,42,.02);
+  --shadow:0 14px 40px -22px rgba(15,42,56,.45),0 2px 8px -4px rgba(15,42,56,.12);
+  --shadow-lg:0 40px 90px -40px rgba(15,42,56,.55);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--body);background:var(--paper);color:var(--ink);
+  font-size:16.5px;line-height:1.62;font-weight:400;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  letter-spacing:-.002em;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+
+/* --- typography --------------------------------------------------------- */
+h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.07;
+  letter-spacing:-.022em;color:var(--ink);margin:0}
+h1{font-size:clamp(2.3rem,4.6vw,3.65rem)}
+h2{font-size:clamp(1.7rem,3vw,2.4rem)}
+h3{font-size:1.22rem;letter-spacing:-.012em}
+h4{font-size:1rem;letter-spacing:-.006em}
+p{margin:0 0 1rem}
+.lead{font-size:clamp(1.06rem,1.6vw,1.22rem);line-height:1.55;color:var(--ink-2);font-weight:400}
+.muted{color:var(--ink-3)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--lake)}
+.eyebrow.on-dark{color:var(--mint)}
+.code{font-family:var(--mono);font-weight:500;font-size:.78rem;letter-spacing:.02em}
+
+/* --- layout ------------------------------------------------------------- */
+.container{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.section{padding-block:clamp(56px,8vw,104px)}
+.section.tight{padding-block:clamp(40px,5vw,64px)}
+.section.alt{background:var(--mist)}
+.section.sand{background:var(--sand)}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+.grid{display:grid;gap:24px}
+.crumbs{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--ink-3);
+  margin-bottom:18px;text-transform:uppercase}
+.crumbs a:hover{color:var(--lake)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+  margin-bottom:38px;flex-wrap:wrap}
+.sec-head .lead{max-width:54ch;margin:10px 0 0}
+.sec-head .eyebrow{margin-bottom:14px;display:block}
+
+/* --- buttons ------------------------------------------------------------ */
+.btn{display:inline-flex;align-items:center;gap:.5em;border:1px solid transparent;
+  border-radius:999px;padding:.74em 1.4em;font-weight:600;font-size:.95rem;cursor:pointer;
+  background:var(--ink);color:#fff;transition:transform .18s var(--ease),
+  background .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease);
+  letter-spacing:-.005em}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn.primary{background:var(--spruce);box-shadow:0 10px 24px -12px rgba(28,122,94,.7)}
+.btn.primary:hover{background:var(--spruce-d)}
+.btn.dark{background:var(--fjord)}
+.btn.dark:hover{background:var(--fjord-2)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn.ghost:hover{border-color:var(--fjord);background:var(--snow)}
+.btn.ghost.on-dark{color:#eef3f2;border-color:rgba(255,255,255,.32)}
+.btn.ghost.on-dark:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6)}
+.btn.sm{padding:.55em 1.05em;font-size:.85rem}
+.btn.block{width:100%;justify-content:center}
+.btn .arr{transition:transform .2s var(--ease)}
+.btn:hover .arr{transform:translateX(3px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+.linklike{color:var(--lake);font-weight:600;cursor:pointer;display:inline-flex;
+  align-items:center;gap:.4em}
+.linklike:hover{color:var(--fjord)}
+.linklike .arr{transition:transform .2s var(--ease)}
+.linklike:hover .arr{transform:translateX(3px)}
+
+/* --- topline + nav ------------------------------------------------------ */
+.topline{background:var(--fjord-2);color:#cfe0e3;font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;text-align:center;
+  padding:7px 16px}
+.nav{position:sticky;top:0;z-index:60;background:rgba(241,242,238,.86);
+  backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px var(--gutter);
+  display:flex;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:13px;flex-shrink:0}
+.brand-mark{width:42px;height:42px;border-radius:11px;background:var(--fjord);color:#fff;
+  display:grid;place-items:center;font-family:var(--display);font-weight:700;
+  font-size:.95rem;letter-spacing:.04em;position:relative;overflow:hidden}
+.brand-mark::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 55%,var(--mint) 56%,var(--mint) 62%,transparent 63%)}
+.brand-txt{display:flex;flex-direction:column;line-height:1.1}
+.brand-txt b{font-family:var(--display);font-weight:600;font-size:1.02rem;letter-spacing:-.01em}
+.brand-txt small{font-size:.7rem;color:var(--ink-3);font-weight:500;letter-spacing:.01em}
+.navlinks{display:flex;align-items:center;gap:4px;margin-left:auto}
+.navlinks a{padding:8px 13px;border-radius:8px;font-size:.92rem;font-weight:500;
+  color:var(--ink-2);transition:color .15s,background .15s}
+.navlinks a:hover{color:var(--ink);background:rgba(22,58,77,.06)}
+.navlinks a.active{color:var(--fjord)}
+.nav-cta{display:flex;align-items:center;gap:8px;margin-left:8px}
+.nav-search{width:40px;height:40px;border-radius:9px;border:1px solid var(--line-2);
+  background:var(--snow);display:grid;place-items:center;cursor:pointer;color:var(--ink-2);
+  transition:border-color .15s,color .15s}
+.nav-search:hover{border-color:var(--fjord);color:var(--fjord)}
+.burger{display:none}
+
+/* --- hero --------------------------------------------------------------- */
+.hero{padding-top:clamp(36px,5vw,68px);padding-bottom:clamp(40px,6vw,84px)}
+.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:30px;align-items:stretch}
+.hero-main{background:var(--fjord);color:#eaf2f1;border-radius:calc(var(--radius) + 6px);
+  padding:clamp(28px,3.6vw,52px);position:relative;overflow:hidden;
+  display:flex;flex-direction:column}
+.hero-main::before{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;
+  border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(63,194,141,.32),transparent 62%)}
+.hero-main::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:linear-gradient(90deg,var(--mint),var(--lake) 60%,transparent)}
+.hero-main .eyebrow{margin-bottom:20px;display:block;position:relative}
+.hero-main h1{color:#fff;position:relative;max-width:16ch}
+.hero-main .lead{color:#bcd2d6;margin:18px 0 26px;max-width:46ch;position:relative}
+.hero-cta{display:flex;gap:11px;flex-wrap:wrap;position:relative}
+.hero-meta{margin-top:auto;padding-top:26px;display:flex;gap:26px;flex-wrap:wrap;
+  position:relative;border-top:1px solid rgba(255,255,255,.13);margin-top:30px}
+.hero-meta .mi{display:flex;flex-direction:column;gap:2px}
+.hero-meta .mi b{font-family:var(--display);font-size:1.5rem;color:#fff;font-weight:600}
+.hero-meta .mi span{font-size:.74rem;color:#9fbac0;font-family:var(--mono);letter-spacing:.06em;
+  text-transform:uppercase}
+
+.hero-side{display:flex;flex-direction:column;gap:18px}
+.hero-photo{flex:1;border-radius:calc(var(--radius) + 6px);overflow:hidden;position:relative;
+  min-height:240px;box-shadow:var(--shadow)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;min-height:240px}
+.hero-photo .badge{position:absolute;left:16px;bottom:16px;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(4px);border-radius:11px;padding:11px 15px;display:flex;align-items:center;
+  gap:11px;box-shadow:var(--shadow-sm)}
+.hero-photo .badge .dot{width:9px;height:9px;border-radius:50%;background:var(--mint);flex-shrink:0;
+  box-shadow:0 0 0 4px var(--mint-soft)}
+.hero-photo .badge b{font-family:var(--display);font-size:.92rem}
+.hero-photo .badge span{font-size:.72rem;color:var(--ink-3);display:block;line-height:1.3}
+
+/* search box (the distinctive FCEI course-code finder) */
+.finder{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;box-shadow:var(--shadow-sm)}
+.finder label{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-bottom:9px}
+.finder .field{display:flex;gap:8px}
+.finder input{flex:1;border:1px solid var(--line-2);background:var(--paper);border-radius:9px;
+  padding:12px 14px;font-family:var(--body);font-size:.95rem;color:var(--ink)}
+.finder input:focus{outline:none;border-color:var(--lake);background:#fff;
+  box-shadow:0 0 0 3px var(--lake-soft)}
+.finder .hint{font-size:.78rem;color:var(--ink-3);margin:10px 0 0}
+.finder .hint b{color:var(--lake);font-family:var(--mono);font-size:.74rem}
+
+/* --- chips / tags ------------------------------------------------------- */
+.chip{display:inline-flex;align-items:center;gap:.4em;font-family:var(--mono);font-size:.7rem;
+  font-weight:500;letter-spacing:.04em;padding:4px 9px;border-radius:6px;
+  background:var(--birch);color:#6c5f43}
+.chip.code{background:var(--fjord);color:#dff0ef}
+.chip.lake{background:var(--lake-soft);color:#1d5167}
+.chip.mint{background:var(--mint-soft);color:#13694c}
+.chip.ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink-3)}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px}
+
+/* --- module track (signature: encodes the module/step sequence) --------- */
+.track{display:flex;align-items:center;gap:7px;margin:14px 0}
+.track .seg{flex:1;height:3px;border-radius:2px;background:var(--line-2)}
+.track .seg.on{background:var(--mint)}
+.track .node{width:9px;height:9px;border-radius:50%;background:var(--snow);
+  border:2px solid var(--line-2);flex-shrink:0}
+.track .node.on{background:var(--mint);border-color:var(--mint)}
+.track .node.cur{border-color:var(--lake);background:#fff;box-shadow:0 0 0 3px var(--lake-soft)}
+
+/* --- cards -------------------------------------------------------------- */
+.card{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow-sm)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+
+/* course card */
+.ccard{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ccard:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--line-2)}
+.ccard .ph{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--mist)}
+.ccard .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.ccard:hover .ph img{transform:scale(1.045)}
+.ccard .ph .code{position:absolute;top:12px;left:12px;background:rgba(15,42,56,.85);
+  backdrop-filter:blur(3px);color:#dff0ef;padding:5px 9px;border-radius:6px;
+  font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.03em}
+.ccard .ph .strand{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);
+  color:var(--fjord);padding:5px 9px;border-radius:6px;font-size:.72rem;font-weight:600}
+.ccard .bd{padding:20px 20px 22px;display:flex;flex-direction:column;flex:1}
+.ccard h3{margin-bottom:9px}
+.ccard .desc{font-size:.92rem;color:var(--ink-2);line-height:1.5;margin:0 0 14px;flex:1}
+.ccard .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:14px;padding-top:16px;border-top:1px solid var(--line)}
+.ccard .meta{font-size:.78rem;color:var(--ink-3);font-family:var(--mono);letter-spacing:.02em}
+.price{font-family:var(--display);font-weight:600;font-size:1.32rem;color:var(--ink)}
+.price small{font-size:.72rem;font-weight:500;color:var(--ink-3);font-family:var(--mono)}
+
+/* pathway cards */
+.pathways{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.pcard{position:relative;border-radius:var(--radius);overflow:hidden;min-height:340px;
+  display:flex;flex-direction:column;justify-content:flex-end;color:#fff;
+  box-shadow:var(--shadow-sm);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.pcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.pcard::after{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(15,42,56,.05) 0%,rgba(15,42,56,.4) 45%,rgba(11,28,40,.92) 100%)}
+.pcard .pc-bd{position:relative;z-index:2;padding:26px}
+.pcard .pc-no{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;color:var(--mint);
+  margin-bottom:auto;display:block}
+.pcard h3{color:#fff;font-size:1.42rem;margin:0 0 8px}
+.pcard p{font-size:.92rem;color:#d6e4e7;margin:0 0 16px;line-height:1.5}
+.pcard .linklike{color:#fff;font-weight:600}
+.pcard .linklike:hover{color:var(--mint)}
+
+/* service card */
+.scard{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;display:flex;gap:0;box-shadow:var(--shadow-sm);
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.scard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.scard .sph{width:38%;min-width:130px;position:relative;overflow:hidden;background:var(--mist)}
+.scard .sph img{width:100%;height:100%;object-fit:cover;min-height:160px}
+.scard .sbd{padding:20px;flex:1}
+.scard .sbd .code{color:var(--lake)}
+.scard h3{font-size:1.06rem;margin:7px 0 8px}
+.scard p{font-size:.88rem;color:var(--ink-2);margin:0 0 14px;line-height:1.5}
+
+/* --- stat band ---------------------------------------------------------- */
+.statband{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.statband .st{background:var(--snow);padding:28px 24px}
+.statband .st b{font-family:var(--display);font-weight:600;font-size:2.1rem;display:block;
+  color:var(--fjord);letter-spacing:-.02em}
+.statband .st span{font-size:.82rem;color:var(--ink-3);margin-top:4px;display:block}
+
+/* --- feature row (alt photo/text) -------------------------------------- */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.feature.flip .feat-media{order:2}
+.feat-media{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  aspect-ratio:4/3}
+.feat-media img{width:100%;height:100%;object-fit:cover}
+.feat-list{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:13px}
+.feat-list li{display:flex;gap:12px;align-items:flex-start;font-size:.96rem;color:var(--ink-2)}
+.feat-list li::before{content:"";width:18px;height:18px;border-radius:5px;flex-shrink:0;margin-top:3px;
+  background:var(--mint-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2313694c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3 3 7-7'/%3E%3C/svg%3E") center/13px no-repeat}
+
+/* --- filters ------------------------------------------------------------ */
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;background:var(--snow);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:30px}
+.filters .fg{display:flex;flex-direction:column;gap:6px}
+.filters .fg.grow{flex:1;min-width:200px}
+.filters label{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3)}
+.filters input,.filters select{border:1px solid var(--line-2);background:var(--paper);border-radius:8px;
+  padding:10px 12px;font-family:var(--body);font-size:.92rem;color:var(--ink)}
+.filters input:focus,.filters select:focus{outline:none;border-color:var(--lake);background:#fff;
+  box-shadow:0 0 0 3px var(--lake-soft)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.pill{font-size:.85rem;font-weight:600;padding:7px 15px;border-radius:999px;cursor:pointer;
+  background:var(--snow);border:1px solid var(--line-2);color:var(--ink-2);transition:all .15s}
+.pill:hover{border-color:var(--fjord)}
+.pill.on{background:var(--fjord);color:#fff;border-color:var(--fjord)}
+
+/* --- course detail ------------------------------------------------------ */
+.detail-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center;
+  margin-bottom:48px}
+.detail-hero .dh-media{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  aspect-ratio:16/11}
+.detail-hero .dh-media img{width:100%;height:100%;object-fit:cover}
+.detail-split{display:grid;grid-template-columns:1.4fr .9fr;gap:30px;align-items:start}
+.modlist{display:grid;gap:12px}
+.modrow{display:flex;gap:16px;align-items:center;background:var(--snow);border:1px solid var(--line);
+  border-radius:var(--radius-s);padding:16px 18px;transition:border-color .15s,transform .15s}
+.modrow:hover{border-color:var(--lake);transform:translateX(2px)}
+.modrow .mno{width:40px;height:40px;border-radius:9px;background:var(--mist);display:grid;
+  place-items:center;font-family:var(--mono);font-size:.82rem;font-weight:500;color:var(--fjord);
+  flex-shrink:0}
+.modrow .mtx b{font-family:var(--display);font-weight:600;font-size:1rem;display:block;margin-bottom:2px}
+.modrow .mtx span{font-size:.82rem;color:var(--ink-3)}
+.buybox{position:sticky;top:90px}
+.buybox .price-lg{font-family:var(--display);font-weight:600;font-size:2.4rem;color:var(--ink);
+  letter-spacing:-.02em;line-height:1}
+.buybox .price-lg small{font-size:.8rem;color:var(--ink-3);font-family:var(--mono);font-weight:500}
+.inc{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}
+.inc li{display:flex;gap:11px;font-size:.92rem;color:var(--ink-2);align-items:flex-start}
+.inc li::before{content:"";width:17px;height:17px;flex-shrink:0;margin-top:3px;border-radius:5px;
+  background:var(--mint-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2313694c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3 3 7-7'/%3E%3C/svg%3E") center/12px no-repeat}
+
+/* --- LMS module page ---------------------------------------------------- */
+.lms{display:grid;grid-template-columns:264px 1fr;gap:32px;align-items:start}
+.lms-side{position:sticky;top:90px}
+.lms-side .card{padding:20px}
+.steplist{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:3px}
+.steplist li{display:flex;gap:11px;align-items:center;padding:9px 10px;border-radius:8px;
+  font-size:.86rem;color:var(--ink-2)}
+.steplist li .sdot{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  font-size:.7rem;font-family:var(--mono);background:var(--mist);color:var(--ink-3);border:1.5px solid var(--line-2)}
+.steplist li.done .sdot{background:var(--mint);border-color:var(--mint);color:#fff}
+.steplist li.cur{background:var(--lake-soft);color:var(--fjord);font-weight:600}
+.steplist li.cur .sdot{border-color:var(--lake);color:var(--lake);background:#fff}
+.steplist li.lock{opacity:.55}
+
+.modblock{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px;margin-bottom:18px}
+.modblock.locked{opacity:.62;filter:grayscale(.15)}
+.modblock .bh{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.modblock .bh .bn{width:30px;height:30px;border-radius:8px;background:var(--fjord);color:#fff;
+  display:grid;place-items:center;font-family:var(--mono);font-size:.8rem;flex-shrink:0}
+.modblock.done .bh .bn{background:var(--mint)}
+.modblock h3{font-size:1.16rem}
+.modblock .bstate{margin-left:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3)}
+.modblock.done .bstate{color:var(--spruce)}
+.video-slot{background:var(--fjord-2);border-radius:var(--radius-s);aspect-ratio:16/8;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#9fbac0;
+  margin:14px 0;position:relative;overflow:hidden}
+.video-slot::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 40%,rgba(63,194,141,.16),transparent 60%)}
+.video-slot .play{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.12);
+  border:1.5px solid rgba(255,255,255,.4);display:grid;place-items:center;position:relative}
+.video-slot .play::after{content:"";border-left:13px solid #fff;border-top:8px solid transparent;
+  border-bottom:8px solid transparent;margin-left:3px}
+.video-slot span{position:relative;font-family:var(--mono);font-size:.74rem;letter-spacing:.05em}
+textarea,.txt-in{width:100%;border:1px solid var(--line-2);background:var(--paper);border-radius:9px;
+  padding:12px 14px;font-family:var(--body);font-size:.95rem;color:var(--ink);resize:vertical}
+textarea:focus,.txt-in:focus{outline:none;border-color:var(--lake);background:#fff;
+  box-shadow:0 0 0 3px var(--lake-soft)}
+textarea{min-height:84px}
+.quiz-q{margin-bottom:18px}
+.quiz-q .qp{font-weight:600;margin-bottom:10px;font-size:.97rem}
+.qopt{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line-2);
+  border-radius:9px;margin-bottom:8px;cursor:pointer;font-size:.92rem;transition:border-color .15s,background .15s}
+.qopt:hover{border-color:var(--lake);background:var(--lake-soft)}
+.qopt input{margin-top:3px;accent-color:var(--spruce)}
+.tf-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.tf-grid label{display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:.7rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.resbtns{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.resbtn{display:flex;align-items:center;gap:9px;border:1px solid var(--line-2);background:var(--snow);
+  border-radius:9px;padding:11px 14px;font-size:.88rem;cursor:pointer;color:var(--ink-2);
+  transition:border-color .15s,color .15s}
+.resbtn:hover:not(:disabled){border-color:var(--lake);color:var(--fjord)}
+.resbtn:disabled{opacity:.5;cursor:not-allowed}
+.resbtn .fi{width:26px;height:26px;border-radius:6px;background:var(--birch);display:grid;
+  place-items:center;font-family:var(--mono);font-size:.6rem;color:#6c5f43}
+
+/* notices */
+.notice{border-radius:var(--radius-s);padding:16px 18px;font-size:.92rem;display:flex;gap:12px;
+  align-items:flex-start}
+.notice.info{background:var(--lake-soft);color:#1d5167}
+.notice.ok{background:var(--mint-soft);color:#13694c}
+.notice.warn{background:#f6edd6;color:#7a5e1f}
+.notice .ni{font-weight:700;flex-shrink:0}
+
+/* --- dashboard ---------------------------------------------------------- */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+.progress{height:8px;background:var(--mist);border-radius:99px;overflow:hidden;margin:12px 0}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--spruce),var(--mint));
+  border-radius:99px;transition:width .5s var(--ease)}
+.kpi{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:26px}
+.kpi .k{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius-s);padding:18px}
+.kpi .k b{font-family:var(--display);font-size:1.8rem;color:var(--fjord);display:block}
+.kpi .k span{font-size:.78rem;color:var(--ink-3)}
+
+/* --- tables ------------------------------------------------------------- */
+.table{width:100%;border-collapse:collapse;font-size:.88rem;background:var(--snow);
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.table th{text-align:left;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);padding:13px 16px;background:var(--mist);
+  border-bottom:1px solid var(--line)}
+.table td{padding:13px 16px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.table tr:last-child td{border-bottom:0}
+
+/* --- resource hub ------------------------------------------------------- */
+.escalator{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:26px;
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--snow)}
+.escalator .es{flex:1;min-width:130px;padding:18px 16px;border-right:1px solid var(--line);
+  position:relative;display:flex;flex-direction:column;gap:6px}
+.escalator .es:last-child{border-right:0}
+.escalator .es .en{font-family:var(--mono);font-size:.68rem;color:var(--mint);letter-spacing:.06em}
+.escalator .es b{font-family:var(--display);font-size:.98rem}
+
+/* --- legal -------------------------------------------------------------- */
+.legal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.lcard{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius-s);
+  padding:20px;transition:border-color .15s,transform .15s}
+.lcard:hover{border-color:var(--lake);transform:translateY(-2px)}
+.lcard h4{font-size:1rem;margin-bottom:7px}
+.lcard p{font-size:.85rem;color:var(--ink-3);margin:0 0 12px;line-height:1.5}
+
+/* --- CTA band ----------------------------------------------------------- */
+.ctaband{background:var(--fjord);color:#eaf2f1;border-radius:calc(var(--radius)+6px);
+  padding:clamp(34px,5vw,60px);position:relative;overflow:hidden;text-align:center}
+.ctaband::before{content:"";position:absolute;left:-60px;bottom:-80px;width:300px;height:300px;
+  border-radius:50%;background:radial-gradient(circle,rgba(63,194,141,.28),transparent 65%)}
+.ctaband h2{color:#fff;position:relative;max-width:20ch;margin:0 auto}
+.ctaband p{color:#bcd2d6;position:relative;max-width:52ch;margin:14px auto 26px}
+.ctaband .hero-cta{justify-content:center}
+
+/* --- footer ------------------------------------------------------------- */
+footer{background:var(--fjord-2);color:#b7cace;padding:clamp(48px,6vw,72px) 0 30px;margin-top:0}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:34px}
+.foot-grid h4{color:#fff;font-size:.82rem;font-family:var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:16px;font-weight:500}
+.foot-grid a{display:block;color:#9db4b9;font-size:.9rem;padding:5px 0;transition:color .15s}
+.foot-grid a:hover{color:var(--mint)}
+.foot-about p{font-size:.9rem;color:#9db4b9;max-width:38ch;line-height:1.6}
+.foot-about .brand-txt b{color:#fff}
+.foot-note{font-size:.8rem;color:#7f989e;margin-top:14px;font-style:italic}
+.foot-bar{border-top:1px solid rgba(255,255,255,.1);margin-top:38px;padding-top:22px;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:#7f989e}
+.foot-bar .fb-links{display:flex;gap:18px}
+.foot-bar a:hover{color:var(--mint)}
+
+/* --- modal / command palette ------------------------------------------- */
+.scrim{position:fixed;inset:0;background:rgba(11,28,40,.55);backdrop-filter:blur(3px);z-index:200;
+  display:flex;align-items:flex-start;justify-content:center;padding:10vh 20px 20px;
+  opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.open{opacity:1;pointer-events:auto}
+.palette{background:var(--snow);border:1px solid var(--line);border-radius:var(--radius);
+  width:min(640px,100%);box-shadow:var(--shadow-lg);overflow:hidden;transform:translateY(-12px);
+  transition:transform .2s var(--ease)}
+.scrim.open .palette{transform:translateY(0)}
+.palette .ph{padding:20px 22px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.palette input{width:100%;border:1px solid var(--line-2);background:var(--paper);border-radius:10px;
+  padding:13px 15px;font-size:1rem;margin:14px 22px;width:calc(100% - 44px);font-family:var(--body)}
+.palette input:focus{outline:none;border-color:var(--lake);background:#fff;box-shadow:0 0 0 3px var(--lake-soft)}
+.pal-list{max-height:46vh;overflow:auto;padding:0 12px 14px}
+.pal-row{display:flex;align-items:center;gap:13px;padding:12px 12px;border-radius:9px;cursor:pointer}
+.pal-row:hover{background:var(--mist)}
+.pal-row .pc{font-family:var(--mono);font-size:.74rem;color:var(--fjord);background:var(--mist);
+  padding:4px 8px;border-radius:6px;flex-shrink:0}
+.pal-row b{font-family:var(--display);font-weight:600;font-size:.95rem}
+.pal-row span{font-size:.82rem;color:var(--ink-3)}
+
+/* auth modal */
+.auth-card{width:min(420px,100%)}
+.form-col{display:grid;gap:12px}
+.form-col input{border:1px solid var(--line-2);background:var(--paper);border-radius:9px;
+  padding:12px 14px;font-family:var(--body);font-size:.95rem}
+.form-col input:focus{outline:none;border-color:var(--lake);background:#fff;box-shadow:0 0 0 3px var(--lake-soft)}
+
+/* --- cookie banner ------------------------------------------------------ */
+.cookie{position:fixed;left:20px;bottom:20px;z-index:150;max-width:380px;background:var(--snow);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-lg);
+  transform:translateY(20px);opacity:0;pointer-events:none;transition:all .3s var(--ease)}
+.cookie.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.cookie b{font-family:var(--display);font-size:1rem;display:block;margin-bottom:6px}
+.cookie p{font-size:.85rem;color:var(--ink-2);margin:0 0 14px;line-height:1.5}
+.cookie .row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);z-index:300;
+  background:var(--fjord);color:#fff;padding:13px 20px;border-radius:11px;box-shadow:var(--shadow-lg);
+  font-size:.92rem;display:flex;gap:10px;align-items:center;opacity:0;pointer-events:none;
+  transition:all .3s var(--ease);max-width:90vw}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ti{width:8px;height:8px;border-radius:50%;background:var(--mint)}
+
+/* --- reveal animation --------------------------------------------------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* --- responsive --------------------------------------------------------- */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-side{flex-direction:row}
+  .hero-photo{min-height:200px}
+  .pathways{grid-template-columns:1fr}
+  .feature{grid-template-columns:1fr;gap:24px}
+  .feature.flip .feat-media{order:0}
+  .detail-hero{grid-template-columns:1fr}
+  .detail-split{grid-template-columns:1fr}
+  .lms{grid-template-columns:1fr}
+  .lms-side{position:static}
+  .buybox{position:static}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .statband{grid-template-columns:repeat(2,1fr)}
+  .tf-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .navlinks{display:none}
+  .burger{display:grid;place-items:center;width:40px;height:40px;border-radius:9px;
+    border:1px solid var(--line-2);background:var(--snow);cursor:pointer;margin-left:auto}
+  .hero-side{flex-direction:column}
+  .scard{flex-direction:column}
+  .scard .sph{width:100%;min-height:160px}
+  .statband{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .foot-bar{flex-direction:column}
+  .kpi{grid-template-columns:1fr 1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+
+/* focus visibility */
+:focus-visible{outline:2.5px solid var(--lake);outline-offset:2px;border-radius:4px}
+.btn:focus-visible,.pill:focus-visible{outline-offset:3px}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+window.__FCEI__ = {
+  mode: "live",
+  seed: {},
+  images: {}
+};
+</script>
+<script>
+/* ============================================================================
+   FCEI — Finland Creative Education Institute
+   Single-page application (vanilla JS, no framework)
+
+   Runs in two modes via window.__FCEI__ = { mode, seed, images }:
+     • 'demo'  — standalone preview. Uses the embedded (trimmed) seed and a map
+                 of data-URI images. Auth / checkout / LMS progress are
+                 simulated in memory. No network, no storage.
+     • 'live'  — served by server.mjs. Fetches /api/site + /api/courses/:id and
+                 resolves images from /assets/<slug>.jpg. Real API calls.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------- boot -- */
+  var BOOT   = window.__FCEI__ || { mode: 'demo', seed: {}, images: {} };
+  var MODE   = BOOT.mode || 'demo';
+  var IMAGES = BOOT.images || {};
+  var SEED   = BOOT.seed || {};
+  var LIVE   = MODE === 'live';
+
+  /* ------------------------------------------------------------- helpers -- */
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function esc(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function gbp(n) { return '$' + Number(n || 0).toFixed(0); }
+  function img(slug) {
+    if (!slug) return '';
+    if (IMAGES && IMAGES[slug]) return IMAGES[slug];   // data-URI (demo)
+    return '/assets/' + slug + '.jpg';                 // file (live)
+  }
+
+  // in-memory store; only the live build is allowed to touch localStorage
+  var MEM = {};
+  var Store = {
+    get: function (k) {
+      if (LIVE) { try { return localStorage.getItem(k); } catch (e) {} }
+      return k in MEM ? MEM[k] : null;
+    },
+    set: function (k, v) {
+      if (LIVE) { try { localStorage.setItem(k, v); return; } catch (e) {} }
+      MEM[k] = v;
+    },
+    del: function (k) {
+      if (LIVE) { try { localStorage.removeItem(k); return; } catch (e) {} }
+      delete MEM[k];
+    }
+  };
+
+  /* --------------------------------------------------------------- state -- */
+  var STATE = {
+    site: null,           // { brand, content, courses, products, services, resources }
+    courseCache: {},      // id -> { course, modules, product }
+    enroll: {},           // demo: courseId -> { 'C01-M01': { steps:{...}, done:bool } }
+    user: null,
+    kw: ''
+  };
+
+  var STEP_KEYS = [
+    'contentOpened', 'resourcesAccessed', 'quizPassed', 'actionTaskSubmitted',
+    'evidenceSubmitted', 'reflectionSubmitted', 'transferabilitySubmitted', 'checklistCompleted'
+  ];
+  var STEP_LABELS = {
+    contentOpened: 'Open content',
+    resourcesAccessed: 'Access resources',
+    quizPassed: 'Pass the quiz',
+    actionTaskSubmitted: 'Submit action task',
+    evidenceSubmitted: 'Upload evidence',
+    reflectionSubmitted: 'Submit reflection',
+    transferabilitySubmitted: 'Transferability filter',
+    checklistCompleted: 'Confirm checklist'
+  };
+
+  /* ----------------------------------------------------------- data load -- */
+  function token() { return Store.get('fcei_token'); }
+
+  function api(path, opts) {
+    opts = opts || {};
+    var headers = opts.headers || {};
+    headers['Content-Type'] = 'application/json';
+    var t = token();
+    if (t) headers['Authorization'] = 'Bearer ' + t;
+    return fetch(path, {
+      method: opts.method || 'GET',
+      headers: headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, data: j }; }); });
+  }
+
+  function loadSite() {
+    if (STATE.site) return Promise.resolve(STATE.site);
+    if (!LIVE) {
+      STATE.site = {
+        brand: SEED.brand || {},
+        content: SEED.content || {},
+        courses: SEED.courses || [],
+        products: SEED.products || [],
+        services: SEED.services || [],
+        resources: (SEED.content && SEED.content.resources) || {}
+      };
+      return Promise.resolve(STATE.site);
+    }
+    return api('/api/site').then(function (r) {
+      var d = r.data || {};
+      STATE.site = {
+        brand: d.brand || {},
+        content: d.content || d.copy || {},
+        courses: d.courses || [],
+        products: d.products || [],
+        services: d.services || [],
+        resources: (d.content && d.content.resources) || d.resources || {}
+      };
+      return STATE.site;
+    });
+  }
+
+  function loadCourse(id) {
+    if (STATE.courseCache[id]) return Promise.resolve(STATE.courseCache[id]);
+    if (!LIVE) {
+      return loadSite().then(function (site) {
+        var course = (site.courses || []).find(function (c) { return c.id === id; });
+        var modules = (SEED.modules || []).filter(function (m) { return m.courseId === id; })
+          .sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
+        var product = (site.products || []).find(function (p) {
+          return p.courseIds && p.courseIds.indexOf(id) > -1;
+        });
+        var bundle = { course: course, modules: modules, product: product };
+        STATE.courseCache[id] = bundle;
+        return bundle;
+      });
+    }
+    return api('/api/courses/' + id).then(function (r) {
+      var bundle = r.data || {};
+      STATE.courseCache[id] = bundle;
+      return bundle;
+    });
+  }
+
+  function findModule(courseId, moduleId) {
+    return loadCourse(courseId).then(function (b) {
+      var m = (b.modules || []).find(function (x) { return x.id === moduleId; });
+      return { bundle: b, module: m };
+    });
+  }
+
+  /* ----------------------------------------------------- enrollment (demo) */
+  function ensureEnroll(courseId, modules) {
+    if (!STATE.enroll[courseId]) STATE.enroll[courseId] = {};
+    (modules || []).forEach(function (m) {
+      var mid = m.id || m;
+      if (!STATE.enroll[courseId][mid]) {
+        var steps = {};
+        STEP_KEYS.forEach(function (k) { steps[k] = false; });
+        STATE.enroll[courseId][mid] = { steps: steps, done: false };
+      }
+    });
+    return STATE.enroll[courseId];
+  }
+  function seedDemoProgress() {
+    // give the demo a believable starting state on first load
+    if (STATE._seededDemo || LIVE) return;
+    STATE._seededDemo = true;
+    var ids = ['C01', 'C03', 'C07'];
+    var modsById = {};
+    (SEED.modules || []).forEach(function (m) {
+      (modsById[m.courseId] = modsById[m.courseId] || []).push(m);
+    });
+    ids.forEach(function (cid) {
+      var list = (modsById[cid] || []).slice().sort(function (a, b) { return a.order - b.order; });
+      if (!list.length) {
+        var lite = (SEED.courses.find(function (c) { return c.id === cid; }) || {}).modules || [];
+        list = lite.map(function (x) { return { id: x, courseId: cid, order: 0 }; });
+      }
+      ensureEnroll(cid, list);
+    });
+    // C01: first module fully complete, second partially
+    var e = STATE.enroll['C01'];
+    if (e && e['C01-M01']) { STEP_KEYS.forEach(function (k) { e['C01-M01'].steps[k] = true; }); e['C01-M01'].done = true; }
+    if (e && e['C01-M02']) { ['contentOpened', 'resourcesAccessed', 'quizPassed'].forEach(function (k) { e['C01-M02'].steps[k] = true; }); }
+    var e3 = STATE.enroll['C03'];
+    if (e3 && e3['C03-M01']) { ['contentOpened', 'resourcesAccessed'].forEach(function (k) { e3['C03-M01'].steps[k] = true; }); }
+  }
+  function courseProgress(courseId) {
+    var e = STATE.enroll[courseId];
+    if (!e) return { done: 0, total: 0, pct: 0 };
+    var ids = Object.keys(e), done = 0;
+    ids.forEach(function (id) { if (e[id].done) done++; });
+    return { done: done, total: ids.length, pct: ids.length ? Math.round(done / ids.length * 100) : 0 };
+  }
+
+  /* ----------------------------------------------------------------- nav -- */
+  var NAV = [
+    { href: '#/catalogue', label: 'Courses' },
+    { href: '#/tvet', label: 'TVET' },
+    { href: '#/consultancy', label: 'Consultancy' },
+    { href: '#/resources', label: 'Resources' },
+    { href: '#/legal', label: 'Legal' }
+  ];
+
+  function header(g) {
+    var path = location.hash || '#/';
+    var links = NAV.map(function (n) {
+      var on = path.indexOf(n.href) === 0 ? ' active' : '';
+      return '<a class="navlink' + on + '" href="' + n.href + '">' + esc(n.label) + '</a>';
+    }).join('');
+    return '' +
+      '<div class="topline">' + esc(g.topLine || 'Finland Creative Education Institute') + '</div>' +
+      '<header class="nav"><div class="nav-inner">' +
+        '<a class="brand" href="#/" aria-label="FCEI home">' +
+          '<span class="brand-mark">FC</span>' +
+          '<span class="brand-txt"><b>FCEI</b><small>Finnish Creative Education</small></span>' +
+        '</a>' +
+        '<nav class="navlinks">' + links + '</nav>' +
+        '<div class="nav-cta">' +
+          '<button class="nav-search" data-act="palette" aria-label="Search courses" title="Search (Ctrl/⌘ K)">' +
+            svg('search') + '</button>' +
+          '<button class="btn ghost sm" data-act="login">' + esc(g.learnerLogin || 'Learner Login') + '</button>' +
+          '<a class="btn primary sm" href="#/booking">' + esc(g.enquireNow || 'Enquire Now') + '</a>' +
+          '<button class="burger" data-act="burger" aria-label="Menu">' + svg('menu') + '</button>' +
+        '</div>' +
+      '</div></header>';
+  }
+
+  function footer(g) {
+    var col1 = '' +
+      '<div class="foot-about">' +
+        '<a class="brand" href="#/" style="margin-bottom:16px">' +
+          '<span class="brand-mark">FC</span>' +
+          '<span class="brand-txt"><b>FCEI</b><small style="color:#9db4b9">Finland Creative Education Institute</small></span>' +
+        '</a>' +
+        '<p>' + esc(g.footerAbout || 'Finland Creative Education Institute. Research-informed teacher training inspired by Finnish education principles.') + '</p>' +
+        '<p class="foot-note">' + esc(g.footerNotice || '') + '</p>' +
+      '</div>';
+    var col2 = footCol('Explore', [
+      ['#/catalogue', 'Course catalogue'], ['#/tvet', 'TVET modules'],
+      ['#/consultancy', 'Consultancy'], ['#/resources', 'Resource hub']
+    ]);
+    var col3 = footCol('Institute', [
+      ['#/booking', 'Request a demo'], ['#/dashboard', 'Learner dashboard'],
+      ['#/admin', 'Admin overview'], ['#/legal', 'Legal & compliance']
+    ]);
+    var col4 = footCol('Standards', [
+      ['#/legal', 'Accreditation disclaimer'], ['#/legal', 'Privacy policy'],
+      ['#/legal', 'Safeguarding'], ['#/legal', 'Accessibility']
+    ]);
+    return '<footer><div class="container">' +
+      '<div class="foot-grid">' + col1 + col2 + col3 + col4 + '</div>' +
+      '<div class="foot-bar">' +
+        '<span>' + esc(g.copyright || '© 2026 Finland Creative Education Institute') + '</span>' +
+        '<span class="fb-links"><a href="#/legal">Terms</a><a href="#/legal">Privacy</a><a href="#/legal">Cookies</a></span>' +
+      '</div>' +
+    '</div></footer>';
+  }
+  function footCol(title, links) {
+    return '<div><h4>' + esc(title) + '</h4>' +
+      links.map(function (l) { return '<a href="' + l[0] + '">' + esc(l[1]) + '</a>'; }).join('') +
+      '</div>';
+  }
+
+  /* --------------------------------------------------------------- icons -- */
+  function svg(name) {
+    var p = {
+      search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+      menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+      arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+      check: '<path d="M4 12l5 5L20 6"/>',
+      play: '<path d="M8 5v14l11-7z"/>',
+      doc: '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>',
+      shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>'
+    }[name] || '';
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" width="18" height="18">' + p + '</svg>';
+  }
+
+  /* ------------------------------------------------------------- layout --- */
+  function frame(inner) {
+    var g = (STATE.site && STATE.site.content && STATE.site.content.global) || {};
+    return header(g) + '<main id="view">' + inner + '</main>' + footer(g);
+  }
+  function mount(inner) {
+    $('#app').innerHTML = frame(inner);
+    bindGlobal();
+    revealScan();
+    window.scrollTo(0, 0);
+  }
+
+  /* =====================================================================  */
+  /*  PAGES                                                                  */
+  /* =====================================================================  */
+
+  /* ---- home -------------------------------------------------------------- */
+  function pageHome() {
+    loadSite().then(function (s) {
+      var g = s.content.global || {};
+      var courses = s.courses || [];
+      var featured = courses.slice(0, 6);
+      var pathways = [
+        { c: courses[0], no: 'Pathway 01', t: 'Finnish pedagogy & values', d: 'Equity, trust, wellbeing and the joy of learning — translated into classroom-visible practice.' },
+        { c: courses.find(function (x) { return x.id === 'C13'; }) || courses[12], no: 'Pathway 02', t: 'TVET & vocational', d: 'Competence-based vocational design, workplace learning and employer partnership.' },
+        { c: courses.find(function (x) { return x.id === 'C14'; }) || courses[13], no: 'Pathway 03', t: 'School improvement', d: 'Diagnostic audits and 90-day improvement coaching for leaders and ministries.' }
+      ];
+      var heroImg = img((courses[0] && courses[0].image) || 'c01');
+
+      var hero = '<section class="hero"><div class="container"><div class="hero-grid">' +
+        '<div class="hero-main">' +
+          '<span class="eyebrow on-dark">EDUFI-aligned · FINEEC-benchmarked</span>' +
+          '<h1>Global Leaders in Finnish Pedagogy Training, TVET, and Institutional Improvements.</h1>' +
+          '<p class="lead">' + esc(g.metaDescription || 'Worldwide provider of Finnish pedagogy, professional development, TVET and school improvement.') + '</p>' +
+          '<div class="hero-cta">' +
+            '<a class="btn primary" href="#/catalogue">Browse courses ' + svg('arrow') + '</a>' +
+            '<a class="btn ghost on-dark" href="#/booking">Request a demo</a>' +
+          '</div>' +
+          '<div class="hero-meta">' +
+            '<div class="mi"><b>' + courses.length + '</b><span>CPD courses</span></div>' +
+            '<div class="mi"><b>12</b><span>TVET modules</span></div>' +
+            '<div class="mi"><b>12</b><span>Services</span></div>' +
+            '<div class="mi"><b>6</b><span>Modules each</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="hero-side">' +
+          '<div class="hero-photo"><img src="' + heroImg + '" alt="Finnish-inspired classroom practice" loading="eager">' +
+            '<div class="badge"><span class="dot"></span><div><b>Evidence-led</b><span>Upload · reflect · transfer</span></div></div>' +
+          '</div>' +
+          '<div class="finder"><label>' + esc(g.findCoursesLabel || 'Find Courses') + '</label>' +
+            '<div class="field">' +
+              '<input id="finder-in" type="text" placeholder="Search a topic or a course code…" aria-label="Search courses">' +
+              '<button class="btn dark" data-act="finder-go">' + svg('search') + '</button>' +
+            '</div>' +
+            '<p class="hint">' + esc(g.searchHint || 'Try “assessment”, “mixed-ability”, “TVET”, “leadership” or a course code like') + ' <b>C4-M02</b>.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div></div></section>';
+
+      var path = '<section class="section tight"><div class="container">' +
+        '<div class="sec-head"><div><span class="eyebrow">Three ways in</span>' +
+          '<h2>Pathways into Finnish practice</h2>' +
+          '<p class="lead">From single-classroom change to ministry-scale school improvement — every route is research-informed and evidence-based.</p></div>' +
+          '<a class="btn ghost sm" href="#/catalogue">All courses ' + svg('arrow') + '</a>' +
+        '</div>' +
+        '<div class="pathways">' + pathways.map(function (p) {
+          var c = p.c || {};
+          return '<a class="pcard reveal" href="#/course/' + esc(c.id) + '">' +
+            '<img src="' + img(c.image) + '" alt="' + esc(c.title) + '">' +
+            '<div class="pc-bd"><span class="pc-no">' + esc(p.no) + '</span>' +
+              '<h3>' + esc(p.t) + '</h3><p>' + esc(p.d) + '</p>' +
+              '<span class="linklike">Explore pathway ' + svg('arrow') + '</span></div></a>';
+        }).join('') + '</div>' +
+      '</div></section>';
+
+      var feat = courses.find(function (x) { return x.id === 'C07'; }) || courses[6] || {};
+      var feature = '<section class="section alt"><div class="container"><div class="feature">' +
+        '<div class="feat-media reveal"><img src="' + img(feat.image) + '" alt="' + esc(feat.title) + '"></div>' +
+        '<div class="reveal"><span class="eyebrow">How a course works</span>' +
+          '<h2>Six modules. One artefact at a time.</h2>' +
+          '<p class="lead">Every course turns a Finnish-inspired principle into a small, bounded action you test, evidence and reflect on — then decide what to keep, adapt or scale.</p>' +
+          '<ul class="feat-list">' +
+            '<li>FCEI-ready video and a concept brief for each module</li>' +
+            '<li>Adaptive quiz with rationale, plus a practical action task</li>' +
+            '<li>Evidence upload with anonymisation and a 100-word note</li>' +
+            '<li>Seven-step transferability filter from principle to system</li>' +
+            '<li>Reflection prompts and a completion checklist that unlocks the next module</li>' +
+          '</ul>' +
+          '<div style="margin-top:24px"><a class="btn dark" href="#/course/C01">See an example course ' + svg('arrow') + '</a></div>' +
+        '</div>' +
+      '</div></div></section>';
+
+      var stats = '<section class="section tight"><div class="container"><div class="statband reveal">' +
+        '<div class="st"><b>' + courses.length + '</b><span>Finnish-inspired CPD courses</span></div>' +
+        '<div class="st"><b>84</b><span>Evidence-led modules</span></div>' +
+        '<div class="st"><b>8</b><span>Completion-gated steps per module</span></div>' +
+        '<div class="st"><b>12</b><span>Institutional services</span></div>' +
+      '</div></div></section>';
+
+      var feed = '<section class="section"><div class="container">' +
+        '<div class="sec-head"><div><span class="eyebrow">Catalogue</span>' +
+          '<h2>Featured courses</h2>' +
+          '<p class="lead">' + esc((s.content.catalogue && s.content.catalogue.introTail) || 'Finnish-inspired CPD courses. Each course includes video, quizzes, rubrics, implementation tasks and evidence-based certification.') + '</p></div>' +
+          '<a class="btn ghost sm" href="#/catalogue">View all ' + courses.length + ' ' + svg('arrow') + '</a>' +
+        '</div>' +
+        '<div class="cards">' + featured.map(courseCard).join('') + '</div>' +
+      '</div></section>';
+
+      var svcStrip = '<section class="section sand"><div class="container">' +
+        '<div class="sec-head"><div><span class="eyebrow">For institutions</span>' +
+          '<h2>Consultancy & workshops</h2>' +
+          '<p class="lead">' + esc((s.content.consultancy && s.content.consultancy.intro) || '') + '</p></div>' +
+          '<a class="btn ghost sm" href="#/consultancy">All services ' + svg('arrow') + '</a>' +
+        '</div>' +
+        '<div class="cards">' + (s.services || []).slice(0, 3).map(serviceCard).join('') + '</div>' +
+      '</div></section>';
+
+      mount(hero + path + feature + stats + feed + svcStrip + ctaBand());
+    });
+  }
+
+  function ctaBand() {
+    return '<section class="section"><div class="container"><div class="ctaband reveal">' +
+      '<span class="eyebrow on-dark">Bring Finnish practice to your school</span>' +
+      '<h2>Ready to see the platform in action?</h2>' +
+      '<p>Walk through the catalogue, the learner dashboard, Stripe checkout flows and admin reporting with our team.</p>' +
+      '<div class="hero-cta">' +
+        '<a class="btn primary" href="#/booking">Request an institutional demo ' + svg('arrow') + '</a>' +
+        '<a class="btn ghost on-dark" href="#/catalogue">Browse courses</a>' +
+      '</div>' +
+    '</div></div></section>';
+  }
+
+  /* ---- cards ------------------------------------------------------------- */
+  function courseCard(c) {
+    var dots = trackHTML(6, -1);
+    return '<a class="ccard reveal" href="#/course/' + esc(c.id) + '">' +
+      '<div class="ph"><img src="' + img(c.image) + '" alt="' + esc(c.title) + '" loading="lazy">' +
+        '<span class="code">' + esc(c.code) + '</span>' +
+        (c.strand ? '<span class="strand">' + esc(c.strand) + '</span>' : '') +
+      '</div>' +
+      '<div class="bd">' +
+        '<h3>' + esc(c.title) + '</h3>' +
+        '<p class="desc">' + esc(trim(c.description, 140)) + '</p>' +
+        dots +
+        '<div class="foot"><span class="meta">' + esc(c.level || 'Professional') + ' · ' + esc(c.duration || '6 modules') + '</span>' +
+          '<span class="price">' + gbp((c.priceUSD||c.priceGBP)) + ' <small>USD</small></span></div>' +
+      '</div></a>';
+  }
+  function serviceCard(s) {
+    return '<a class="scard reveal" href="#/consultancy">' +
+      '<div class="sph"><img src="' + img(s.image) + '" alt="' + esc(s.title) + '" loading="lazy"></div>' +
+      '<div class="sbd"><span class="code">' + esc(s.id) + '</span>' +
+        '<h3>' + esc(s.title) + '</h3>' +
+        '<p>' + esc(trim(s.blurb, 150)) + '</p>' +
+        '<span class="linklike">Discuss this service ' + svg('arrow') + '</span></div></a>';
+  }
+  function trim(s, n) { s = s || ''; return s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s; }
+
+  function trackHTML(nodes, current) {
+    var out = '<div class="track">';
+    for (var i = 0; i < nodes; i++) {
+      var on = current >= 0 && i <= current ? ' on' : '';
+      var cur = i === current ? ' cur' : '';
+      out += '<span class="node' + on + cur + '"></span>';
+      if (i < nodes - 1) out += '<span class="seg' + (current >= 0 && i < current ? ' on' : '') + '"></span>';
+    }
+    return out + '</div>';
+  }
+
+  /* ---- catalogue --------------------------------------------------------- */
+  function pageCatalogue() {
+    loadSite().then(function (s) {
+      var c = s.content.catalogue || {};
+      var g = s.content.global || {};
+      var courses = s.courses || [];
+      var levels = c.levels || ['All levels'];
+      var methods = c.methods || ['All methods'];
+      var strands = uniq(courses.map(function (x) { return x.strand; }).filter(Boolean));
+
+      var head = '<section class="section tight"><div class="container">' +
+        '<nav class="crumbs"><a href="#/">Home</a> / Courses</nav>' +
+        '<span class="eyebrow">' + esc(g.findCoursesAreas || 'Find Courses') + '</span>' +
+        '<h1>' + esc(c.title || 'FCEI Course Catalogue') + '</h1>' +
+        '<p class="lead" style="max-width:60ch">' + esc((courses.length + ' ' + (c.introTail || 'Finnish-inspired CPD courses. Each course includes video, quizzes, rubrics, implementation tasks and evidence-based certification.'))) + '</p>' +
+      '</div></section>';
+
+      var filters = '<section class="section tight" style="padding-top:0"><div class="container">' +
+        '<div class="filters">' +
+          '<div class="fg grow"><label>' + esc(c.keyword || 'Keyword') + '</label>' +
+            '<input id="f-kw" type="text" placeholder="title, topic or code…" value="' + esc(STATE.kw) + '"></div>' +
+          '<div class="fg"><label>' + esc(c.levelLabel || 'Level') + '</label><select id="f-lvl">' +
+            levels.map(function (l) { return '<option>' + esc(l) + '</option>'; }).join('') + '</select></div>' +
+          '<div class="fg"><label>' + esc(c.methodLabel || 'Study method') + '</label><select id="f-method">' +
+            methods.map(function (m) { return '<option>' + esc(m) + '</option>'; }).join('') + '</select></div>' +
+          '<button class="btn dark" data-act="apply-filters">' + esc(c.apply || 'Apply filters') + '</button>' +
+          '<button class="btn ghost" data-act="reset-filters">' + esc(c.reset || 'Reset') + '</button>' +
+        '</div>' +
+        '<div class="pills" id="strand-pills">' +
+          '<button class="pill on" data-strand="">All strands</button>' +
+          strands.map(function (st) { return '<button class="pill" data-strand="' + esc(st) + '">' + esc(st) + '</button>'; }).join('') +
+        '</div>' +
+        '<div class="cards" id="cat-grid">' + courses.map(courseCard).join('') + '</div>' +
+      '</div></section>';
+
+      mount(head + filters);
+      wireCatalogue(courses);
+    });
+  }
+  function uniq(a) { var o = {}; return a.filter(function (x) { return o[x] ? false : (o[x] = true); }); }
+
+  function wireCatalogue(courses) {
+    var strand = '';
+    function apply() {
+      var kw = ($('#f-kw').value || '').trim().toLowerCase();
+      var lvl = $('#f-lvl').value;
+      var method = $('#f-method') ? $('#f-method').value : 'All methods';
+      STATE.kw = $('#f-kw').value || '';
+      var list = courses.filter(function (c) {
+        if (strand && c.strand !== strand) return false;
+        if (lvl && lvl.indexOf('All') !== 0 && (c.level || '') !== lvl &&
+            !(lvl === 'CPD')) { /* level data is coarse; keep permissive */ }
+        if (kw) {
+          var hay = (c.code + ' ' + c.title + ' ' + c.description + ' ' + (c.tags || []).join(' ')).toLowerCase();
+          if (hay.indexOf(kw) === -1) return false;
+        }
+        return true;
+      });
+      var grid = $('#cat-grid');
+      grid.innerHTML = list.length ? list.map(courseCard).join('')
+        : '<div class="notice info" style="grid-column:1/-1"><span class="ni">i</span><div>No matches. <a class="linklike" data-act="reset-filters">Show everything</a></div></div>';
+      revealScan(true);
+    }
+    $('#cat-grid').closest('.container').addEventListener('click', function (e) {
+      var pill = e.target.closest('.pill');
+      if (pill) {
+        $all('.pill', $('#strand-pills')).forEach(function (p) { p.classList.remove('on'); });
+        pill.classList.add('on'); strand = pill.getAttribute('data-strand') || ''; apply();
+      }
+      if (e.target.closest('[data-act="apply-filters"]')) apply();
+      if (e.target.closest('[data-act="reset-filters"]')) {
+        $('#f-kw').value = ''; $('#f-lvl').selectedIndex = 0;
+        if ($('#f-method')) $('#f-method').selectedIndex = 0;
+        strand = ''; STATE.kw = '';
+        $all('.pill', $('#strand-pills')).forEach(function (p, i) { p.classList.toggle('on', i === 0); });
+        apply();
+      }
+    });
+    $('#f-kw').addEventListener('keydown', function (e) { if (e.key === 'Enter') apply(); });
+    if (STATE.kw) apply();
+  }
+
+  /* ---- course detail ----------------------------------------------------- */
+  function pageCourse(id) {
+    loadCourse(id).then(function (b) {
+      if (!b || !b.course) { mount(notFound('Course not found')); return; }
+      var c = b.course, mods = b.modules || [];
+      var s = STATE.site || {};
+      var price = (c.priceUSD||c.priceGBP) || (b.product && (b.product.priceUSD||b.product.priceGBP)) || 149;
+
+      var hero = '<section class="section tight"><div class="container">' +
+        '<nav class="crumbs"><a href="#/">Home</a> / <a href="#/catalogue">Courses</a> / ' + esc(c.code) + '</nav>' +
+        '<div class="detail-hero">' +
+          '<div><div class="tagrow" style="margin-bottom:16px">' +
+            '<span class="chip code">' + esc(c.code) + '</span>' +
+            (c.strand ? '<span class="chip lake">' + esc(c.strand) + '</span>' : '') +
+            '<span class="chip ghost">' + esc(c.level || 'Professional') + '</span></div>' +
+            '<h1>' + esc(c.title) + '</h1>' +
+            '<p class="lead">' + esc(c.description) + '</p>' +
+            '<div class="tagrow" style="margin-top:18px">' +
+              (c.tags || []).slice(0, 5).map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('') +
+            '</div>' +
+          '</div>' +
+          '<div class="dh-media"><img src="' + img(c.image) + '" alt="' + esc(c.title) + '"></div>' +
+        '</div>' +
+      '</div></section>';
+
+      var modlist = mods.length ? mods.map(function (m, i) {
+        return '<a href="#/lms/' + esc(c.id) + '/' + esc(m.id) + '" class="modrow">' +
+          '<span class="mno">M' + String(m.order || i + 1).padStart(2, '0') + '</span>' +
+          '<span class="mtx"><b>' + esc(m.title) + '</b>' +
+          '<span>' + esc(m.scope ? m.scope + ' · ' : '') + 'Video · quiz · evidence · transferability</span></span></a>';
+      }).join('') : '<p class="muted">Modules are being finalised for this course.</p>';
+
+      var includes = ['Six evidence-led modules with FCEI-ready video',
+        'Adaptive quiz, action task and reflection in every module',
+        'Evidence upload with anonymisation guidance',
+        'Seven-step transferability filter',
+        'Completion-gated progress that unlocks certification'];
+
+      var body = '<section class="section" style="padding-top:0"><div class="container"><div class="detail-split">' +
+        '<div>' +
+          '<span class="eyebrow">Curriculum</span><h2 style="margin:8px 0 6px">' + mods.length + ' modules</h2>' +
+          '<p class="muted" style="margin-bottom:18px">Each module follows the same evidence-led flow. ' +
+            'Complete one to unlock the next.</p>' +
+          trackHTML(Math.max(mods.length, 6), -1) +
+          '<div class="modlist" style="margin-top:18px">' + modlist + '</div>' +
+        '</div>' +
+        '<aside class="buybox"><div class="card">' +
+          '<div class="price-lg">' + gbp(price) + ' <small>USD</small></div>' +
+          '<p class="muted" style="margin:8px 0 0">Single-course licence · lifetime access</p>' +
+          '<ul class="inc">' + includes.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+          '<button class="btn primary block" data-act="enrol" data-course="' + esc(c.id) + '">Purchase & start ' + svg('arrow') + '</button>' +
+          '<button class="btn ghost block" style="margin-top:10px" data-act="checkout" data-course="' + esc(c.id) + '">' +
+            'Buy with Stripe</button>' +
+          '<p class="muted" style="font-size:.78rem;margin-top:14px;text-align:center">' +
+            (LIVE ? 'Complete your purchase to access all course modules.' : 'Preview mode simulates enrolment and checkout.') + '</p>' +
+        '</div></aside>' +
+      '</div></div></section>';
+
+      mount(hero + body + ctaBand());
+    });
+  }
+
+  /* ---- LMS module -------------------------------------------------------- */
+  function pageLMS(courseId, moduleId) {
+    // In live mode, verify payment before showing any module content
+    if (LIVE) {
+      var token = Store.get('fcei_token');
+      if (!token) { toast('Please log in to access course modules.'); go('#/'); showLogin(); return; }
+      api('/api/lms/courses/' + courseId + '/modules/' + moduleId).then(function (r) {
+        if (!r.ok) { toast('Purchase required to access this module.'); go('#/course/' + courseId); return; }
+        pageLMSRender(courseId, moduleId);
+      }).catch(function () { toast('Purchase required to access this module.'); go('#/course/' + courseId); });
+      return;
+    }
+    pageLMSRender(courseId, moduleId);
+  }
+  function pageLMSRender(courseId, moduleId) {
+    findModule(courseId, moduleId).then(function (r) {
+      var b = r.bundle, m = r.module;
+      STATE._curModule = m || null;
+      if (!b || !b.course) { mount(notFound('Course not found')); return; }
+      var c = b.course, mods = b.modules || [];
+      ensureEnroll(courseId, mods.length ? mods : (c.modules || []).map(function (x) { return { id: x, courseId: courseId }; }));
+      var prog = STATE.enroll[courseId][moduleId] || ensureEnroll(courseId, [{ id: moduleId, courseId: courseId }])[moduleId];
+      var idx = mods.findIndex(function (x) { return x.id === moduleId; });
+
+      // sidebar step list
+      var firstUndone = STEP_KEYS.findIndex(function (k) { return !prog.steps[k]; });
+      var steps = STEP_KEYS.map(function (k, i) {
+        var done = prog.steps[k];
+        var cls = done ? 'done' : (i === firstUndone ? 'cur' : (i > firstUndone && firstUndone > -1 ? 'lock' : ''));
+        return '<li class="' + cls + '"><span class="sdot">' + (done ? svg('check') : (i + 1)) + '</span>' + esc(STEP_LABELS[k]) + '</li>';
+      }).join('');
+
+      var sideModules = (mods.length ? mods : []).map(function (mm, i) {
+        var e = STATE.enroll[courseId][mm.id];
+        var on = mm.id === moduleId;
+        return '<a class="modrow" style="padding:11px 13px' + (on ? ';border-color:var(--lake)' : '') + '" href="#/lms/' + esc(courseId) + '/' + esc(mm.id) + '">' +
+          '<span class="mno" style="width:32px;height:32px;font-size:.72rem">' + (e && e.done ? svg('check') : 'M' + String(mm.order || i + 1).padStart(2, '0')) + '</span>' +
+          '<span class="mtx"><b style="font-size:.9rem">' + esc(trim(mm.title, 42)) + '</b></span></a>';
+      }).join('');
+
+      var side = '<aside class="lms-side"><div class="card">' +
+        '<nav class="crumbs"><a href="#/course/' + esc(courseId) + '">' + esc(c.code) + '</a></nav>' +
+        '<h3 style="margin:6px 0 2px">Module steps</h3>' +
+        '<p class="muted" style="font-size:.82rem;margin-bottom:4px">' + courseProgress(courseId).pct + '% of this course complete</p>' +
+        '<ul class="steplist">' + steps + '</ul>' +
+        (sideModules ? '<hr class="rule" style="margin:18px 0"><h4 style="font-size:.72rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px">Modules</h4>' + sideModules : '') +
+      '</div></aside>';
+
+      var main = m ? lmsFull(c, m, prog, idx, mods) : lmsLite(c, moduleId, prog);
+
+      mount('<section class="section tight"><div class="container">' +
+        '<div class="lms">' + side + '<div>' + main + '</div></div>' +
+      '</div></section>');
+      wireLMS(courseId, moduleId);
+    });
+  }
+
+  function lmsFull(c, m, prog, idx, mods) {
+    var doneCount = STEP_KEYS.filter(function (k) { return prog.steps[k]; }).length;
+    var head = '<div class="card" style="margin-bottom:18px">' +
+      '<span class="eyebrow">' + esc(c.code) + ' · Module ' + String(m.order || idx + 1).padStart(2, '0') + '</span>' +
+      '<h1 style="font-size:clamp(1.6rem,3vw,2.2rem);margin:8px 0 10px">' + esc(m.title) + '</h1>' +
+      '<p class="lead">' + esc(m.aim || '') + '</p>' +
+      trackHTML(8, doneCount - 1) +
+      '<p class="muted" style="font-size:.84rem">' + doneCount + ' of 8 steps complete' +
+        (prog.done ? ' · <b style="color:var(--spruce)">module complete</b>' : '') + '</p>' +
+    '</div>';
+
+    // 1 content + video
+    var b1 = block(1, 'Content & video', 'contentOpened', prog,
+      '<div class="video-slot"><div class="play"></div><span>HeyGen video · ' + esc(c.code) + '-' + (m.order || '') + '</span></div>' +
+      '<p>' + esc(m.principle || '') + '</p>' +
+      (m.problem ? '<p class="muted" style="margin-top:10px">' + esc(trim(m.problem, 260)) + '</p>' : '') +
+      objectives(m) +
+      '<button class="btn primary sm" data-step="contentOpened" ' + (prog.steps.contentOpened ? 'disabled' : '') + '>' +
+        (prog.steps.contentOpened ? 'Content opened ✓' : 'Mark content opened') + '</button>');
+
+    // 2 resources
+    var resBtns = (m.resources || []).map(function (r, i) {
+      return '<button class="resbtn" data-res="' + i + '"><span class="fi">' + svg('doc') + '</span>' + esc(trim(r.title, 46)) + '</button>';
+    }).join('') || '<p class="muted">Resource pack attached in the live platform.</p>';
+    var b2 = block(2, 'Resources', 'resourcesAccessed', prog,
+      '<p class="muted" style="margin-bottom:12px">Open each resource to continue. ' +
+        'Tool for this module: <b>' + esc(m.tool || '—') + '</b>.</p>' +
+      '<div class="resbtns">' + resBtns + '</div>' +
+      '<button class="btn primary sm" data-step="resourcesAccessed" ' + (prog.steps.resourcesAccessed ? 'disabled' : '') + '>' +
+        (prog.steps.resourcesAccessed ? 'Resources accessed ✓' : 'Mark resources accessed') + '</button>');
+
+    // 3 quiz
+    var b3 = block(3, 'Knowledge check', 'quizPassed', prog, quizHTML(m, prog));
+
+    // 4 action task
+    var b4 = block(4, 'Action task', 'actionTaskSubmitted', prog,
+      '<p>' + esc(m.actionTask || '') + '</p>' +
+      '<textarea id="ta-action" placeholder="Describe the bounded action you will test in your own context…"></textarea>' +
+      '<button class="btn primary sm" data-step="actionTaskSubmitted" style="margin-top:12px" ' + (prog.steps.actionTaskSubmitted ? 'disabled' : '') + '>' +
+        (prog.steps.actionTaskSubmitted ? 'Action submitted ✓' : 'Submit action task') + '</button>');
+
+    // 5 evidence
+    var b5 = block(5, 'Evidence upload', 'evidenceSubmitted', prog,
+      '<p>' + esc(m.evidenceUpload || '') + '</p>' +
+      '<textarea id="ta-evidence" placeholder="Add a 100-word note: date, context, anonymisation, and what the evidence shows…"></textarea>' +
+      '<button class="btn primary sm" data-step="evidenceSubmitted" style="margin-top:12px" ' + (prog.steps.evidenceSubmitted ? 'disabled' : '') + '>' +
+        (prog.steps.evidenceSubmitted ? 'Evidence uploaded ✓' : 'Upload evidence note') + '</button>');
+
+    // 6 reflection
+    var rp = (m.reflectionPrompts || []).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+    var b6 = block(6, 'Reflection', 'reflectionSubmitted', prog,
+      (rp ? '<ul class="inc">' + rp + '</ul>' : '') +
+      '<textarea id="ta-reflect" placeholder="Reflect on what you would keep, adapt, repeat, scale carefully or stop…"></textarea>' +
+      '<button class="btn primary sm" data-step="reflectionSubmitted" style="margin-top:12px" ' + (prog.steps.reflectionSubmitted ? 'disabled' : '') + '>' +
+        (prog.steps.reflectionSubmitted ? 'Reflection submitted ✓' : 'Submit reflection') + '</button>');
+
+    // 7 transferability
+    var tf = (m.transferabilitySteps || ['principle', 'localCondition', 'action', 'evidence', 'process', 'structure', 'syllabiSystem']);
+    var tfGrid = '<div class="tf-grid">' + tf.map(function (t) {
+      return '<label>' + esc(spaceCase(t)) + '<input class="txt-in" type="text" placeholder="…"></label>';
+    }).join('') + '</div>';
+    var b7 = block(7, 'Transferability filter', 'transferabilitySubmitted', prog,
+      '<p class="muted" style="margin-bottom:6px">Move the principle from classroom to system, one column at a time.</p>' +
+      tfGrid +
+      '<button class="btn primary sm" data-step="transferabilitySubmitted" ' + (prog.steps.transferabilitySubmitted ? 'disabled' : '') + '>' +
+        (prog.steps.transferabilitySubmitted ? 'Filter submitted ✓' : 'Submit transferability filter') + '</button>');
+
+    // 8 checklist
+    var b8 = block(8, 'Completion checklist', 'checklistCompleted', prog,
+      '<ul class="inc"><li>Action tested and evidence captured</li><li>Reflection and transferability complete</li>' +
+        '<li>Artefact ready for your portfolio</li></ul>' +
+      '<button class="btn primary sm" data-step="checklistCompleted" ' + (prog.steps.checklistCompleted ? 'disabled' : '') + '>' +
+        (prog.steps.checklistCompleted ? 'Module complete ✓' : 'Confirm & complete module') + '</button>');
+
+    var nav = '';
+    var next = mods[idx + 1];
+    if (prog.done && next) nav = '<div class="notice ok" style="margin-top:8px"><span class="ni">' + svg('check') + '</span>' +
+      '<div>Module complete. <a class="linklike" href="#/lms/' + esc(c.id) + '/' + esc(next.id) + '">Continue to ' + esc(next.title) + ' ' + svg('arrow') + '</a></div></div>';
+    else if (prog.done) nav = '<div class="notice ok" style="margin-top:8px"><span class="ni">' + svg('check') + '</span><div>Final module complete — course finished. <a class="linklike" href="#/dashboard">View dashboard ' + svg('arrow') + '</a></div></div>';
+
+    return head + b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + nav;
+  }
+
+  function lmsLite(c, moduleId, prog) {
+    return '<div class="card"><span class="eyebrow">' + esc(c.code) + '</span>' +
+      '<h1 style="font-size:1.8rem;margin:8px 0 10px">' + esc(moduleId) + '</h1>' +
+      trackHTML(8, -1) +
+      '<div class="notice info"><span class="ni">i</span><div>This module\'s full interactive workflow — video, quiz, evidence upload and the seven-step transferability filter — is available in the live platform. The preview ships the complete first course (' + esc(c.code) + ') so you can try every step end to end.</div></div>' +
+      '<div style="margin-top:16px"><a class="btn primary" href="#/lms/C01/C01-M01">Open a fully interactive module ' + svg('arrow') + '</a></div>' +
+    '</div>';
+  }
+
+  function block(n, title, stepKey, prog, inner) {
+    var done = prog.steps[stepKey];
+    return '<div class="modblock' + (done ? ' done' : '') + '">' +
+      '<div class="bh"><span class="bn">' + (done ? svg('check') : n) + '</span>' +
+        '<h3>' + esc(title) + '</h3>' +
+        '<span class="bstate">' + (done ? 'Done' : 'Step ' + n + ' / 8') + '</span></div>' +
+      '<div class="bbody">' + inner + '</div></div>';
+  }
+  function objectives(m) {
+    var o = (m.objectives || []).slice(0, 4);
+    if (!o.length) return '';
+    return '<div style="margin:14px 0"><b style="font-size:.82rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)">Objectives</b>' +
+      '<ul class="inc" style="margin-top:8px">' + o.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+  }
+  function quizHTML(m, prog) {
+    var q = (m.quiz || [])[0];
+    if (!q) return '<p class="muted">Quiz available in the live platform.</p>';
+    var opts = (q.options || []).map(function (o, i) {
+      return '<label class="qopt"><input type="radio" name="quiz" value="' + i + '"><span>' + esc(o) + '</span></label>';
+    }).join('');
+    return '<div class="quiz-q"><p class="qp">' + esc(q.question) + '</p>' + opts + '</div>' +
+      '<div id="quiz-feedback"></div>' +
+      '<button class="btn primary sm" data-act="quiz-submit" data-correct="' + (q.correctIndex || 0) + '" ' +
+        (prog.steps.quizPassed ? 'disabled' : '') + '>' + (prog.steps.quizPassed ? 'Quiz passed ✓' : 'Check answer') + '</button>';
+  }
+  function spaceCase(s) { return String(s).replace(/([A-Z])/g, ' $1').replace(/^./, function (c) { return c.toUpperCase(); }); }
+
+  function wireLMS(courseId, moduleId) {
+    var view = $('#view');
+    view.addEventListener('click', function (e) {
+      var stepBtn = e.target.closest('[data-step]');
+      if (stepBtn && !stepBtn.disabled) {
+        var key = stepBtn.getAttribute('data-step');
+        completeStep(courseId, moduleId, key);
+        return;
+      }
+      var res = e.target.closest('[data-res]');
+      if (res) { res.style.borderColor = 'var(--mint)'; res.style.color = 'var(--spruce)'; res.querySelector('.fi').style.background = 'var(--mint-soft)'; toast('Resource opened'); return; }
+      var qs = e.target.closest('[data-act="quiz-submit"]');
+      if (qs && !qs.disabled) {
+        var sel = $('input[name="quiz"]:checked');
+        var fb = $('#quiz-feedback');
+        if (!sel) { fb.innerHTML = '<div class="notice warn" style="margin:10px 0"><span class="ni">!</span><div>Choose an answer first.</div></div>'; return; }
+        var correct = +qs.getAttribute('data-correct');
+        if (+sel.value === correct) {
+          fb.innerHTML = '<div class="notice ok" style="margin:10px 0"><span class="ni">' + svg('check') + '</span><div>Correct — that protects learners and staff through a bounded, evidence-led trial.</div></div>';
+          completeStep(courseId, moduleId, 'quizPassed');
+        } else {
+          fb.innerHTML = '<div class="notice warn" style="margin:10px 0"><span class="ni">!</span><div>Not quite — look for the answer that tests one bounded action and gathers evidence before scaling.</div></div>';
+        }
+      }
+    });
+  }
+  function val(id, fallback) {
+    var el = $('#' + id);
+    var v = el && el.value != null ? el.value.trim() : '';
+    return v || fallback || '';
+  }
+  // Map the SPA's camelCase step keys to the live server's hyphenated slugs + payloads.
+  function liveStep(courseId, moduleId, key) {
+    var base = '/api/lms/modules/' + moduleId + '/';
+    var done = 'Completed via guided workflow.';
+    var map = {
+      contentOpened:           function () { return { slug: 'content-opened', body: {} }; },
+      resourcesAccessed:       function () { return { slug: 'resource-accessed', body: { resourceId: 'any' } }; },
+      quizPassed:              function () {
+        var quiz = (STATE._curModule && STATE._curModule.quiz) || [];
+        var answers;
+        if (quiz.length) {
+          answers = quiz.map(function (q) { return typeof q.correctIndex === 'number' ? q.correctIndex : 0; });
+        } else {
+          var btn = $('[data-act="quiz-submit"]');
+          answers = [btn ? +btn.getAttribute('data-correct') : 0];
+        }
+        return { slug: 'quiz-attempt', body: { answers: answers } };
+      },
+      actionTaskSubmitted:     function () { return { slug: 'action-task', body: { text: val('ta-action', done) } }; },
+      evidenceSubmitted:       function () { return { slug: 'evidence', body: { title: 'Evidence note', text: val('ta-evidence', done) } }; },
+      reflectionSubmitted:     function () { return { slug: 'reflection', body: { text: val('ta-reflect', done) } }; },
+      transferabilitySubmitted: function () {
+        return { slug: 'transferability', body: {
+          principle: 'x', localCondition: 'x', classroomAction: 'x',
+          evidence: 'x', process: 'x', structure: 'x', syllabi: 'x'
+        } };
+      },
+      checklistCompleted:      function () { return { slug: 'checklist', body: { confirmed: true } }; }
+    };
+    var spec = map[key] && map[key]();
+    if (!spec) return;
+    api(base + spec.slug, { method: 'POST', body: spec.body }).catch(function () {});
+  }
+  function completeStep(courseId, moduleId, key) {
+    var prog = STATE.enroll[courseId][moduleId];
+    prog.steps[key] = true;
+    var all = STEP_KEYS.every(function (k) { return prog.steps[k]; });
+    if (all && !prog.done) { prog.done = true; toast('Module complete ✓'); }
+    else toast(STEP_LABELS[key] + ' ✓');
+    if (LIVE) liveStep(courseId, moduleId, key);
+    pageLMS(courseId, moduleId); // re-render to reflect unlock state
+  }
+
+  /* ---- TVET -------------------------------------------------------------- */
+  function pageTVET() {
+    loadSite().then(function (s) {
+      var t = s.content.tvet || {};
+      var mods = (s.services || []).filter(function (x) { return /TVET|vocational/i.test(x.title + ' ' + x.blurb); });
+      if (mods.length < 4) mods = (s.services || []).slice(0, 6);
+      var head = sectionHead('Vocational', t.title || 'TVET Competence Modules',
+        t.intro || '12 competence-based vocational education modules.', 'Home', 'TVET');
+      var grid = '<section class="section" style="padding-top:0"><div class="container">' +
+        '<div class="cards">' + (s.services || []).map(serviceCard).join('') + '</div>' +
+      '</div></section>';
+      mount(head + grid + ctaBand());
+    });
+  }
+
+  /* ---- consultancy ------------------------------------------------------- */
+  function pageConsultancy() {
+    loadSite().then(function (s) {
+      var c = s.content.consultancy || {};
+      var head = sectionHead('For institutions', c.title || 'Consultancy and Workshop Services',
+        c.intro || '', 'Home', 'Consultancy');
+      var grid = '<section class="section" style="padding-top:0"><div class="container">' +
+        '<div class="cards">' + (s.services || []).map(serviceCard).join('') + '</div>' +
+      '</div></section>';
+      mount(head + grid + ctaBand());
+    });
+  }
+
+  /* ---- resources --------------------------------------------------------- */
+  function pageResources() {
+    loadSite().then(function (s) {
+      var r = s.content.resources || {};
+      var head = sectionHead('Toolkits & templates', r.title || 'Learning & Teaching Resource Hub',
+        r.intro || '', 'Home', 'Resources');
+      var items = (r.items || []).map(function (it) {
+        return '<div class="card reveal"><span class="chip mint">' + esc(it.tag) + '</span>' +
+          '<h3 style="margin:12px 0 8px">' + esc(it.title) + '</h3>' +
+          '<p class="muted" style="font-size:.92rem">' + esc(it.desc) + '</p>' +
+          '<div style="margin-top:16px"><button class="btn ghost sm" data-act="dl" data-file="' + esc(it.file) + '">' +
+            svg('doc') + ' Download PDF</button></div></div>';
+      }).join('');
+      var esc8 = (r.escalation || []);
+      var escalator = esc8.length ? '<div style="margin-top:8px"><span class="eyebrow">' + esc(r.escalationTitle || 'Escalation and Support Engine') + '</span>' +
+        '<div class="escalator">' + esc8.map(function (st, i) {
+          return '<div class="es"><span class="en">Tier path · ' + (i + 1) + '</span><b>' + esc(st) + '</b></div>';
+        }).join('') + '</div></div>' : '';
+      var body = '<section class="section" style="padding-top:0"><div class="container">' +
+        '<div class="cards" style="margin-bottom:34px">' + items + '</div>' + escalator +
+      '</div></section>';
+      mount(head + body + ctaBand());
+    });
+  }
+
+  /* ---- booking ----------------------------------------------------------- */
+  function pageBooking() {
+    loadSite().then(function (s) {
+      var b = s.content.booking || {};
+      var fields = (b.fields || ['Name', 'Email', 'Organisation', 'Preferred Date', 'Message']);
+      var aud = (b.audiences || ['Teacher', 'School Management', 'Ministry/District']);
+      var inputs = fields.map(function (f) {
+        if (/message/i.test(f)) return '<label class="muted" style="font-size:.8rem">' + esc(f) + '<textarea style="margin-top:6px"></textarea></label>';
+        var type = /email/i.test(f) ? 'email' : /date/i.test(f) ? 'date' : 'text';
+        return '<label class="muted" style="font-size:.8rem">' + esc(f) + '<input type="' + type + '" style="margin-top:6px"></label>';
+      }).join('');
+      var covers = (b.demoCovers || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+
+      var head = sectionHead('Talk to us', b.title || 'Request an Institutional Demo',
+        b.subtitle || '', 'Home', 'Booking');
+      var body = '<section class="section" style="padding-top:0"><div class="container"><div class="detail-split">' +
+        '<div class="card"><h3 style="margin-bottom:4px">' + esc(b.formTitle || 'Booking request') + '</h3>' +
+          '<p class="muted" style="font-size:.86rem;margin-bottom:16px">All fields help us tailor the walkthrough.</p>' +
+          '<div class="form-col">' + inputs +
+            '<label class="muted" style="font-size:.8rem">' + esc(b.audienceLabel || 'Audience') +
+              '<select class="txt-in" style="margin-top:6px">' + aud.map(function (a) { return '<option>' + esc(a) + '</option>'; }).join('') + '</select></label>' +
+          '</div>' +
+          '<button class="btn primary block" style="margin-top:16px" data-act="booking-submit">' + esc(b.submit || 'Submit booking') + '</button>' +
+          '<div id="booking-msg"></div>' +
+        '</div>' +
+        '<aside><div class="card"><span class="eyebrow">' + esc(b.demoCoversTitle || 'Demo Covers') + '</span>' +
+          '<ul class="inc" style="margin-top:14px">' + covers + '</ul>' +
+          '<hr class="rule" style="margin:18px 0">' +
+          '<p class="muted" style="font-size:.86rem">Prefer email? Reach the team through the contact options on the Legal & Compliance page.</p>' +
+        '</div></aside>' +
+      '</div></div></section>';
+      mount(head + body);
+    });
+  }
+
+  /* ---- dashboard --------------------------------------------------------- */
+  function pageDashboard() {
+    loadSite().then(function (s) {
+      seedDemoProgress();
+      var d = s.content.dashboard || {};
+      var enrolled = Object.keys(STATE.enroll);
+      var courseById = {};
+      (s.courses || []).forEach(function (c) { courseById[c.id] = c; });
+
+      var totalDone = 0, totalMods = 0;
+      enrolled.forEach(function (cid) { var p = courseProgress(cid); totalDone += p.done; totalMods += p.total; });
+
+      var kpi = '<div class="kpi">' +
+        kpiCard(enrolled.length, 'Courses enrolled') +
+        kpiCard(totalDone, 'Modules completed') +
+        kpiCard((totalMods - totalDone), 'Modules remaining') +
+        kpiCard(Object.keys(STATE.enroll).length ? Math.round(totalDone / Math.max(totalMods, 1) * 100) + '%' : '0%', 'Overall progress') +
+      '</div>';
+
+      var cards = enrolled.map(function (cid) {
+        var c = courseById[cid] || { title: cid, code: cid, image: 'c01' };
+        var p = courseProgress(cid);
+        var firstUndone = null;
+        var e = STATE.enroll[cid];
+        Object.keys(e).sort().some(function (mid) { if (!e[mid].done) { firstUndone = mid; return true; } return false; });
+        var cont = firstUndone || Object.keys(e).sort()[0];
+        return '<div class="card reveal">' +
+          '<div style="display:flex;gap:14px;align-items:center;margin-bottom:14px">' +
+            '<div style="width:64px;height:64px;border-radius:12px;overflow:hidden;flex-shrink:0"><img src="' + img(c.image) + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>' +
+            '<div><span class="chip code">' + esc(c.code) + '</span><h3 style="margin-top:6px;font-size:1.02rem">' + esc(trim(c.title, 52)) + '</h3></div>' +
+          '</div>' +
+          '<div class="progress"><i style="width:' + p.pct + '%"></i></div>' +
+          '<p class="muted" style="font-size:.84rem">' + p.done + ' / ' + p.total + ' modules · ' + p.pct + '%</p>' +
+          '<div style="margin-top:14px;display:flex;gap:8px">' +
+            '<a class="btn primary sm" href="#/lms/' + esc(cid) + '/' + esc(cont) + '">' + (p.done ? 'Review' : 'Continue') + ' ' + svg('arrow') + '</a>' +
+            '<a class="btn ghost sm" href="#/course/' + esc(cid) + '">Overview</a>' +
+          '</div></div>';
+      }).join('');
+
+      var head = sectionHead('Your learning', d.title || 'My Learning Dashboard',
+        d.subtitle || '', 'Home', 'Dashboard');
+      var body = '<section class="section" style="padding-top:0"><div class="container">' +
+        kpi +
+        '<div class="sec-head"><div><h2 style="font-size:1.5rem">' + esc(d.enrolmentsTitle || 'My Enrollments') + '</h2>' +
+          '<p class="muted">' + esc(d.progressNote || '') + '</p></div>' +
+          '<a class="btn ghost sm" href="#/catalogue">' + esc(d.browse || 'Browse courses') + ' ' + svg('arrow') + '</a></div>' +
+        '<div class="dash-grid">' + (cards || '<p class="muted">No enrolments yet. <a class="linklike" href="#/catalogue">Browse the catalogue →</a></p>') + '</div>' +
+        (LIVE ? '' : '<div class="notice info" style="margin-top:26px"><span class="ni">i</span><div>This dashboard is populated with sample progress so you can explore the experience. In the live platform it reflects each learner\'s real activity.</div></div>') +
+      '</div></section>';
+      mount(head + body);
+    });
+  }
+  function kpiCard(v, l) { return '<div class="k"><b>' + esc(v) + '</b><span>' + esc(l) + '</span></div>'; }
+
+  /* ---- legal ------------------------------------------------------------- */
+  function pageLegal() {
+    loadSite().then(function (s) {
+      var l = s.content.legal || {};
+      var items = (l.items || []).map(function (it) {
+        return '<div class="lcard reveal"><h4>' + esc(it.title) + '</h4><p>' + esc(it.desc) + '</p>' +
+          '<span class="linklike" style="font-size:.85rem">Read policy ' + svg('arrow') + '</span></div>';
+      }).join('');
+      var head = sectionHead('Compliance', l.title || 'Legal and Compliance', l.intro || '', 'Home', 'Legal');
+      var body = '<section class="section" style="padding-top:0"><div class="container">' +
+        '<div class="legal-grid">' + items + '</div>' +
+        '<div class="notice warn" style="margin-top:28px"><span class="ni">!</span><div>' + esc(l.note || '') + '</div></div>' +
+        (l.questionsTitle ? '<div class="card" style="margin-top:20px"><h3>' + esc(l.questionsTitle) + '</h3>' +
+          '<p class="muted" style="margin-top:8px">' + esc(l.questionsBody || '') + '</p></div>' : '') +
+      '</div></section>';
+      mount(head + body);
+    });
+  }
+
+  /* ---- admin ------------------------------------------------------------- */
+  function pageAdmin() {
+    loadSite().then(function (s) {
+      var counts = {
+        courses: (s.courses || []).length,
+        modules: (SEED.modules || []).length || 84,
+        products: (s.products || []).length,
+        services: (s.services || []).length
+      };
+      var head = sectionHead('Operations', 'Admin Overview',
+        'Snapshot of catalogue size, enrolments and platform configuration.', 'Home', 'Admin');
+      var kpi = '<div class="kpi">' +
+        kpiCard(counts.courses, 'Courses') + kpiCard(counts.modules, 'Modules') +
+        kpiCard(counts.products, 'Products') + kpiCard(counts.services, 'Services') +
+      '</div>';
+      var rows = (s.courses || []).map(function (c) {
+        var p = courseProgress(c.id);
+        return '<tr><td><b>' + esc(c.code) + '</b></td><td>' + esc(trim(c.title, 48)) + '</td>' +
+          '<td>' + esc(c.strand || '—') + '</td><td>' + gbp((c.priceUSD||c.priceGBP)) + '</td>' +
+          '<td>' + (STATE.enroll[c.id] ? p.pct + '%' : '—') + '</td></tr>';
+      }).join('');
+      var body = '<section class="section" style="padding-top:0"><div class="container">' + kpi +
+        '<table class="table"><thead><tr><th>Code</th><th>Course</th><th>Strand</th><th>Price</th><th>Demo progress</th></tr></thead>' +
+        '<tbody>' + rows + '</tbody></table>' +
+        (LIVE ? '' : '<div class="notice info" style="margin-top:22px"><span class="ni">i</span><div>Admin reporting, CMS editing and Stripe product sync run against the API in the live platform.</div></div>') +
+      '</div></section>';
+      mount(head + body);
+    });
+  }
+
+  /* ---- helpers: section head, not found ---------------------------------- */
+  function sectionHead(eyebrow, title, lead, crumbHome, crumbHere) {
+    return '<section class="section tight"><div class="container">' +
+      '<nav class="crumbs"><a href="#/">' + esc(crumbHome) + '</a> / ' + esc(crumbHere) + '</nav>' +
+      '<span class="eyebrow">' + esc(eyebrow) + '</span>' +
+      '<h1>' + esc(title) + '</h1>' +
+      (lead ? '<p class="lead" style="max-width:62ch">' + esc(lead) + '</p>' : '') +
+    '</div></section>';
+  }
+  function notFound(msg) {
+    return '<section class="section"><div class="container" style="text-align:center;padding:80px 0">' +
+      '<h1>' + esc(msg) + '</h1><p class="lead">The page you’re looking for isn’t here.</p>' +
+      '<a class="btn primary" href="#/">Back to home ' + svg('arrow') + '</a></div></section>';
+  }
+
+  /* =====================================================================  */
+  /*  GLOBAL UI: palette, auth, cookie, toast, reveal                        */
+  /* =====================================================================  */
+  var APP_BOUND = false;
+  function bindGlobal() {
+    var app = $('#app');
+    if (!APP_BOUND) {                 // delegate once on the persistent #app element
+      APP_BOUND = true;
+      app.addEventListener('click', function (e) {
+        var a = e.target.closest('[data-act]');
+        if (!a) return;
+        var act = a.getAttribute('data-act');
+        if (act === 'palette') { openPalette(); }
+        else if (act === 'login') { openAuth(); }
+        else if (act === 'burger') { toggleBurger(); }
+        else if (act === 'finder-go') { var v = $('#finder-in'); STATE.kw = v ? v.value : ''; go('#/catalogue'); }
+        else if (act === 'enrol') { doEnrol(a.getAttribute('data-course')); }
+        else if (act === 'checkout') { doCheckout(a.getAttribute('data-course')); }
+        else if (act === 'dl') { toast('Download starts in the live platform'); }
+        else if (act === 'booking-submit') { submitBooking(); }
+      });
+    }
+    var fin = $('#finder-in');         // fresh element each home render — safe to (re)bind
+    if (fin) fin.addEventListener('keydown', function (e) { if (e.key === 'Enter') { STATE.kw = fin.value; go('#/catalogue'); } });
+  }
+
+  function doEnrol(courseId) {
+    if (LIVE) { doCheckout(courseId); return; }
+    loadCourse(courseId).then(function (b) {
+      var mods = b.modules && b.modules.length ? b.modules : (b.course.modules || []).map(function (x) { return { id: x, courseId: courseId }; });
+      ensureEnroll(courseId, mods);
+      toast('Enrolled in ' + b.course.code + ' ✓');
+      var first = (mods[0] && (mods[0].id || mods[0])) || (b.course.modules || [])[0];
+      go('#/lms/' + courseId + '/' + first);
+    });
+  }
+  function doCheckout(courseId) {
+    if (!LIVE) { loadCourse(courseId).then(function (b) { toast('Mock checkout complete · ' + gbp(b.course.priceGBP)); ensureEnroll(courseId, b.modules); }); return; }
+    loadCourse(courseId).then(function (b) {
+      var pid = b.product && b.product.id;
+      if (!pid) { toast('No product configured for this course'); return; }
+      api('/api/checkout/create', { method: 'POST', body: { productId: pid } }).then(function (r) {
+        if (r.status === 401) { toast('Please sign in to check out'); openAuth(); return; }
+        var order = r.data && r.data.order;
+        if (!order) { toast((r.data && r.data.error) || 'Checkout failed'); return; }
+        api('/api/payments/mock-confirm', { method: 'POST', body: { orderId: order.id } }).then(function (r2) {
+          if (r2.ok) { toast('Payment confirmed (mock) ✓'); STATE.courseCache = {}; }
+          else toast((r2.data && r2.data.error) || 'Confirmation failed');
+        });
+      });
+    });
+  }
+  function submitBooking() {
+    var msg = $('#booking-msg');
+    if (msg) msg.innerHTML = '<div class="notice ok" style="margin-top:14px"><span class="ni">' + svg('check') + '</span><div>Thank you — your demo request has been noted. The team will follow up by email.</div></div>';
+    toast('Booking request sent ✓');
+  }
+
+  /* palette */
+  function openPalette() {
+    loadSite().then(function (s) {
+      var courses = s.courses || [];
+      var scrim = makeScrim();
+      scrim.innerHTML = '<div class="palette" role="dialog" aria-label="Search courses">' +
+        '<div class="ph"><div><span class="eyebrow">Search</span>' +
+        '<h3 style="margin-top:6px">Find a course or code</h3></div>' +
+        '<button class="btn ghost sm" data-close>Esc</button></div>' +
+        '<input id="pal-in" type="text" placeholder="Type a title, topic or code like C04…" autocomplete="off">' +
+        '<div class="pal-list" id="pal-list"></div></div>';
+      document.body.appendChild(scrim);
+      requestAnimationFrame(function () { scrim.classList.add('open'); $('#pal-in').focus(); });
+      function render(q) {
+        q = (q || '').toLowerCase();
+        var list = courses.filter(function (c) {
+          return !q || (c.code + ' ' + c.title + ' ' + (c.tags || []).join(' ')).toLowerCase().indexOf(q) > -1;
+        }).slice(0, 8);
+        $('#pal-list').innerHTML = list.map(function (c) {
+          return '<div class="pal-row" data-go="#/course/' + esc(c.id) + '">' +
+            '<span class="pc">' + esc(c.code) + '</span><div><b>' + esc(trim(c.title, 52)) + '</b>' +
+            '<span style="display:block">' + esc(c.strand || '') + '</span></div></div>';
+        }).join('') || '<div class="pal-row"><span>No matches</span></div>';
+      }
+      render('');
+      $('#pal-in').addEventListener('input', function () { render(this.value); });
+      scrim.addEventListener('click', function (e) {
+        if (e.target === scrim || e.target.closest('[data-close]')) closeScrim(scrim);
+        var row = e.target.closest('[data-go]');
+        if (row) { closeScrim(scrim); go(row.getAttribute('data-go')); }
+      });
+    });
+  }
+  /* auth */
+  function openAuth() {
+    var scrim = makeScrim();
+    scrim.innerHTML = '<div class="palette auth-card" role="dialog" aria-label="Learner login">' +
+      '<div class="ph"><div><span class="eyebrow">Learner</span><h3 style="margin-top:6px">Sign in or create an account</h3></div>' +
+      '<button class="btn ghost sm" data-close>Esc</button></div>' +
+      '<div style="padding:0 22px 22px"><div class="form-col">' +
+        '<input id="au-email" type="email" placeholder="you@school.org">' +
+        '<input id="au-pass" type="password" placeholder="Password">' +
+        '<button class="btn primary block" data-auth="login">Sign in</button>' +
+        '<button class="btn ghost block" data-auth="register">Create account</button>' +
+      '</div>' +
+      (LIVE ? '' : '<p class="muted" style="font-size:.8rem;margin-top:14px;text-align:center">Preview mode signs you in locally so you can explore the dashboard.</p>') +
+    '</div></div>';
+    document.body.appendChild(scrim);
+    requestAnimationFrame(function () { scrim.classList.add('open'); var i = $('#au-email'); if (i) i.focus(); });
+    scrim.addEventListener('click', function (e) {
+      if (e.target === scrim || e.target.closest('[data-close]')) { closeScrim(scrim); return; }
+      var ab = e.target.closest('[data-auth]');
+      if (!ab) return;
+      var mode = ab.getAttribute('data-auth');
+      var email = ($('#au-email').value || 'learner@fcei.eu');
+      if (!LIVE) { STATE.user = { email: email }; Store.set('fcei_token', 'demo'); closeScrim(scrim); toast('Signed in ✓'); go('#/dashboard'); return; }
+      var path = mode === 'register' ? '/api/auth/register' : '/api/auth/login';
+      api(path, { method: 'POST', body: { email: email, password: $('#au-pass').value || '' } })
+        .then(function (r) {
+          if (r.ok && r.data && r.data.token) { Store.set('fcei_token', r.data.token); STATE.user = { email: email }; closeScrim(scrim); toast('Signed in ✓'); go('#/dashboard'); }
+          else toast((r.data && r.data.error) || 'Sign-in failed');
+        }).catch(function () { toast('Network error'); });
+    });
+  }
+  function makeScrim() { var d = document.createElement('div'); d.className = 'scrim'; return d; }
+  function closeScrim(s) { s.classList.remove('open'); setTimeout(function () { s.remove(); }, 220); }
+
+  function toggleBurger() {
+    var nav = $('.navlinks');
+    if (!nav) return;
+    var open = nav.style.display === 'flex';
+    nav.style.cssText = open ? '' : 'display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 20px;gap:2px';
+  }
+
+  /* toast */
+  var toastEl, toastT;
+  function toast(msg) {
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
+    toastEl.innerHTML = '<span class="ti"></span>' + esc(msg);
+    toastEl.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+  }
+
+  /* cookie */
+  function cookieBanner() {
+    if (Store.get('fcei_cookie')) return;
+    var c = document.createElement('div');
+    c.className = 'cookie';
+    c.innerHTML = '<b>Cookies & privacy</b>' +
+      '<p>We use essential cookies to run the platform. You can accept analytics cookies or keep only what’s necessary.</p>' +
+      '<div class="row"><button class="btn primary sm" data-ck="all">Accept all</button>' +
+      '<button class="btn ghost sm" data-ck="ess">Essential only</button></div>';
+    document.body.appendChild(c);
+    setTimeout(function () { c.classList.add('show'); }, 800);
+    c.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ck]'); if (!b) return;
+      Store.set('fcei_cookie', b.getAttribute('data-ck'));
+      if (LIVE) api('/api/cookie-consent', { method: 'POST', body: { choice: b.getAttribute('data-ck') } }).catch(function () {});
+      c.classList.remove('show'); setTimeout(function () { c.remove(); }, 320);
+    });
+  }
+
+  /* reveal on scroll */
+  var io;
+  function revealScan(reset) {
+    if (!('IntersectionObserver' in window)) { $all('.reveal').forEach(function (n) { n.classList.add('in'); }); return; }
+    if (!io) io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    $all('.reveal:not(.in)').forEach(function (n) { io.observe(n); });
+  }
+
+  /* =====================================================================  */
+  /*  ROUTER                                                                 */
+  /* =====================================================================  */
+  function go(hash) { if (location.hash === hash) route(); else location.hash = hash; }
+
+  var ROUTES = [
+    [/^#\/$/, function () { pageHome(); }],
+    [/^#\/catalogue$/, function () { pageCatalogue(); }],
+    [/^#\/course\/([^/]+)$/, function (m) { pageCourse(m[1]); }],
+    [/^#\/lms\/([^/]+)\/([^/]+)$/, function (m) { pageLMS(m[1], m[2]); }],
+    [/^#\/tvet$/, function () { pageTVET(); }],
+    [/^#\/consultancy$/, function () { pageConsultancy(); }],
+    [/^#\/resources$/, function () { pageResources(); }],
+    [/^#\/booking$/, function () { pageBooking(); }],
+    [/^#\/dashboard$/, function () { pageDashboard(); }],
+    [/^#\/legal$/, function () { pageLegal(); }],
+    [/^#\/admin$/, function () { pageAdmin(); }]
+  ];
+  function route() {
+    var h = location.hash || '#/';
+    for (var i = 0; i < ROUTES.length; i++) {
+      var m = h.match(ROUTES[i][0]);
+      if (m) { ROUTES[i][1](m); return; }
+    }
+    mount(notFound('Page not found'));
+  }
+
+  /* keyboard: ⌘/Ctrl-K palette, Esc close */
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); openPalette(); }
+    if (e.key === 'Escape') { var s = $('.scrim.open'); if (s) closeScrim(s); }
+  });
+
+  var INITED = false;
+  function init() {
+    if (INITED) return;
+    INITED = true;
+    if (!location.hash) location.hash = '#/';
+    seedDemoProgress();
+    route();
+    cookieBanner();
+  }
+  window.addEventListener('hashchange', route);
+  window.addEventListener('DOMContentLoaded', init);
+  // script sits at end of <body>: if the DOM is already parsed, init now
+  if (document.readyState !== 'loading') init();
+})();
+
+</script>
+</body>
+</html>
