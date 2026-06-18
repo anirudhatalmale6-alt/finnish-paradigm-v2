@@ -557,6 +557,82 @@ footer{background:var(--fjord-2);color:#b7cace;padding:clamp(48px,6vw,72px) 0 30
 :focus-visible{outline:2.5px solid var(--lake);outline-offset:2px;border-radius:4px}
 .btn:focus-visible,.pill:focus-visible{outline-offset:3px}
 
+
+/* ── Interactive LMS Module View ──────────────────────────────────────── */
+.lms-view{--lms-green:#40C788;--lms-ink:#151917;--lms-muted:#607069;--lms-bg:#f5faf7;--lms-card:#fff;--lms-line:#d9ebe3;--lms-soft:#e9fff5}
+.lms-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;margin-top:20px}
+.lms-sidebar{position:sticky;top:86px;align-self:start;background:var(--lms-card);border:1px solid var(--lms-line);border-radius:24px;padding:20px;box-shadow:0 10px 28px rgba(0,0,0,.045)}
+.lms-sidebar h2{font-size:20px;margin:5px 0 14px}
+.lms-modlink{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:15px;text-decoration:none;border:1px solid transparent;margin-bottom:8px;cursor:pointer}
+.lms-modlink:hover,.lms-modlink.active{background:var(--lms-soft);border-color:#bcecd4}
+.lms-modlink.locked{opacity:.55}
+.lms-moddot{min-width:28px;height:28px;border-radius:999px;background:#eee;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}
+.lms-modlink.done .lms-moddot{background:var(--lms-green);color:#06150c}
+.lms-modlink.active .lms-moddot{background:var(--lms-green);color:#06150c}
+.lms-modtitle{font-weight:900;line-height:1.2;font-size:.92rem}
+.lms-modsub{font-size:12px;color:var(--lms-muted)}
+.lms-progress-card{margin-top:14px;background:#0d0d0d;color:#fff;border-radius:20px;padding:16px}
+.lms-progress-track{height:13px;background:#29342f;border-radius:999px;overflow:hidden;margin:10px 0}
+.lms-progress-fill{height:100%;background:var(--lms-green);transition:.3s}
+.lms-flag{display:flex;align-items:center;justify-content:space-between;background:#fff;color:#111;border-radius:12px;padding:8px 10px;font-size:12px;margin-bottom:7px}
+.lms-flag span{font-weight:900}
+.lms-flag.done{background:#e4faee}
+.lms-flag.todo{background:#f2f2f2;color:#777}
+.lms-section{background:var(--lms-card);border:1px solid var(--lms-line);border-radius:24px;padding:20px;box-shadow:0 10px 28px rgba(0,0,0,.045);margin-bottom:14px}
+.lms-section h3{margin-top:0;font-size:1.1rem}
+.lms-badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--lms-soft);border:1px solid #beecd5;font-weight:850;font-size:12px;color:#0a5d37}
+.lms-video-shell{background:#111;color:#fff;border-radius:24px 24px 0 0;min-height:320px;position:relative;display:grid;grid-template-columns:1.2fr .8fr}
+.lms-video-visual{position:relative;display:flex;align-items:center;justify-content:center;padding:26px;background:radial-gradient(circle at 35% 25%,#5ce4a7 0,#1d8d5c 25%,#111 70%)}
+.lms-avatar{width:min(220px,70%);aspect-ratio:1/1;border-radius:50%;background:linear-gradient(145deg,#f3d7b7,#7a4b2d);box-shadow:0 20px 60px rgba(0,0,0,.32)}
+.lms-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:rgba(64,199,136,.95);display:flex;align-items:center;justify-content:center;border:4px solid rgba(255,255,255,.5);font-size:30px;color:#06150c;cursor:pointer}
+.lms-play:hover{transform:translate(-50%,-50%) scale(1.08)}
+.lms-video-info{padding:24px;display:flex;flex-direction:column;justify-content:center}
+.lms-video-info h3{font-size:1.4rem;margin:0 0 10px}
+.lms-video-meta{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.lms-video-meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 10px;font-size:12px}
+.lms-video-footer{padding:14px 20px;background:#fff;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;border-radius:0 0 24px 24px;border:1px solid var(--lms-line);border-top:0}
+.lms-watchbar{height:10px;background:#ecf2ef;border-radius:999px;overflow:hidden;min-width:200px;flex:1}
+.lms-watchfill{height:100%;width:0;background:var(--lms-green);transition:1s}
+.lms-notice{background:#fff4d6;border:1px solid #ead37e;border-radius:18px;padding:15px;margin-bottom:10px}
+.lms-success{background:#e4faee;border:1px solid #aee8c8;border-radius:18px;padding:15px}
+.lms-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.lms-resource{border:1px solid var(--lms-line);border-radius:16px;padding:13px;background:#fbfffd;display:block;text-decoration:none;cursor:pointer}
+.lms-resource:hover{border-color:#bcecd4;background:var(--lms-soft)}
+.lms-resource strong{display:block;font-size:.95rem}
+.lms-resource small{color:var(--lms-muted);font-size:.82rem}
+.lms-resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.lms-quiz-card{border:1px solid var(--lms-line);border-radius:18px;padding:15px;margin:12px 0;background:#fff}
+.lms-option{display:block;border:1px solid var(--lms-line);border-radius:13px;padding:10px;margin:8px 0;cursor:pointer}
+.lms-option:hover{background:var(--lms-soft)}
+.lms-option input{width:auto;margin-right:8px}
+.lms-option.correct{background:#e4faee;border-color:#aee8c8}
+.lms-option.wrong{background:#ffe5e5;border-color:#efb5b5}
+.lms-feedback{border-radius:16px;padding:13px;margin-top:12px}
+.lms-feedback.good{background:#e4faee;border:1px solid #b0e9ca}
+.lms-feedback.warn{background:#fff4d6;border:1px solid #ead37e}
+.lms-template{border:2px dashed #bfe8d3;background:#fbfffd;border-radius:18px;padding:15px;margin-top:12px}
+.lms-template table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden}
+.lms-template th,.lms-template td{text-align:left;border-bottom:1px solid var(--lms-line);padding:10px;font-size:14px}
+.lms-template th{background:#f0f8f4}
+.lms-template input,.lms-template textarea{width:100%;padding:8px;border:1px solid var(--lms-line);border-radius:10px;font:inherit}
+.lms-template textarea{min-height:70px}
+.lms-tf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.lms-tf-grid label{display:block;font-weight:600;font-size:.92rem}
+.lms-tf-grid textarea{width:100%;min-height:82px;padding:10px;border:1px solid var(--lms-line);border-radius:14px;font:inherit}
+.lms-form-grid{display:grid;gap:10px}
+.lms-form-grid label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
+.lms-form-grid input,.lms-form-grid textarea{width:100%;padding:10px;border:1px solid var(--lms-line);border-radius:14px;font:inherit}
+.lms-form-grid textarea{min-height:92px}
+.lms-completion-banner{position:sticky;bottom:16px;z-index:10;background:#111;color:#fff;border-radius:24px;padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;box-shadow:0 18px 50px rgba(0,0,0,.25);margin-top:18px}
+.lms-completion-banner strong{color:var(--lms-green)}
+.lms-btn-green{border:0;border-radius:14px;background:var(--lms-green);color:#06150c;font-weight:900;padding:11px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.lms-btn-green:hover{filter:brightness(1.05)}
+.lms-btn-secondary{border:1px solid var(--lms-line);border-radius:14px;background:#fff;color:#111;font-weight:900;padding:11px 15px;cursor:pointer}
+.lms-module-header{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:16px}
+.lms-module-header h2{font-size:1.8rem;line-height:1.07;margin:8px 0}
+.lms-code{font-weight:950;color:#0b5a36;font-size:.85rem}
+@media(max-width:900px){.lms-layout{grid-template-columns:1fr}.lms-sidebar{position:static}.lms-video-shell{grid-template-columns:1fr;min-height:0}.lms-module-header{flex-direction:column}.lms-completion-banner{position:static}.lms-two{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1164,16 +1240,17 @@ window.__FCEI__ = {
 
   /* ---- LMS module -------------------------------------------------------- */
   function pageLMS(courseId, moduleId) {
-    // In live mode, verify payment before showing any module content
     if (LIVE) {
       var token = Store.get('fcei_token');
       if (!token) { toast('Please log in to access course modules.'); go('#/'); showLogin(); return; }
       api('/api/lms/courses/' + courseId + '/modules/' + moduleId).then(function (r) {
         if (!r.ok) { toast('Purchase required to access this module.'); go('#/course/' + courseId); return; }
+        STATE._lmsApiData = r.data || {};
         pageLMSRender(courseId, moduleId);
       }).catch(function () { toast('Purchase required to access this module.'); go('#/course/' + courseId); });
       return;
     }
+    STATE._lmsApiData = null;
     pageLMSRender(courseId, moduleId);
   }
   function pageLMSRender(courseId, moduleId) {
@@ -1181,41 +1258,372 @@ window.__FCEI__ = {
       var b = r.bundle, m = r.module;
       STATE._curModule = m || null;
       if (!b || !b.course) { mount(notFound('Course not found')); return; }
-      var c = b.course, mods = b.modules || [];
-      ensureEnroll(courseId, mods.length ? mods : (c.modules || []).map(function (x) { return { id: x, courseId: courseId }; }));
-      var prog = STATE.enroll[courseId][moduleId] || ensureEnroll(courseId, [{ id: moduleId, courseId: courseId }])[moduleId];
-      var idx = mods.findIndex(function (x) { return x.id === moduleId; });
+      var c = b.course, allMods = b.modules || [];
 
-      // sidebar step list
-      var firstUndone = STEP_KEYS.findIndex(function (k) { return !prog.steps[k]; });
-      var steps = STEP_KEYS.map(function (k, i) {
-        var done = prog.steps[k];
-        var cls = done ? 'done' : (i === firstUndone ? 'cur' : (i > firstUndone && firstUndone > -1 ? 'lock' : ''));
-        return '<li class="' + cls + '"><span class="sdot">' + (done ? svg('check') : (i + 1)) + '</span>' + esc(STEP_LABELS[k]) + '</li>';
+      // ── Progress state ──
+      var STEP_KEYS_LMS = ['contentOpened','resourcesAccessed','quizPassed','actionTaskSubmitted','evidenceSubmitted','reflectionSubmitted','transferabilitySubmitted','checklistCompleted'];
+      var STEP_LABELS = {'contentOpened':'Learning content opened','resourcesAccessed':'Resources accessed','quizPassed':'Quiz passed','actionTaskSubmitted':'Action task submitted','evidenceSubmitted':'Evidence submitted','reflectionSubmitted':'Reflection submitted','transferabilitySubmitted':'Transferability Filter submitted','checklistCompleted':'Completion checklist confirmed'};
+      var prog = {};
+      STEP_KEYS_LMS.forEach(function(k){ prog[k] = false; });
+
+      // Use progress from the LMS API response (LIVE mode)
+      var apiData = STATE._lmsApiData || {};
+      if (apiData.progress) {
+        STEP_KEYS_LMS.forEach(function(k){ if (apiData.progress[k]) prog[k] = true; });
+      }
+
+      var idx = allMods.findIndex(function(x){ return x.id === moduleId; });
+
+      // ── Sidebar ──
+      var sidebarMods = allMods.map(function(mm, i) {
+        var isCurrent = mm.id === moduleId;
+        var cls = isCurrent ? 'lms-modlink active' : 'lms-modlink';
+        return '<a href="#/lms/' + esc(courseId) + '/' + esc(mm.id) + '" class="' + cls + '">' +
+          '<span class="lms-moddot">' + String(mm.order || i+1).padStart(2,'0') + '</span>' +
+          '<span><span class="lms-modtitle">' + esc(mm.title) + '</span>' +
+          '<span class="lms-modsub">' + esc(mm.scope || '') + '</span></span></a>';
       }).join('');
 
-      var sideModules = (mods.length ? mods : []).map(function (mm, i) {
-        var e = STATE.enroll[courseId][mm.id];
-        var on = mm.id === moduleId;
-        return '<a class="modrow" style="padding:11px 13px' + (on ? ';border-color:var(--lake)' : '') + '" href="#/lms/' + esc(courseId) + '/' + esc(mm.id) + '">' +
-          '<span class="mno" style="width:32px;height:32px;font-size:.72rem">' + (e && e.done ? svg('check') : 'M' + String(mm.order || i + 1).padStart(2, '0')) + '</span>' +
-          '<span class="mtx"><b style="font-size:.9rem">' + esc(trim(mm.title, 42)) + '</b></span></a>';
+      var flagsHTML = STEP_KEYS_LMS.map(function(k) {
+        return '<div class="lms-flag ' + (prog[k]?'done':'todo') + '"><span>' + (prog[k]?'✓':'○') + '</span>' + esc(STEP_LABELS[k]) + '</div>';
       }).join('');
 
-      var side = '<aside class="lms-side"><div class="card">' +
-        '<nav class="crumbs"><a href="#/course/' + esc(courseId) + '">' + esc(c.code) + '</a></nav>' +
-        '<h3 style="margin:6px 0 2px">Module steps</h3>' +
-        '<p class="muted" style="font-size:.82rem;margin-bottom:4px">' + courseProgress(courseId).pct + '% of this course complete</p>' +
-        '<ul class="steplist">' + steps + '</ul>' +
-        (sideModules ? '<hr class="rule" style="margin:18px 0"><h4 style="font-size:.72rem;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px">Modules</h4>' + sideModules : '') +
-      '</div></aside>';
+      var doneCount = STEP_KEYS_LMS.filter(function(k){ return prog[k]; }).length;
+      var pct = Math.round(doneCount / 8 * 100);
 
-      var main = m ? lmsFull(c, m, prog, idx, mods) : lmsLite(c, moduleId, prog);
+      var sidebar = '<aside class="lms-sidebar">' +
+        '<h2>Course modules</h2>' + sidebarMods +
+        '<div class="lms-progress-card">' +
+          '<strong>Module progress</strong>' +
+          '<div class="lms-progress-track"><div class="lms-progress-fill" id="lmsProgressFill" style="width:' + pct + '%"></div></div>' +
+          '<div id="lmsPercentText">' + pct + '% complete</div>' +
+          '<div id="lmsFlags">' + flagsHTML + '</div>' +
+        '</div>' +
+      '</aside>';
 
-      mount('<section class="section tight"><div class="container">' +
-        '<div class="lms">' + side + '<div>' + main + '</div></div>' +
-      '</div></section>');
-      wireLMS(courseId, moduleId);
+      // ── Module header ──
+      var header = '<div class="lms-module-header">' +
+        '<div>' +
+          '<span class="lms-badge">' + esc(moduleId) + ' · ' + esc(m.scope || 'Classroom') + ' Scope</span>' +
+          '<h2>' + esc(m.title) + '</h2>' +
+          '<p class="lead" style="color:var(--lms-muted)">' + esc(m.aim || m.description || '') + '</p>' +
+        '</div>' +
+        '<div class="lms-section" style="min-width:220px;margin-bottom:0">' +
+          '<div class="lms-code">Backend completion rule</div>' +
+          '<p style="font-size:.82rem;color:var(--lms-muted);margin:4px 0 0">The frontend only submits actions. The backend marks completion only when all flags are true.</p>' +
+        '</div>' +
+      '</div>';
+
+      // ── Video section ──
+      var videoTitle = 'Video ' + String(m.order || idx+1).padStart(2,'0') + ': ' + (m.title || '');
+      var videoDuration = (m.video && m.video.duration) || '06:00';
+      var video = '<section class="lms-section" style="overflow:hidden;padding:0">' +
+        '<div class="lms-video-shell">' +
+          '<div class="lms-video-visual">' +
+            '<div class="lms-avatar"></div>' +
+            '<button class="lms-play" id="lmsPlayBtn" aria-label="Play video">▶</button>' +
+          '</div>' +
+          '<div class="lms-video-info">' +
+            '<span class="lms-badge" style="background:rgba(64,199,136,.2);border-color:rgba(64,199,136,.4);color:#a0ffd0">Learning video</span>' +
+            '<h3>' + esc(videoTitle) + '</h3>' +
+            '<p style="color:#ccc;font-size:.9rem">Video embed slot. In the live platform, the final video URL is inserted using module_id <strong>' + esc(moduleId) + '</strong>.</p>' +
+            '<div class="lms-video-meta"><span>' + esc(videoDuration) + '</span><span>Captions available</span><span>Transcript</span><span>SCORM contentOpened flag</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="lms-video-footer">' +
+          '<span><strong>Video completion:</strong> <span id="lmsWatchText">0%</span></span>' +
+          '<div class="lms-watchbar"><div class="lms-watchfill" id="lmsWatchFill"></div></div>' +
+          '<button class="lms-btn-green" id="lmsMarkVideoBtn">Mark video complete</button>' +
+        '</div>' +
+      '</section>';
+
+      // ── Short explanation + key terms ──
+      var termsHTML = '';
+      if (m.keyTerms && m.keyTerms.length) {
+        var termCards = m.keyTerms.slice(0,4).map(function(t) {
+          return '<div class="lms-notice"><strong>Term: ' + esc(typeof t === 'string' ? t : t.term || '') + '</strong><br>' + esc(typeof t === 'string' ? '' : t.definition || '') + '</div>';
+        }).join('');
+        termsHTML = '<div class="lms-two" style="margin-top:12px">' + termCards + '</div>';
+      }
+      var explanation = '<section class="lms-section">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h3>Short explanation</h3><span class="lms-badge">EDUFI/FINEEC framing</span></div>' +
+        '<p>' + esc(m.principle || m.aim || '') + '</p>' +
+        termsHTML +
+      '</section>';
+
+      // ── Classroom scenario ──
+      var scenario = '';
+      if (m.problem) {
+        scenario = '<section class="lms-section">' +
+          '<h3>Real classroom scenario</h3>' +
+          '<p>' + esc(m.problem) + '</p>' +
+        '</section>';
+      }
+
+      // ── Embedded template ──
+      var template = '<section class="lms-section">' +
+        '<h3>Embedded learner template</h3>' +
+        '<div class="lms-template">' +
+          '<h3 style="font-size:1rem">Evidence-to-Practice Map</h3>' +
+          '<table><thead><tr><th>Prompt</th><th>Your response</th></tr></thead><tbody>' +
+          '<tr><td>Value/principle</td><td><input placeholder="Which value are you applying?"></td></tr>' +
+          '<tr><td>Observable routine</td><td><input placeholder="What routine makes it visible?"></td></tr>' +
+          '<tr><td>Evidence</td><td><input placeholder="What evidence will you collect?"></td></tr>' +
+          '<tr><td>Improvement decision</td><td><input placeholder="Repeat, adapt, scale or stop?"></td></tr>' +
+          '</tbody></table>' +
+          '<br><button class="lms-btn-green" id="lmsSaveTemplateBtn">Save template to portfolio</button>' +
+        '</div>' +
+      '</section>';
+
+      // ── Resources ──
+      var resHTML = '';
+      if (m.resources && m.resources.length) {
+        var resCards = m.resources.map(function(res) {
+          return '<a class="lms-resource" data-lms-resource><strong>' + esc(res.title) + '</strong><small>' + esc(res.type || 'downloadable template') + '</small></a>';
+        }).join('');
+        resHTML = '<section class="lms-section">' +
+          '<h3>Downloadable resources</h3>' +
+          '<p style="color:var(--lms-muted);font-size:.9rem">Resources unlock after video/content is opened. Each click is tracked by <strong>resource_accessed</strong>.</p>' +
+          '<div class="lms-resource-grid">' + resCards + '</div>' +
+        '</section>';
+      }
+
+      // ── Quiz ──
+      var quizHTML = '';
+      if (m.quiz && m.quiz.length) {
+        var quizCards = m.quiz.map(function(q, qi) {
+          var opts = (q.options || []).map(function(o, oi) {
+            return '<label class="lms-option"><input type="radio" name="lmsq' + qi + '" value="' + oi + '"> ' + esc(o) + '</label>';
+          }).join('');
+          return '<div class="lms-quiz-card" data-correct="' + (q.correctIndex || 0) + '" data-rationale="' + esc(q.rationale || q.feedback_correct || '') + '">' +
+            '<strong>' + (qi+1) + '. ' + esc(q.question) + '</strong>' + opts + '</div>';
+        }).join('');
+        quizHTML = '<section class="lms-section" id="lmsQuiz">' +
+          '<h3>Knowledge check</h3>' +
+          '<p style="color:var(--lms-muted);font-size:.9rem">Pass threshold: 2/' + m.quiz.length + ' correct. Feedback appears immediately after submission.</p>' +
+          quizCards +
+          '<button class="lms-btn-green" id="lmsSubmitQuizBtn">Submit quiz attempt</button>' +
+          '<div id="lmsQuizFeedback"></div>' +
+        '</section>';
+      }
+
+      // ── Action task ──
+      var actionTask = '<section class="lms-section">' +
+        '<h3>Action task</h3>' +
+        '<p>' + esc(typeof m.actionTask === 'string' ? m.actionTask : 'Choose one value and test one short classroom routine that makes the value visible.') + '</p>' +
+        '<div class="lms-form-grid">' +
+          '<label>What value/principle will you make visible?<input id="lmsActionValue" placeholder="Example: learner agency"></label>' +
+          '<label>What one routine will you test?<textarea id="lmsActionRoutine" placeholder="Example: learners choose one target before improving their paragraph"></textarea></label>' +
+          '<label>What evidence will you collect?<textarea id="lmsActionEvidence" placeholder="Example: exit tickets and two work samples"></textarea></label>' +
+        '</div>' +
+        '<br><button class="lms-btn-green" id="lmsSubmitActionBtn">Submit action task</button>' +
+      '</section>';
+
+      // ── Evidence upload ──
+      var evidence = '<section class="lms-section">' +
+        '<h3>Evidence upload / text response</h3>' +
+        '<p style="color:var(--lms-muted);font-size:.9rem">Evidence is stored securely and linked to your user, course and module.</p>' +
+        '<div class="lms-form-grid">' +
+          '<label>Evidence title<input id="lmsEvidenceTitle" placeholder="Example: Learner agency exit tickets"></label>' +
+          '<label>Typed evidence response<textarea id="lmsEvidenceText" placeholder="Explain what the evidence shows..."></textarea></label>' +
+          '<label>Evidence file<input id="lmsEvidenceFile" type="file"></label>' +
+        '</div>' +
+        '<br><button class="lms-btn-green" id="lmsSubmitEvidenceBtn">Submit evidence</button>' +
+      '</section>';
+
+      // ── Reflection ──
+      var reflPrompt = '';
+      if (m.reflectionPrompts) {
+        reflPrompt = typeof m.reflectionPrompts === 'string' ? m.reflectionPrompts :
+          (Array.isArray(m.reflectionPrompts) ? m.reflectionPrompts.join(' ') : '');
+      }
+      var reflection = '<section class="lms-section">' +
+        '<h3>Reflection</h3>' +
+        '<p>' + esc(reflPrompt || 'What changed after applying this principle? What evidence shows the change? What should be improved?') + '</p>' +
+        '<textarea id="lmsReflectionText" style="width:100%;min-height:92px;padding:10px;border:1px solid var(--lms-line);border-radius:14px;font:inherit" placeholder="Write your reflection here..."></textarea>' +
+        '<br><br><button class="lms-btn-green" id="lmsSubmitReflectionBtn">Submit reflection</button>' +
+      '</section>';
+
+      // ── Transferability filter ──
+      var tfLabels = ['1. Principle','2. Local condition','3. Classroom action','4. Evidence','5. Process','6. Structure','7. Syllabi'];
+      var tfPlaceholders = ['Which value/principle are you applying?','What is already happening locally?','What one routine will you test?','What artefact or signal will show impact?','How will you test and improve it?','What timetable/team support is needed?','Where can this be written into planning?'];
+      var tfFields = tfLabels.map(function(label, i) {
+        return '<label>' + esc(label) + '<textarea class="lms-tf" placeholder="' + esc(tfPlaceholders[i]) + '"></textarea></label>';
+      }).join('');
+      var transferability = '<section class="lms-section">' +
+        '<h3>7-step Transferability Filter</h3>' +
+        '<p style="color:var(--lms-muted);font-size:.9rem">This prevents blind copying. Adapt Finnish-inspired principles to your local conditions.</p>' +
+        '<div class="lms-tf-grid">' + tfFields + '</div>' +
+        '<br><button class="lms-btn-green" id="lmsSubmitTransferBtn">Submit Transferability Filter</button>' +
+      '</section>';
+
+      // ── Completion checklist ──
+      var checklist = '<section class="lms-section">' +
+        '<h3>Completion checklist</h3>' +
+        '<label class="lms-option"><input id="lmsConfirmCheck" type="checkbox"> I confirm that I completed the video/content, resources, quiz, action task, evidence, reflection and Transferability Filter.</label>' +
+        '<button class="lms-btn-green" id="lmsSubmitChecklistBtn">Submit checklist</button>' +
+        '<div id="lmsCompletionMessage"></div>' +
+      '</section>';
+
+      // ── Completion banner ──
+      var nextModId = apiData.nextModuleId || (allMods[idx+1] ? allMods[idx+1].id : null);
+      var banner = '<div class="lms-completion-banner">' +
+        '<div><strong id="lmsCompletionText">Backend gate:</strong> module incomplete until all flags are true.</div>' +
+        '<button class="lms-btn-green" id="lmsNextBtn" disabled>Next module locked</button>' +
+      '</div>';
+
+      // ── Assemble ──
+      var content = '<div class="lms-view"><div class="container"><div class="lms-layout">' +
+        sidebar +
+        '<article>' + header + video + explanation + scenario + template + resHTML + quizHTML + actionTask + evidence + reflection + transferability + checklist + banner + '</article>' +
+      '</div></div></div>';
+
+      mount(content);
+
+      // ── Wire up interactive handlers ──
+      var lmsState = {};
+      STEP_KEYS_LMS.forEach(function(k){ lmsState[k] = prog[k]; });
+
+      function lmsUpdate() {
+        var count = STEP_KEYS_LMS.filter(function(k){ return lmsState[k]; }).length;
+        var p = Math.round(count/8*100);
+        var fill = document.getElementById('lmsProgressFill');
+        if (fill) fill.style.width = p + '%';
+        var ptxt = document.getElementById('lmsPercentText');
+        if (ptxt) ptxt.textContent = p + '% complete';
+        var flagsEl = document.getElementById('lmsFlags');
+        if (flagsEl) flagsEl.innerHTML = STEP_KEYS_LMS.map(function(k) {
+          return '<div class="lms-flag ' + (lmsState[k]?'done':'todo') + '"><span>' + (lmsState[k]?'✓':'○') + '</span>' + STEP_LABELS[k] + '</div>';
+        }).join('');
+        var complete = count === 8;
+        var ctxt = document.getElementById('lmsCompletionText');
+        if (ctxt) ctxt.textContent = complete ? 'Backend gate: COMPLETE' : 'Backend gate:';
+        var cmsg = document.getElementById('lmsCompletionMessage');
+        if (cmsg) cmsg.innerHTML = complete ? '<div class="lms-success"><strong>Module complete.</strong> The backend now unlocks the next module.</div>' : '';
+        var nbtn = document.getElementById('lmsNextBtn');
+        if (nbtn) { nbtn.disabled = !complete; nbtn.textContent = complete ? 'Open next module' : 'Next module locked'; }
+      }
+
+      function lmsMark(key) {
+        lmsState[key] = true;
+        lmsUpdate();
+        // Submit to backend in LIVE mode
+        if (LIVE) {
+          var stepMap = {contentOpened:'content-opened',resourcesAccessed:'resource-accessed',quizPassed:'quiz-attempt',actionTaskSubmitted:'action-task',evidenceSubmitted:'evidence',reflectionSubmitted:'reflection',transferabilitySubmitted:'transferability',checklistCompleted:'checklist'};
+          var endpoint = '/api/lms/modules/' + moduleId + '/' + (stepMap[key] || key);
+          var payload = {};
+          if (key === 'quizPassed') payload = {answers: lmsState._quizAnswers || []};
+          if (key === 'actionTaskSubmitted') payload = {text: (document.getElementById('lmsActionRoutine')||{}).value || ''};
+          if (key === 'evidenceSubmitted') payload = {title: (document.getElementById('lmsEvidenceTitle')||{}).value || '', text: (document.getElementById('lmsEvidenceText')||{}).value || ''};
+          if (key === 'reflectionSubmitted') payload = {text: (document.getElementById('lmsReflectionText')||{}).value || ''};
+          if (key === 'transferabilitySubmitted') {
+            var tfs = document.querySelectorAll('.lms-tf');
+            var tfKeys = ['principle','localCondition','classroomAction','evidence','process','structure','syllabi'];
+            tfKeys.forEach(function(k,i){ payload[k] = tfs[i] ? tfs[i].value : ''; });
+          }
+          if (key === 'checklistCompleted') payload = {confirmed: true};
+          if (key === 'resourcesAccessed') payload = {resourceId: 'any'};
+          api('/api/lms/modules/' + moduleId + '/' + (stepMap[key] || key), 'POST', payload);
+        }
+      }
+
+      // Video play button
+      var playBtn = document.getElementById('lmsPlayBtn');
+      if (playBtn) playBtn.onclick = function() {
+        var w = 0, fill = document.getElementById('lmsWatchFill'), txt = document.getElementById('lmsWatchText');
+        var timer = setInterval(function(){ w += 20; if(fill)fill.style.width=w+'%'; if(txt)txt.textContent=w+'%'; if(w>=100){clearInterval(timer);lmsMark('contentOpened');} },350);
+      };
+      var markVidBtn = document.getElementById('lmsMarkVideoBtn');
+      if (markVidBtn) markVidBtn.onclick = function() {
+        var fill = document.getElementById('lmsWatchFill'), txt = document.getElementById('lmsWatchText');
+        if(fill)fill.style.width='100%'; if(txt)txt.textContent='100%'; lmsMark('contentOpened');
+      };
+
+      // Resources
+      document.querySelectorAll('[data-lms-resource]').forEach(function(el){ el.onclick = function(){ lmsMark('resourcesAccessed'); }; });
+      var saveTemplBtn = document.getElementById('lmsSaveTemplateBtn');
+      if (saveTemplBtn) saveTemplBtn.onclick = function() { lmsMark('resourcesAccessed'); };
+
+      // Quiz
+      var quizBtn = document.getElementById('lmsSubmitQuizBtn');
+      if (quizBtn) quizBtn.onclick = function() {
+        var cards = document.querySelectorAll('.lms-quiz-card');
+        var score = 0, answers = [];
+        cards.forEach(function(card, qi) {
+          var correct = parseInt(card.getAttribute('data-correct') || '0');
+          var selected = card.querySelector('input[name="lmsq' + qi + '"]:checked');
+          var val = selected ? parseInt(selected.value) : -1;
+          answers.push(val);
+          if (val === correct) score++;
+          // Highlight options
+          card.querySelectorAll('.lms-option').forEach(function(opt, oi) {
+            opt.classList.remove('correct','wrong');
+            if (oi === correct) opt.classList.add('correct');
+            else if (oi === val && val !== correct) opt.classList.add('wrong');
+          });
+        });
+        lmsState._quizAnswers = answers;
+        var fb = document.getElementById('lmsQuizFeedback');
+        if (score >= 2) {
+          lmsMark('quizPassed');
+          if(fb) fb.innerHTML = '<div class="lms-feedback good"><strong>Passed (' + score + '/' + cards.length + ').</strong> Your answers demonstrate understanding of evidence-led practice.</div>';
+        } else {
+          if(fb) fb.innerHTML = '<div class="lms-feedback warn"><strong>Try again (' + score + '/' + cards.length + ').</strong> Review the short explanation and select the examples linked to observable, evidence-based practice.</div>';
+        }
+      };
+
+      // Action task
+      var actionBtn = document.getElementById('lmsSubmitActionBtn');
+      if (actionBtn) actionBtn.onclick = function() {
+        var routine = document.getElementById('lmsActionRoutine');
+        if (!routine || routine.value.trim().length < 10) { toast('Add a short routine before submitting.'); return; }
+        lmsMark('actionTaskSubmitted');
+        toast('Action task submitted.');
+      };
+
+      // Evidence
+      var evidBtn = document.getElementById('lmsSubmitEvidenceBtn');
+      if (evidBtn) evidBtn.onclick = function() {
+        var title = document.getElementById('lmsEvidenceTitle');
+        var text = document.getElementById('lmsEvidenceText');
+        if ((!title || title.value.trim().length < 3) && (!text || text.value.trim().length < 10)) { toast('Add an evidence title or text response.'); return; }
+        lmsMark('evidenceSubmitted');
+        toast('Evidence submitted.');
+      };
+
+      // Reflection
+      var reflBtn = document.getElementById('lmsSubmitReflectionBtn');
+      if (reflBtn) reflBtn.onclick = function() {
+        var text = document.getElementById('lmsReflectionText');
+        if (!text || text.value.trim().length < 20) { toast('Write a short reflection before submitting.'); return; }
+        lmsMark('reflectionSubmitted');
+        toast('Reflection submitted.');
+      };
+
+      // Transferability
+      var tfBtn = document.getElementById('lmsSubmitTransferBtn');
+      if (tfBtn) tfBtn.onclick = function() {
+        var filled = document.querySelectorAll('.lms-tf');
+        var count = 0;
+        filled.forEach(function(f){ if(f.value.trim().length > 0) count++; });
+        if (count < 7) { toast('Complete all 7 Transferability Filter fields.'); return; }
+        lmsMark('transferabilitySubmitted');
+        toast('Transferability Filter submitted.');
+      };
+
+      // Checklist
+      var checkBtn = document.getElementById('lmsSubmitChecklistBtn');
+      if (checkBtn) checkBtn.onclick = function() {
+        var cb = document.getElementById('lmsConfirmCheck');
+        if (!cb || !cb.checked) { toast('Tick the completion checklist confirmation.'); return; }
+        lmsMark('checklistCompleted');
+      };
+
+      // Next module button
+      var nextBtn = document.getElementById('lmsNextBtn');
+      if (nextBtn && nextModId) nextBtn.onclick = function() { go('#/lms/' + courseId + '/' + nextModId); };
+
+      lmsUpdate();
     });
   }
 
